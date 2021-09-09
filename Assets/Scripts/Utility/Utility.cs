@@ -15,12 +15,14 @@ public static class Utility
         public int coord_x { get; set;}
         public int coord_y { get; set;}
         public Vector3 wPos { get; set;}
+        public int rendValue { get; set;}
 
-        public GridCoord(int x, int y, Vector3 pos)
+        public GridCoord(int x, int y, Vector3 pos, int rendValue)
         {
-            coord_x = x;
-            coord_y = y;
-            wPos = pos;
+            this.coord_x = x;
+            this.coord_y = y;
+            this.wPos = pos;
+            this.rendValue = rendValue;
         }
     }
 

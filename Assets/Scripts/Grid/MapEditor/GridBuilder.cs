@@ -52,7 +52,7 @@ public class GridBuilder : MonoBehaviour
                 hexVisual.transform.Find("Cell_Pos_Text").GetComponent<TextMesh>().text = coords;
                 hexVisual.transform.Find("background").GetComponent<SpriteRenderer>().sortingOrder = -y;
 
-                temp_GridCoord[current] = new Utility.GridCoord(x,y,worldPos);
+                temp_GridCoord[current] = new Utility.GridCoord(x, y, worldPos, -y);
 
                 current++;
             }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5625424725180915040}
   - component: {fileID: 1693256658162106650}
   - component: {fileID: 5754875941382405010}
-  - component: {fileID: -866644797721452629}
+  - component: {fileID: 176389831137021951}
   m_Layer: 0
   m_Name: BossSpawner_GrassTile
   m_TagString: Hex
@@ -82,8 +82,8 @@ MonoBehaviour:
   rootCastle: {fileID: 0}
   isStartPoint: 0
   isBossSpawner: 1
---- !u!135 &-866644797721452629
-SphereCollider:
+--- !u!136 &176389831137021951
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -92,8 +92,9 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 0.25998116
+  m_Height: 0.8716027
+  m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5625424725752147588
 GameObject:
@@ -163,8 +164,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1184228777
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e663b082a64654449839e765dff99607, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

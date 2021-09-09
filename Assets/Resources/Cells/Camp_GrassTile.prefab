@@ -68,8 +68,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1641075361
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e980ff2dedbe46049be1c4dbd0f360f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -150,8 +150,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1184228777
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1affa959757d46e46a02e361ee1bbc43, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 9221108920803381333}
   - component: {fileID: 2781491444041452591}
   - component: {fileID: 9095896184387172007}
-  - component: {fileID: 5918417529619446001}
+  - component: {fileID: 8167375736219568336}
   m_Layer: 0
   m_Name: Camp_GrassTile
   m_TagString: Hex
@@ -246,8 +246,8 @@ MonoBehaviour:
   rootCastle: {fileID: 0}
   isStartPoint: 1
   isBossSpawner: 0
---- !u!135 &5918417529619446001
-SphereCollider:
+--- !u!136 &8167375736219568336
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -256,6 +256,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 0.25998116
+  m_Height: 0.8716027
+  m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}

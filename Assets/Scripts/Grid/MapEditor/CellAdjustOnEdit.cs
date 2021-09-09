@@ -8,12 +8,14 @@ using UnityEditor;
 public class CellAdjustOnEdit : MonoBehaviour
 {
     private GridBuilder gridBuilder;
+    private SpriteRenderer spriteRenderer;
     private Hex hex;
 
     void Start()
     {
         hex = GetComponent<Hex>();
         gridBuilder = GameObject.Find("GridBuilder").GetComponent<GridBuilder>();
+        spriteRenderer = transform.Find("background").GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -35,6 +37,7 @@ public class CellAdjustOnEdit : MonoBehaviour
             {
                 curDist = dist;
                 closestPos = gc.wPos;
+                spriteRenderer.sortingOrder = gc.rendValue;
             }
         }
 
