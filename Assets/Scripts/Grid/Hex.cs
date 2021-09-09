@@ -1,0 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hex : MonoBehaviour
+{
+    public Transform tr;
+
+    public int coord_x;
+    public int coord_y;
+    public List<Hex> neighbors = new List<Hex>();
+
+    public Hex rootCastle;      // set in editor
+    public bool isStartPoint;   // set in editor
+    public bool isBossSpawner;  // set in editor
+
+    private void Awake()
+    {
+        tr = transform;
+    }
+
+    public void Set_Editor_Name()
+    {
+        string result = coord_x + "," + coord_y;
+
+        if(isStartPoint) result += " -StartPoint";
+        if(isBossSpawner) result += " -BossSpawner";
+        if(rootCastle != null) result += " -SummonPoint";
+
+        gameObject.name = result;
+    }
+}
