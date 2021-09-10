@@ -32,6 +32,7 @@ public class LoginResponse : GeneralNetworkTask
     private void Set_PlayerHeroes_Host(Account acc)
     {
         if(this.pHeroes == "") return;
+        CharactersData cd = new CharactersData();
 
         string[] heroes = this.pHeroes.Split('|');
         for(int x = 0; x < heroes.Length; x++)
@@ -39,13 +40,13 @@ public class LoginResponse : GeneralNetworkTask
             string[] heroData = heroes[x].Split(':');
 
             string[] hero = heroData[0].Split(','); // Hero
-            Character hCharacter = Utility.Get_Character_ById(Convert.ToInt32(hero[1]));
+            Character hCharacter = cd.Get_Character_ById(Convert.ToInt32(hero[1]));
             Hero h = new Hero(hCharacter, hero[0]);
 
             string[] hCharacters = heroData[1].Split(','); // Selected Characters
             for(int y = 0; y < hCharacters.Length; y++)
             {
-                Character c = Utility.Get_Character_ById(Convert.ToInt32(hCharacters[y]));
+                Character c = cd.Get_Character_ById(Convert.ToInt32(hCharacters[y]));
                 h.battleCharacters.Add(c);
             }
 
@@ -56,11 +57,12 @@ public class LoginResponse : GeneralNetworkTask
     private void Set_PlayerCharacters_Host(Account p)
     {
         if(this.pCharacters == "") return;
+        CharactersData cd = new CharactersData();
 
         string[] characters = this.pCharacters.Split(',');
         for(int x = 0; x < characters.Length; x++)
         {
-            Character c = Utility.Get_Character_ById(Convert.ToInt32(characters[x]));
+            Character c = cd.Get_Character_ById(Convert.ToInt32(characters[x]));
             p.сharacters.Add(c);
         }
     }

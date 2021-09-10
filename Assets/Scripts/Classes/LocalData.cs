@@ -6,6 +6,13 @@ using UnityEngine;
     // Used to save player local account data
 public class LocalData
 {
+    private CharactersData cd;
+    
+    public LocalData()
+    {
+        cd = new CharactersData();
+    }
+
     public void Save_PlayerData(Account acc)
     {
         AccountData account = new AccountData();
@@ -114,7 +121,7 @@ public class LocalData
             {
                 string[] hData = pHeroesData[x].Split(':');
                 
-                Character heroCharacter = Utility.Get_Character_ById(Convert.ToInt32(hData[1]));
+                Character heroCharacter = cd.Get_Character_ById(Convert.ToInt32(hData[1]));
                 Hero someHero = new Hero(heroCharacter, hData[0]);
 
                 heroCharacter.cHero = someHero;
@@ -132,7 +139,7 @@ public class LocalData
                 for(int y = 0; y < cData.Length; y++)
                 {
                     Hero h = acc.heroes[Convert.ToInt32(hData[0])];
-                    Character someCharacter = Utility.Get_Character_ById(Convert.ToInt32(cData[y]));
+                    Character someCharacter = cd.Get_Character_ById(Convert.ToInt32(cData[y]));
                     someCharacter.cHero = h;
 
                     h.battleCharacters.Add(someCharacter);
@@ -145,7 +152,7 @@ public class LocalData
             string[] pCharactersData = account.pCharacters.Split(',');
             for(int x = 0; x < pCharactersData.Length; x++)
             {
-                Character someCharacter = Utility.Get_Character_ById(Convert.ToInt32(pCharactersData[x]));
+                Character someCharacter = cd.Get_Character_ById(Convert.ToInt32(pCharactersData[x]));
                 
                 acc.сharacters.Add(someCharacter);
             }

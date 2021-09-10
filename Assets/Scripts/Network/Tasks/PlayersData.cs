@@ -203,6 +203,8 @@ public class PlayersData : GeneralNetworkTask
 
     private void Set_PlayersHeroes(Client c)
     {
+        CharactersData cd = new CharactersData();
+
         // 0,h_zxc_1,1:1;0,h_zxc_2,2:1|1,h_qwe_1,1:1;1,h_qwe_2,2:1
         string[] data = this.pHeroes.Split('|');
         for(int x = 0; x < data.Length; x++)
@@ -213,13 +215,13 @@ public class PlayersData : GeneralNetworkTask
                 string[] hero_char_selected = hero[y].Split(':');
                 string[] hero_char = hero_char_selected[0].Split(','); // Hero
 
-                Character hCharacter = Utility.Get_Character_ById(Convert.ToInt32(hero_char[2]));
+                Character hCharacter = cd.Get_Character_ById(Convert.ToInt32(hero_char[2]));
                 Hero h = new Hero(hCharacter, hero_char[1]);
 
                 string[] hero_selected = hero_char_selected[1].Split(','); // Selected
                 for(int z = 0; z < hero_selected.Length; z++)
                 {
-                    Character selectedCharacter = Utility.Get_Character_ById(Convert.ToInt32(hero_selected[z]));
+                    Character selectedCharacter = cd.Get_Character_ById(Convert.ToInt32(hero_selected[z]));
                     h.battleCharacters.Add(selectedCharacter);
                 }
 
@@ -230,6 +232,8 @@ public class PlayersData : GeneralNetworkTask
 
     private void Set_PlayersCharacters(Client c)
     {
+        CharactersData cd = new CharactersData();
+
         // 0:1,1|1:1,1
         string[] data = this.pCharacters.Split('|');
         for(int x = 0; x < data.Length; x++)
@@ -245,7 +249,7 @@ public class PlayersData : GeneralNetworkTask
             for(int y = 0; y < char_data.Length; y++)
             {
                 int charId = Convert.ToInt32(char_data[y]);
-                Character character = Utility.Get_Character_ById(charId);
+                Character character = cd.Get_Character_ById(charId);
                 acc.сharacters.Add(character);
             }
         }

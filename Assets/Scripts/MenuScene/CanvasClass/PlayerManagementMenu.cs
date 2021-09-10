@@ -35,6 +35,8 @@ public class PlayerManagementMenu : UI_Menu_Canvas
     public Button buy_Knight_Button;
     public Text characterToBuy_info_Text;
 
+    private CharactersData cd;
+
     public PlayerManagementMenu(GameObject gameObject, MenuSceneMain mm)
     {
         go = gameObject;
@@ -61,6 +63,8 @@ public class PlayerManagementMenu : UI_Menu_Canvas
         buy_Spearman_Button = characterBuy_Panel.transform.Find("cType_Spearman_Button").GetComponent<Button>();
         buy_Knight_Button = characterBuy_Panel.transform.Find("cType_Knight_Button").GetComponent<Button>();
         characterToBuy_info_Text = characterBuy_Panel.transform.Find("CharacterToBuy_Info_Text").GetComponent<Text>();
+
+        cd = new CharactersData();
     }
 
 
@@ -261,7 +265,7 @@ public class PlayerManagementMenu : UI_Menu_Canvas
 
     public void Create_Hero()
     {
-        Character hCharacter = Utility.Get_Character_ById(heroIdToCreate);
+        Character hCharacter = cd.Get_Character_ById(heroIdToCreate);
         string heroName = creation_heroName.text;
         if (heroName == "" || heroName == " " || heroName == "  " || heroName == "   ") return;
         Hero hero = new Hero(hCharacter, heroName);
@@ -297,7 +301,7 @@ public class PlayerManagementMenu : UI_Menu_Canvas
         buy_Spearman_Button.interactable = true;
         buy_Knight_Button.interactable = true;
         characterIdToBuy = 1;
-        Update_CharacterInfo_OnBuy(Utility.Get_Character_ById(characterIdToBuy));
+        Update_CharacterInfo_OnBuy(cd.Get_Character_ById(characterIdToBuy));
     }
     public void Select_Spearman_ToBuy()
     {
@@ -305,7 +309,7 @@ public class PlayerManagementMenu : UI_Menu_Canvas
         buy_Spearman_Button.interactable = false;
         buy_Knight_Button.interactable = true;
         characterIdToBuy = 2;
-        Update_CharacterInfo_OnBuy(Utility.Get_Character_ById(characterIdToBuy));
+        Update_CharacterInfo_OnBuy(cd.Get_Character_ById(characterIdToBuy));
     }
     public void Select_Knight_ToBuy()
     {
@@ -313,7 +317,7 @@ public class PlayerManagementMenu : UI_Menu_Canvas
         buy_Spearman_Button.interactable = true;
         buy_Knight_Button.interactable = false;
         characterIdToBuy = 3;
-        Update_CharacterInfo_OnBuy(Utility.Get_Character_ById(characterIdToBuy));
+        Update_CharacterInfo_OnBuy(cd.Get_Character_ById(characterIdToBuy));
     }
 
     private void Update_CharacterInfo_OnBuy(Character c)
@@ -328,7 +332,7 @@ public class PlayerManagementMenu : UI_Menu_Canvas
     public void Buy_Character()
     {
         Debug.Log("Character to buy id : " + characterIdToBuy);
-        Character c = Utility.Get_Character_ById(characterIdToBuy);
+        Character c = cd.Get_Character_ById(characterIdToBuy);
 
         if(account.acc_gold < c.cCost) return;
         

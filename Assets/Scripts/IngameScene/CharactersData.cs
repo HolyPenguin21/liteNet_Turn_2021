@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharactersData
 {
-    public IEnumerator Create_Character(Hex hex, int cId, BattlePlayer owner)
+    public void Create_Character(Hex hex, int cId, BattlePlayer owner)
     {
         Vector3 position = hex.transform.position;
         Character character = null;
@@ -28,6 +28,39 @@ public class CharactersData
             break;
         }
 
-        yield return null;
+        character.hex = hex;
+        character.owner = owner;
+
+        hex.character = character;
+    }
+
+    public Character Get_Character_ById(int id)
+    {
+        switch(id)
+        {
+            case 1:
+                return new Swordman(null, null, null);
+            case 2:
+                return new Spearman(null, null, null);
+            case 3:
+                return new Knight(null, null, null);
+            default:
+                return new Swordman(null, null, null);
+        }
+    }
+
+    public Sprite Get_CharacterImage_ById(int id)
+    {
+        switch(id)
+        {
+            case 1:
+                return Resources.Load<Sprite>("Characters/Swordman/Swordman_ii");
+            case 2:
+                return Resources.Load<Sprite>("Characters/Spearman/Spearman_ii");
+            case 3:
+                return Resources.Load<Sprite>("Characters/Knight/Knight_ii");
+            default:
+                return Resources.Load<Sprite>("Characters/Swordman/Swordman_ii");
+        }
     }
 }

@@ -15,8 +15,8 @@ public abstract class GeneralNetworkTask
     {
         for(int x = 0; x < GameData.inst.server.players.Count; x++)
         {
-            Account p = GameData.inst.server.players[x];
-            assignedPlayers.Add(p);
+            Account acc = GameData.inst.server.players[x];
+            assignedPlayers.Add(acc);
         }
     }
 

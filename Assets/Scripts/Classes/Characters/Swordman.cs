@@ -8,13 +8,14 @@ public class Swordman : Character
     {
         go = go_;
         if (go != null) tr = go_.transform;
-        cHex = hex_;
+        hex = hex_;
         owner = owner_;
 
+        CharactersData cd = new CharactersData();
         // Edit
         cId = 1;
         cCost = 15;
         cName = "Swordman";
-        cImage = Utility.Get_CharacterImage_ById(cId);
+        cImage = cd.Get_CharacterImage_ById(cId);
     }
 }

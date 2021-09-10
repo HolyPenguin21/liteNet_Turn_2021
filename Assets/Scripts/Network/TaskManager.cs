@@ -30,8 +30,6 @@ public class TaskManager
 
     public void AddTask(GeneralNetworkTask task)
     {
-        if(server == null) return;
-
         server.taskList.Add(task);
     }
 }

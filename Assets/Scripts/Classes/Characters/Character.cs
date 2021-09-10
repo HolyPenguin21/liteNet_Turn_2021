@@ -9,7 +9,7 @@ public abstract class Character
     public Transform tr;
 
     // Ingame vars
-    public Hex cHex;
+    public Hex hex;
     public BattlePlayer owner;
     public Hero cHero; // if character is hero, this should not be NULL
 

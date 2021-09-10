@@ -77,36 +77,6 @@ public static class Utility
         return result;
     }
 
-    public static Character Get_Character_ById(int id)
-    {
-        switch(id)
-        {
-            case 1:
-                return new Swordman(null, null, null);
-            case 2:
-                return new Spearman(null, null, null);
-            case 3:
-                return new Knight(null, null, null);
-            default:
-                return new Swordman(null, null, null);
-        }
-    }
-
-    public static Sprite Get_CharacterImage_ById(int id)
-    {
-        switch(id)
-        {
-            case 1:
-                return Resources.Load<Sprite>("Characters/Swordman/Swordman_ii");
-            case 2:
-                return Resources.Load<Sprite>("Characters/Spearman/Spearman_ii");
-            case 3:
-                return Resources.Load<Sprite>("Characters/Knight/Knight_ii");
-            default:
-                return Resources.Load<Sprite>("Characters/Swordman/Swordman_ii");
-        }
-    }
-
     public static PlayerItem Get_PlayerItem_ById(int id)
     {
         switch(id)

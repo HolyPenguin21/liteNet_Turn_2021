@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-public class HeroChange : GeneralNetworkTask
+public class CreateCharacter : GeneralNetworkTask
 {
-    public string pName { get; set; }
-	public int hId { get; set; }
+    public int coord_x { get; set; }
+    public int coord_y { get; set; }
+    public int characterId { get; set; }
+    public string ownerName { get; set; }
 
     public override IEnumerator Implementation_Server()
     {
@@ -51,25 +52,11 @@ public class HeroChange : GeneralNetworkTask
 
     private bool Implementation()
     {
-        Server server = GameData.inst.server;
-        Client client = GameData.inst.client;
+        // Hex hex = ;
+        // BattlePlayer owner = ;
 
-        var dropdowns = GameObject.FindObjectsOfType<Dropdown>();
-        foreach(Dropdown d in dropdowns)
-        {
-            if(d.transform.parent.Find("PlayerName_Text").GetComponent<Text>().text == this.pName)
-                d.value = this.hId;
-        }
-
-        if(server != null)
-        {
-            Utility.Get_Server_Player_ByName(this.pName).battleHeroId = this.hId;
-        }
-
-        if(client != null)
-        {
-            Utility.Get_Client_Player_ByName(this.pName).battleHeroId = this.hId;
-        }
+        // CharactersData cd = new CharactersData();
+        // cd.Create_Character(hex, characterId, owner);
 
         return true;
     }

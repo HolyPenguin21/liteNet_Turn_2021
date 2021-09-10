@@ -6,17 +6,21 @@ using UnityEngine;
 public class GameMain : MonoBehaviour
 {
     public TaskManager taskManager;
-    private CharactersData cData;
-
-    private void Awake()
-    {
-        cData = new CharactersData();
-    }
 
 #region Ingame
     public void Order_CreateCharacter(Hex hex, int cId, BattlePlayer owner)
     {
-        StartCoroutine(cData.Create_Character(hex, cId, owner));
+
+        CreateCharacter cr_character = new CreateCharacter();
+        cr_character.taskId = Utility.RandomValueGenerator();
+        cr_character.AssignToAll();
+
+        cr_character.coord_x = hex.coord_x;
+        cr_character.coord_y = hex.coord_y;
+        cr_character.characterId = cId;
+        cr_character.ownerName = owner.name;
+
+        taskManager.AddTask(cr_character);
     }
 
     public void Order_Move()

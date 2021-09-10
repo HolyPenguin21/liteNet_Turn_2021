@@ -8,13 +8,14 @@ public class Knight : Character
     {
         go = go_;
         if (go != null) tr = go_.transform;
-        cHex = hex_;
+        hex = hex_;
         owner = owner_;
-
+        
+        CharactersData cd = new CharactersData();
         // Edit
         cId = 3;
         cCost = 20;
         cName = "Knight";
-        cImage = Utility.Get_CharacterImage_ById(cId);
+        cImage = cd.Get_CharacterImage_ById(cId);
     }
 }
