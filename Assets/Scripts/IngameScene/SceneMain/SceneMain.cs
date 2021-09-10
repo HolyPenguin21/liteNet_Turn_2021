@@ -6,7 +6,6 @@ public class SceneMain : MonoBehaviour
 {
     private SoloScene soloSc;
     private PVPScene pvpSc;
-    private CharactersData cData;
 
     public Hex[] grid;
     public List<Hex> startPoints = new List<Hex>();
@@ -18,10 +17,6 @@ public class SceneMain : MonoBehaviour
     public Utility.GameType gameType;
     public List<PlayerItem> rewards = new List<PlayerItem>();
 
-    private void Awake()
-    {
-        cData = new CharactersData();
-    }
 
     private IEnumerator Start()
     {
@@ -49,14 +44,6 @@ public class SceneMain : MonoBehaviour
 
         yield return Setup_FirstTurn();
     }
-
-    #region Characters management
-    public IEnumerator Create_Character(Hex hex, int cId, BattlePlayer owner)
-    {
-        yield return cData.Create_Character(hex, cId, owner);
-        Debug.Log("Character created");
-    }
-    #endregion
 
     #region Turn management
     public IEnumerator Setup_FirstTurn()

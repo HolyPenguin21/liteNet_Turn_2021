@@ -9,7 +9,7 @@ public class Swordman : Character
         go = go_;
         if (go != null) tr = go_.transform;
         cHex = hex_;
-        cOwner = owner_;
+        owner = owner_;
 
         // Edit
         cId = 1;

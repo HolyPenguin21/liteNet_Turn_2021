@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4362996424006694681}
   - component: {fileID: -623679175100729708}
   - component: {fileID: 2823698373222442371}
-  - component: {fileID: 1560487091689959576}
+  - component: {fileID: 5496883884392817694}
   m_Layer: 0
   m_Name: WaterTile
   m_TagString: Hex
@@ -80,7 +80,7 @@ MonoBehaviour:
   rootCastle: {fileID: 0}
   isStartPoint: 0
   isBossSpawner: 0
---- !u!136 &1560487091689959576
+--- !u!136 &5496883884392817694
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

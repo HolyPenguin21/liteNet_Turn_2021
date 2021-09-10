@@ -132,7 +132,6 @@ MonoBehaviour:
   spritesToUse:
   - {fileID: 21300000, guid: 64921ea0d09ce4248a9526d8c20fa1c6, type: 3}
   - {fileID: 21300000, guid: 6664d7f5c7fb0cf4090e985a24cbd4cc, type: 3}
-  - {fileID: 21300000, guid: d713cc114157afa43bbd58317373dfe2, type: 3}
 --- !u!114 &6140995751426759452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +160,8 @@ MonoBehaviour:
   coord_x: 0
   coord_y: 0
   neighbors: []
+  groundMove: 1
+  moveCost: 1
   rootCastle: {fileID: 0}
   isStartPoint: 0
   isBossSpawner: 0

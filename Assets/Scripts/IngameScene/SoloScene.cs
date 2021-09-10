@@ -25,7 +25,7 @@ public class SoloScene
         int characterId = sm.bPlayers[0].hero.character.cId;
         BattlePlayer bp = sm.bPlayers[0];
 
-        yield return sm.Create_Character(startPoint, characterId, bp);
+        GameData.inst.gameMain.Order_CreateCharacter(startPoint, characterId, bp);
 
         yield return null;
     }

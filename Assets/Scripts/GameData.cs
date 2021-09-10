@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameData : MonoBehaviour
 {
     public static GameData inst;
+    public GameMain gameMain;
 
     public Account account;
 
@@ -16,6 +17,8 @@ public class GameData : MonoBehaviour
 
     private void Awake()
     {
+        gameMain = GetComponent<GameMain>();
+
         DontDestroyOnLoad(gameObject);
         inst = this;
     }

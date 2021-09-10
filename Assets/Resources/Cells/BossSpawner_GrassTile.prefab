@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5625424725180915040}
   - component: {fileID: 1693256658162106650}
   - component: {fileID: 5754875941382405010}
-  - component: {fileID: 176389831137021951}
+  - component: {fileID: 3282738418195217391}
   m_Layer: 0
   m_Name: BossSpawner_GrassTile
   m_TagString: Hex
@@ -79,10 +79,12 @@ MonoBehaviour:
   coord_x: 0
   coord_y: 0
   neighbors: []
+  groundMove: 1
+  moveCost: 1
   rootCastle: {fileID: 0}
   isStartPoint: 0
   isBossSpawner: 1
---- !u!136 &176389831137021951
+--- !u!136 &3282738418195217391
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

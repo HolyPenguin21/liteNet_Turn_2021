@@ -6,6 +6,18 @@ using UnityEngine;
 public class GameMain : MonoBehaviour
 {
     public TaskManager taskManager;
+    private CharactersData cData;
+
+    private void Awake()
+    {
+        cData = new CharactersData();
+    }
+
+#region Ingame
+    public void Order_CreateCharacter(Hex hex, int cId, BattlePlayer owner)
+    {
+        StartCoroutine(cData.Create_Character(hex, cId, owner));
+    }
 
     public void Order_Move()
     {
@@ -22,6 +34,7 @@ public class GameMain : MonoBehaviour
 
         taskManager.AddTask(move);
     }
+    #endregion
 
 #region Lobby_HeroChange
     public void Order_HeroChange(string pName, int hId)
@@ -43,7 +56,7 @@ public class GameMain : MonoBehaviour
         heroChange.hId = hId;
         heroChange.RequestServer();
     }
-#endregion
+    #endregion
 
 #region Lobby_StartGame
     public void Order_StartGame(int sceneId)
@@ -56,5 +69,5 @@ public class GameMain : MonoBehaviour
 
         taskManager.AddTask(pvpStart);
     }
-#endregion
+    #endregion
 }

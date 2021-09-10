@@ -6,7 +6,9 @@ public class SceneMain_UI : MonoBehaviour
 {
     private SceneMain sm;
     private ClickHandler clickHandler;
+    private Pathfinding pathfinding;
 
+    private LineRenderer pathVisual;
     private Transform hover_effect;
     private SpriteRenderer hover_default;
     private SpriteRenderer hover_attack;
@@ -31,31 +33,31 @@ public class SceneMain_UI : MonoBehaviour
 
     void Start()
     {
+        pathVisual = transform.Find("Path_Line").GetComponent<LineRenderer>();
         hover_effect = transform.Find("HoverEffect");
         hover_default = hover_effect.Find("Default").GetComponent<SpriteRenderer>();
         hover_attack = hover_effect.Find("Attack").GetComponent<SpriteRenderer>();
         hover_move = hover_effect.Find("Move").GetComponent<SpriteRenderer>();
         selected_effect = transform.Find("SelectedEffect");
+
+        pathfinding = new Pathfinding(pathVisual);
+        pathfinding.Hide_Path();
     }
 
     void Update()
     {
         clickHandler.Update();
-        Mouse_Constant_Input();
+        Mouse_Hover_Input();
     }
 
-    private void Mouse_Constant_Input()
+    private void Mouse_Hover_Input()
     {
         Hex someHex = HittedObject();
-        if (someHex == null)
-        {
-            Reset_Hover();
-            return;
-        }
-
+        if (!IsHittingSomething(someHex)) return;
         if (someHex == hover_Hex) return;
-        // pathfinding.Hide_Path();
+
         Set_Hover(someHex);
+        Path_Display();
     }
 
     public void OnDoubleClick()
@@ -98,6 +100,17 @@ public class SceneMain_UI : MonoBehaviour
         // }
     }
 
+    private void Path_Display()
+    {
+        if(hover_Hex.groundMove || selected_Hex == null || selected_Hex.character == null)
+        {
+            pathfinding.Hide_Path();
+            return;
+        }
+        
+        pathfinding.Show_Path(selected_Hex, hover_Hex);
+    }
+
     public void SelectHex(Hex hex)
     {
         selected_Hex = hex;
@@ -126,6 +139,17 @@ public class SceneMain_UI : MonoBehaviour
         return null;
     }
 
+    private bool IsHittingSomething(Hex someHex)
+    {
+        if (someHex == null)
+        {
+            Reset_Hover();
+            pathfinding.Hide_Path();
+            return false;
+        }
+        return true;
+    }
+
     private void Set_Hover(Hex h)
     {
         hover_Hex = h;
@@ -147,8 +171,6 @@ public class SceneMain_UI : MonoBehaviour
 
         selected_Hex = null;
         selected_effect.gameObject.SetActive(false);
-
-        // pathfinding.Hide_Path();
 
         // Set_HoverImage(0);
         // GameObject.Find("UI").GetComponent<UI_Ingame>().Hide_HexInfo();

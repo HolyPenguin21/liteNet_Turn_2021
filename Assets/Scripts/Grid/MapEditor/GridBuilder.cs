@@ -52,7 +52,7 @@ public class GridBuilder : MonoBehaviour
                 hexVisual.transform.Find("Cell_Pos_Text").GetComponent<TextMesh>().text = coords;
                 hexVisual.transform.Find("background").GetComponent<SpriteRenderer>().sortingOrder = -y;
 
-                temp_GridCoord[current] = new Utility.GridCoord(x, y, worldPos, -y);
+                temp_GridCoord[current] = new Utility.GridCoord(x,y,worldPos, -y);
 
                 current++;
             }
@@ -80,6 +80,7 @@ public class GridBuilder : MonoBehaviour
             h.coord_x = gc.coord_x;
             h.coord_y = gc.coord_y;
             h.Set_Editor_Name();
+            h.tr = h.transform;
 
             sceneData.grid[x] = h;
 
@@ -99,7 +100,7 @@ public class GridBuilder : MonoBehaviour
             Hex current = sceneData.grid[x];
             Get_Neighbors(current);
 
-            EditorUtility.SetDirty(sceneData.grid[x]); // COMMENT
+            EditorUtility.SetDirty(current); // COMMENT
         }
 
         Debug.Log("Builder > Neighbors are setted up");
@@ -114,25 +115,27 @@ public class GridBuilder : MonoBehaviour
             Hex toCheck = sceneData.grid[x];
             if (hex == toCheck) continue;
 
-            float dist = Get_Distance(hex, toCheck);
-            if (dist == 1) hex.neighbors.Add(toCheck);
+            float dist = Vector3.Distance(hex.tr.position, toCheck.tr.position);
+            // Debug.Log(hex + " - " + toCheck + " : " + dist);
+            if (dist < 0.85f) 
+            hex.neighbors.Add(toCheck);
         }
     }
 
-    private int Get_Distance(Hex a, Hex b)
-    {
-        int dx = b.coord_x - a.coord_x;
-        int dy = b.coord_y - a.coord_y;
-        int x = Mathf.Abs(dx);
-        int y = Mathf.Abs(dy);
-        // special case if we start on an odd row or if we move into negative x direction
-        if ((dx < 0)^((a.coord_y&1)==1))
-            x = Mathf.Max(0, x - (y + 1) / 2);
-        else
-            x = Mathf.Max(0, x - (y) / 2);
+    // private int Get_Distance(Hex a, Hex b)
+    // {
+    //     int dx = b.coord_x - a.coord_x;
+    //     int dy = b.coord_y - a.coord_y;
+    //     int x = Mathf.Abs(dx);
+    //     int y = Mathf.Abs(dy);
+    //     // special case if we start on an odd row or if we move into negative x direction
+    //     if ((dx < 0)^((a.coord_y&1)==1))
+    //         x = Mathf.Max(0, x - (y + 1) / 2);
+    //     else
+    //         x = Mathf.Max(0, x - (y) / 2);
 
-        return x + y;
-    }
+    //     return x + y;
+    // }
 
     private Hex Get_ClosestHex(Vector3 pos)
     {

@@ -6,6 +6,7 @@ using UnityEngine;
 public static class Utility
 {
     public static float distHexes = 1.3f;
+    public static int enemyHexValue = 3; // move cost near enemy character
 
     public enum Daytime { dawn, day1, day2, evening, night1, night2 };
     public enum GameType { solo, pvp };
@@ -115,6 +116,30 @@ public static class Utility
             default:
                 return new TreasureChest();
         }
+    }
+
+    public static bool EnemyInNeighbors(Character character, Hex current)
+    {
+        for (int x = 0; x < current.neighbors.Count; x++)
+        {
+            if (current.neighbors[x].character != null && current.neighbors[x].character.tr.gameObject.activeInHierarchy && character.owner != current.neighbors[x].character.owner)
+                return true;
+        }
+        return false;
+    }
+
+    public static List<T> Swap_ListItems<T>(List<T> initialList)
+    {
+        int listHalf = Convert.ToInt32(initialList.Count / 2);
+
+        for (int x = 0; x < listHalf; x++)
+        {
+            T tempItem = initialList[x];
+            initialList[x] = initialList[initialList.Count - 1 - x];
+            initialList[initialList.Count - 1 - x] = tempItem;
+        }
+
+        return initialList;
     }
 
     public static int RandomValueGenerator()

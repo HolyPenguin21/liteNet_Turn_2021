@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 9221108920803381333}
   - component: {fileID: 2781491444041452591}
   - component: {fileID: 9095896184387172007}
-  - component: {fileID: 8167375736219568336}
+  - component: {fileID: 7610333359249897362}
   m_Layer: 0
   m_Name: Camp_GrassTile
   m_TagString: Hex
@@ -243,10 +243,12 @@ MonoBehaviour:
   coord_x: 0
   coord_y: 0
   neighbors: []
+  groundMove: 1
+  moveCost: 1
   rootCastle: {fileID: 0}
   isStartPoint: 1
   isBossSpawner: 0
---- !u!136 &8167375736219568336
+--- !u!136 &7610333359249897362
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

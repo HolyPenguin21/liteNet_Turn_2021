@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1864974913527153037}
   - component: {fileID: -4571264932241744393}
   - component: {fileID: 1742136709910144895}
-  - component: {fileID: 2223324754966490413}
+  - component: {fileID: 4116549455037203840}
   m_Layer: 0
   m_Name: GrassTile
   m_TagString: Hex
@@ -50,7 +50,6 @@ MonoBehaviour:
   spritesToUse:
   - {fileID: 21300000, guid: e663b082a64654449839e765dff99607, type: 3}
   - {fileID: 21300000, guid: 6b1e87e902beb834ea0dd324031f2e5f, type: 3}
-  - {fileID: 21300000, guid: 1affa959757d46e46a02e361ee1bbc43, type: 3}
 --- !u!114 &-4571264932241744393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,10 +78,12 @@ MonoBehaviour:
   coord_x: 0
   coord_y: 0
   neighbors: []
+  groundMove: 1
+  moveCost: 1
   rootCastle: {fileID: 0}
   isStartPoint: 0
   isBossSpawner: 0
---- !u!136 &2223324754966490413
+--- !u!136 &4116549455037203840
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

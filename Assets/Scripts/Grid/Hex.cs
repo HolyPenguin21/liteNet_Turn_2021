@@ -9,10 +9,14 @@ public class Hex : MonoBehaviour
     public int coord_x;
     public int coord_y;
     public List<Hex> neighbors = new List<Hex>();
+    public bool groundMove;
+    public int moveCost = 1;
 
     public Hex rootCastle;      // set in editor
     public bool isStartPoint;   // set in editor
     public bool isBossSpawner;  // set in editor
+
+    public Character character;
 
     private void Awake()
     {

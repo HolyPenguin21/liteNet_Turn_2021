@@ -159,6 +159,8 @@ MonoBehaviour:
   coord_x: 0
   coord_y: 0
   neighbors: []
+  groundMove: 1
+  moveCost: 1
   rootCastle: {fileID: 0}
   isStartPoint: 0
   isBossSpawner: 0

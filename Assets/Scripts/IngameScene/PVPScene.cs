@@ -34,7 +34,8 @@ public class PVPScene
 
             BattlePlayer bp = sm.bPlayers[x];
             int characterId = bp.hero.character.cId;
-            yield return sm.Create_Character(startPoint, characterId, bp);
+            
+            GameData.inst.gameMain.Order_CreateCharacter(startPoint, characterId, bp);
         }
 
         yield return null;
