@@ -27,4 +27,77 @@ public class Account
         this.сharacters = new List<Character>();
         this.items = new List<PlayerItem>();
     }
+
+    #region Acc data : get/set
+    public string Get_Acc_Data()
+    {
+        return name + "," + battleHeroId;
+    }
+    #endregion
+
+    #region Acc heroes data : get/set
+    public string Get_Heroes_Data()
+    {
+        string data = "";
+
+        for(int x = 0; x < heroes.Count; x++)
+        {
+            Hero hero = heroes[x];
+
+            data += hero.name + "," + hero.character.cId + ":";
+            if(hero.battleCharacters.Count > 0) data += Get_Hero_CharactersData(hero);
+
+            data += "|";
+        }
+        if(data != "") data = data.Remove(data.Length - 1);
+
+        return data;
+    }
+    
+    private string Get_Hero_CharactersData(Hero hero)
+    {
+        string data = "";
+
+        for(int x = 0; x < hero.battleCharacters.Count; x++)
+        {
+            Character c = hero.battleCharacters[x];
+            data += c.cId + ",";
+        }
+        if(data != "") data = data.Remove(data.Length - 1);
+
+        return data;
+    }
+    #endregion
+
+    #region Acc Characters data : get/set
+    public string Get_Acc_CharactersData()
+    {
+        string data = "";
+
+        for(int x = 0; x < сharacters.Count; x++)
+        {
+            Character c = сharacters[x];
+            data += c.cId + ",";
+        }
+        if(data != "") data = data.Remove(data.Length - 1);
+
+        return data;
+    }
+    #endregion
+
+    #region Acc items data : get/set
+    public string Get_Acc_ItemsData()
+    {
+        string data = "";
+
+        for(int x = 0; x < items.Count; x++)
+        {
+            PlayerItem i = items[x];
+            data += i.id + ",";
+        }
+        if(data != "") data = data.Remove(data.Length - 1);
+
+        return data;
+    }
+    #endregion
 }

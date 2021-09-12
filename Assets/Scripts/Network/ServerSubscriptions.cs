@@ -22,12 +22,13 @@ public class ServerSubscriptions
     public void LoginResponse()
     {
         netProcessor.SubscribeReusable<LoginResponse, NetPeer>((data, client) => {
-            Debug.Log("Server > Client has logged in : " + data.pName);
+            Debug.Log("Server > Client has logged in : " + client);
 
             for(int x = 0; x < GameData.inst.server.players.Count; x++)
                 if(GameData.inst.server.players[x].address == client)
                 {
-                    GameData.inst.server.players[x].name = data.pName;
+                    string[] acc_Data_Recieved = data.acc_Data.Split(',');
+                    GameData.inst.server.players[x].name = acc_Data_Recieved[0];
                     break;
                 }
 

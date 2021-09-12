@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LoginResponse : GeneralNetworkTask
 {
-    public string pName { get; set; }
-    public int battleHeroId { get; set; }
+    public string acc_Data { get; set; }
     public string pHeroes { get; set; }
     public string pCharacters { get; set; }
     public string pItems { get; set; }
@@ -19,8 +18,10 @@ public class LoginResponse : GeneralNetworkTask
         // Debug.Log("Server : Player heroes data : " + this.pHeroes);
         // Debug.Log("Server : Player characters : " + this.pCharacters);
 
-        Account acc = Utility.Get_Server_Player_ByName(this.pName);
-        acc.battleHeroId = this.battleHeroId;
+        string[] acc_Data_Recieved = this.acc_Data.Split(',');
+
+        Account acc = Utility.Get_Server_Player_ByName(acc_Data_Recieved[0]);
+        acc.battleHeroId = Convert.ToInt32(acc_Data_Recieved[1]);
 
         Set_PlayerHeroes_Host(acc);
         Set_PlayerCharacters_Host(acc);
@@ -84,77 +85,12 @@ public class LoginResponse : GeneralNetworkTask
     {
         Account acc = GameData.inst.account;
 
-        this.pName = acc.name;
-        this.battleHeroId = acc.battleHeroId;
-        this.pHeroes = Get_HeroesData(acc);
-        this.pCharacters = Get_PlayerCharactersData(acc);
-        this.pItems = Get_PlayerItemsData(acc);
-
-        // Debug.Log("Client : Player name : " + this.pName);
-        // Debug.Log("Client : Player heroes data : " + this.pHeroes);
-        // Debug.Log("Client : Player characters : " + this.pCharacters);
+        this.acc_Data = acc.Get_Acc_Data(); // aName,bhId
+        this.pHeroes = acc.Get_Heroes_Data(); // hName,hcId:cId,cId,cId|
+        this.pCharacters = acc.Get_Acc_CharactersData(); // cId,cId,cId
+        this.pItems = acc.Get_Acc_ItemsData(); // cId,cId,cId
 
         yield return null;
-    }
-
-    private string Get_HeroesData(Account acc)
-    {
-        string data = "";
-
-        for(int x = 0; x < acc.heroes.Count; x++)
-        {
-            Hero hero = acc.heroes[x];
-
-            data += hero.name + "," + hero.character.cId + ":";
-            if(hero.battleCharacters.Count > 0) data += Get_HeroCharactersData(hero);
-
-            data += "|";
-        }
-        if(data != "") data = data.Remove(data.Length - 1);
-
-        return data;
-    }
-
-    private string Get_HeroCharactersData(Hero hero)
-    {
-        string data = "";
-
-        for(int x = 0; x < hero.battleCharacters.Count; x++)
-        {
-            Character c = hero.battleCharacters[x];
-            data += c.cId + ",";
-        }
-        if(data != "") data = data.Remove(data.Length - 1);
-
-        return data;
-    }
-
-    private string Get_PlayerCharactersData(Account p)
-    {
-        string data = "";
-
-        for(int x = 0; x < p.сharacters.Count; x++)
-        {
-            Character c = p.сharacters[x];
-            data += c.cId + ",";
-        }
-        if(data != "") data = data.Remove(data.Length - 1);
-
-        return data;
-    }
-
-    private string Get_PlayerItemsData(Account p)
-    {
-        string data = "";
-
-        for(int x = 0; x < p.items.Count; x++)
-        {
-            PlayerItem i = p.items[x];
-            data += i.id + ",";
-        }
-        if(data != "") data = data.Remove(data.Length - 1);
-
-        return data;
     }
 
     public override void SendToClients(Server server)
