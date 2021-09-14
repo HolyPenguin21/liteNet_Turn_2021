@@ -11,7 +11,6 @@ public abstract class Character
     // Ingame vars
     public Hex hex;
     public BattlePlayer owner;
-    public Hero cHero; // if character is hero, this should not be NULL
 
     // Character specific vars
     public int cId;

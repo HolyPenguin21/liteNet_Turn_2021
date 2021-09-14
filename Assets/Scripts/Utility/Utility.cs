@@ -5,10 +5,10 @@ using UnityEngine;
 
 public static class Utility
 {
-    public static float distHexes = 1.3f;
     public static int enemyHexValue = 3; // move cost near enemy character
 
     public enum Daytime { dawn, day1, day2, evening, night1, night2 };
+    public enum UI_Char_Button { hero, battleChar, accChar };
     public enum GameType { solo, pvp };
 
     public struct GridCoord
@@ -29,52 +29,44 @@ public static class Utility
 
     public static Account Get_Client_Player_ByName(string pName)
     {
-        Account p = null;
-
         for(int x = 0 ; x < GameData.inst.client.players.Count; x ++)
         {
             if(GameData.inst.client.players[x].name == pName)
-                p = GameData.inst.client.players[x];
+                return GameData.inst.client.players[x];
         }
 
-        return p;
+        return null;
     }
     public static int Get_Client_PlayerID_ByName(string pName)
     {
-        int result = 0;
-
         for(int x = 0 ; x < GameData.inst.client.players.Count; x ++)
         {
             if(GameData.inst.client.players[x].name == pName)
-                result = x;
+                return x;
         }
 
-        return result;
+        return 0;
     }
 
     public static Account Get_Server_Player_ByName(string pName)
     {
-        Account p = null;
-
         for(int x = 0 ; x < GameData.inst.server.players.Count; x ++)
         {
             if(GameData.inst.server.players[x].name == pName)
-                p = GameData.inst.server.players[x];
+                return GameData.inst.server.players[x];
         }
 
-        return p;
+        return null;
     }
     public static int Get_Server_PlayerID_ByName(string pName)
     {
-        int result = 0;
-
         for(int x = 0 ; x < GameData.inst.server.players.Count; x ++)
         {
             if(GameData.inst.server.players[x].name == pName)
-                result = x;
+                return x;
         }
 
-        return result;
+        return 0;
     }
 
     public static PlayerItem Get_PlayerItem_ById(int id)
@@ -86,6 +78,35 @@ public static class Utility
             default:
                 return new TreasureChest();
         }
+    }
+
+    public static BattlePlayer Get_BattlePlayer_ByName(string name)
+    {
+        SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
+
+        for(int x = 0; x < sm.bPlayers.Count; x++)
+        {
+            BattlePlayer bp = sm.bPlayers[x];
+            if (bp.name == name)
+                return bp;
+        }
+
+        return null;
+    }
+
+    public static Hex Get_Hex_ByCoords(int coord_x, int coord_y)
+    {
+        SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
+
+        for(int x = 0; x < sm.grid.Length; x++)
+        {
+            Hex h = sm.grid[x];
+
+            if(h.coord_x == coord_x && h.coord_y == coord_y)
+                return h;
+        }
+
+        return null;
     }
 
     public static bool EnemyInNeighbors(Character character, Hex current)
@@ -119,7 +140,7 @@ public static class Utility
         {
             value += UnityEngine.Random.Range(0, 9);
         }
-        int fValue = Convert.ToInt32(value);
-        return fValue;
+
+        return Convert.ToInt32(value);
         }
 }

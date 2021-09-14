@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,13 +12,12 @@ public class Account
     public string name;
     public string password;
 
+    public int battleHeroId = 0;
+    public int acc_gold;
+
     public List<Hero> heroes;
     public List<Character> сharacters;
     public List<PlayerItem> items;
-
-    public int acc_gold;
-
-    public int battleHeroId = 0;
 
     public Account (string name)
     {
@@ -31,12 +31,21 @@ public class Account
     #region Acc data : get/set
     public string Get_Acc_Data()
     {
-        return name + "," + battleHeroId;
+        return name + "," + password + "," + battleHeroId + "," + acc_gold;
+    }
+
+    public void Set_Acc_Data(string data)
+    {
+        string[] acc_Data = data.Split(',');
+        name = acc_Data[0];
+        password = acc_Data[1];
+        battleHeroId = Convert.ToInt32(acc_Data[2]);
+        acc_gold = Convert.ToInt32(acc_Data[3]);
     }
     #endregion
 
     #region Acc heroes data : get/set
-    public string Get_Heroes_Data()
+    public string Get_Acc_Heroes_Data()
     {
         string data = "";
 
@@ -47,7 +56,7 @@ public class Account
             data += hero.name + "," + hero.character.cId + ":";
             if(hero.battleCharacters.Count > 0) data += Get_Hero_CharactersData(hero);
 
-            data += "|";
+            data += ";";
         }
         if(data != "") data = data.Remove(data.Length - 1);
 
@@ -67,6 +76,34 @@ public class Account
 
         return data;
     }
+
+    public void Set_Acc_Heroes_Data(string data)
+    {
+        if(data == "") return;
+        CharactersData cd = new CharactersData();
+        
+        string[] heroesData = data.Split(';');
+        for(int x = 0; x < heroesData.Length; x++)
+        {
+            string[] heroData = heroesData[x].Split(':');
+
+            string[] hero = heroData[0].Split(','); // Hero
+            Character hCharacter = cd.Get_Character_ById(Convert.ToInt32(hero[1]));
+            Hero h = new Hero(hCharacter, hero[0]);
+
+            if(heroData[1] != "")
+            {
+                string[] hCharacters = heroData[1].Split(','); // Selected Characters
+                for(int y = 0; y < hCharacters.Length; y++)
+                {
+                    Character c = cd.Get_Character_ById(Convert.ToInt32(hCharacters[y]));
+                    h.battleCharacters.Add(c);
+                }
+            }
+
+            heroes.Add(h);
+        }
+    }
     #endregion
 
     #region Acc Characters data : get/set
@@ -83,6 +120,19 @@ public class Account
 
         return data;
     }
+
+    public void Set_Acc_CharactersData(string data)
+    {
+        if(data == "") return;
+        CharactersData cd = new CharactersData();
+
+        string[] characters = data.Split(',');
+        for(int x = 0; x < characters.Length; x++)
+        {
+            Character c = cd.Get_Character_ById(Convert.ToInt32(characters[x]));
+            сharacters.Add(c);
+        }
+    }
     #endregion
 
     #region Acc items data : get/set
@@ -98,6 +148,18 @@ public class Account
         if(data != "") data = data.Remove(data.Length - 1);
 
         return data;
+    }
+
+    public void Set_Acc_ItemsData(string data)
+    {
+        if(data == "") return;
+
+        string[] itemsData = data.Split(',');
+        for(int x = 0; x < itemsData.Length; x++)
+        {
+            PlayerItem pi = Utility.Get_PlayerItem_ById(Convert.ToInt32(itemsData[x]));
+            items.Add(pi);
+        }
     }
     #endregion
 }

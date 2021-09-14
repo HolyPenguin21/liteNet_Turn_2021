@@ -52,11 +52,11 @@ public class CreateCharacter : GeneralNetworkTask
 
     private bool Implementation()
     {
-        // Hex hex = ;
-        // BattlePlayer owner = ;
+        Hex hex = Utility.Get_Hex_ByCoords(this.coord_x, this.coord_y);
+        BattlePlayer owner = Utility.Get_BattlePlayer_ByName(this.ownerName);
 
-        // CharactersData cd = new CharactersData();
-        // cd.Create_Character(hex, characterId, owner);
+        CharactersData cd = new CharactersData();
+        cd.Create_Character(hex, this.characterId, owner);
 
         return true;
     }

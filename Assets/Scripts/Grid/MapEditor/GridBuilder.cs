@@ -2,9 +2,9 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor; // COMMENT
+// using UnityEditor; // COMMENT
 
-[ExecuteInEditMode] // COMMENT
+// [ExecuteInEditMode] // COMMENT
 public class GridBuilder : MonoBehaviour
 {
     public int grid_height = 5;
@@ -90,7 +90,7 @@ public class GridBuilder : MonoBehaviour
             if (h.isBossSpawner)
                 sceneData.bossSpawners.Add(h);
         }
-        EditorUtility.SetDirty(sceneData); // COMMENT
+        // EditorUtility.SetDirty(sceneData); // COMMENT
     }
 
     private void Assign_Neighbors()
@@ -100,7 +100,7 @@ public class GridBuilder : MonoBehaviour
             Hex current = sceneData.grid[x];
             Get_Neighbors(current);
 
-            EditorUtility.SetDirty(current); // COMMENT
+            // EditorUtility.SetDirty(current); // COMMENT
         }
 
         Debug.Log("Builder > Neighbors are setted up");

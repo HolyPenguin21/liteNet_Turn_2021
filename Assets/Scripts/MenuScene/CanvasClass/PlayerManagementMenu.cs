@@ -100,7 +100,8 @@ public class PlayerManagementMenu : UI_Menu_Canvas
             GameObject cButton_obj = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/Character_Button", typeof(GameObject)), heroContent_tr) as GameObject;
             Menu_Character_Button menu_cButton = cButton_obj.GetComponent<Menu_Character_Button>();
 
-            menu_cButton.Init(this, h.character, true, false, false);
+            menu_cButton.hero = h;
+            menu_cButton.Init(this, h.character, Utility.UI_Char_Button.hero);
             if(account.battleHeroId == x) menu_cButton.TaskOnClick();
         }
     }
@@ -123,7 +124,7 @@ public class PlayerManagementMenu : UI_Menu_Canvas
             GameObject hCharacterButton = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/Character_Button", typeof(GameObject)), hCharactersContent_tr) as GameObject;
             Menu_Character_Button menu_cButton = hCharacterButton.GetComponent<Menu_Character_Button>();
             
-            menu_cButton.Init(this, c, false, true, false);
+            menu_cButton.Init(this, c, Utility.UI_Char_Button.battleChar);
             if(x == 0) menu_cButton.TaskOnClick();
         }
     }
@@ -143,7 +144,7 @@ public class PlayerManagementMenu : UI_Menu_Canvas
             GameObject hCharacterButton = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/Character_Button", typeof(GameObject)), pCharactersContent_tr) as GameObject;
             Menu_Character_Button menu_cButton = hCharacterButton.GetComponent<Menu_Character_Button>();
 
-            menu_cButton.Init(this, c, false, false, true);
+            menu_cButton.Init(this, c, Utility.UI_Char_Button.accChar);
             if(x == 0) menu_cButton.TaskOnClick();
         }
     }
@@ -198,9 +199,6 @@ public class PlayerManagementMenu : UI_Menu_Canvas
         account.сharacters.Remove(c);
         h.battleCharacters.Add(c);
 
-        // Character vars change
-        c.cHero = h;
-
         // UI changes
         selected_pCharacter_id = 0;
         if (account.сharacters.Count == 0) selected_pCharacter_Name_Text.text = "Character info ...";
@@ -219,9 +217,6 @@ public class PlayerManagementMenu : UI_Menu_Canvas
 
         h.battleCharacters.Remove(c);
         account.сharacters.Add(c);
-
-        // Character vars change
-        c.cHero = null;
 
         // UI changes
         selected_hCharacter_id = 0;
@@ -269,8 +264,6 @@ public class PlayerManagementMenu : UI_Menu_Canvas
         string heroName = creation_heroName.text;
         if (heroName == "" || heroName == " " || heroName == "  " || heroName == "   ") return;
         Hero hero = new Hero(hCharacter, heroName);
-        
-        hCharacter.cHero = hero;
 
         account.heroes.Add(hero);
 

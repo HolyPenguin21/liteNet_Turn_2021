@@ -102,12 +102,12 @@ public class SceneMain_UI : MonoBehaviour
 
     private void Path_Display()
     {
-        if(hover_Hex.groundMove || selected_Hex == null || selected_Hex.character == null)
+        if(!hover_Hex.groundMove || selected_Hex == null || selected_Hex.character == null)
         {
             pathfinding.Hide_Path();
             return;
         }
-        
+
         pathfinding.Show_Path(selected_Hex, hover_Hex);
     }
 

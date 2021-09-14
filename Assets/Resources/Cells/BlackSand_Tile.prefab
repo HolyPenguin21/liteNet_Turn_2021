@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 889198243969451878}
   - component: {fileID: 6140995751426759452}
   - component: {fileID: 980651953239548308}
-  - component: {fileID: 2519399244422452938}
+  - component: {fileID: 6767800579688692570}
   m_Layer: 0
   m_Name: BlackSand_Tile
   m_TagString: Hex
@@ -165,7 +165,7 @@ MonoBehaviour:
   rootCastle: {fileID: 0}
   isStartPoint: 0
   isBossSpawner: 0
---- !u!136 &2519399244422452938
+--- !u!136 &6767800579688692570
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,7 +175,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.25998116
-  m_Height: 0.8716027
+  m_Radius: 0.30665112
+  m_Height: 0.9
   m_Direction: 0
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.0064094067, z: 0}

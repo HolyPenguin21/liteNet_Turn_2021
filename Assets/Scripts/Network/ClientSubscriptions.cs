@@ -59,6 +59,15 @@ public class ClientSubscriptions
         });
     }
 
+    public void CreateCharacter()
+    {
+        netProcessor.SubscribeReusable<CreateCharacter>((data) => {
+            Debug.Log("Client > CreateCharacter order from Server. Task id : " + data.taskId);
+            CreateCharacter charCreation = data;
+            GameData.inst.StartCoroutine(charCreation.Implementation_Client());
+        });
+    }
+
     public void MoveOrder()
     {
         netProcessor.SubscribeReusable<Move>((data) => {

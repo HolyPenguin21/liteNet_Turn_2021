@@ -27,6 +27,7 @@ public class SceneMain : MonoBehaviour
 
     private IEnumerator Setup_Game()
     {
+        if (GameData.inst.server == null) yield break;
         gameType = GameData.inst.gameType;
 
         if(gameType == Utility.GameType.solo)
