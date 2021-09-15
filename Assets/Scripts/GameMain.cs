@@ -7,10 +7,13 @@ public class GameMain : MonoBehaviour
 {
     public TaskManager taskManager;
 
+#region Pregame
+        
+#endregion
+
 #region Ingame
     public void Order_CreateCharacter(Hex hex, int cId, BattlePlayer owner)
     {
-
         CreateCharacter cr_character = new CreateCharacter();
         cr_character.taskId = Utility.RandomValueGenerator();
         cr_character.AssignToAll();
@@ -21,6 +24,17 @@ public class GameMain : MonoBehaviour
         cr_character.ownerName = owner.name;
 
         taskManager.AddTask(cr_character);
+    }
+
+    public void Order_SetTurn(int bpId)
+    {
+        SetTurn setTurn = new SetTurn();
+        setTurn.taskId = Utility.RandomValueGenerator();
+        setTurn.AssignToAll();
+        
+        setTurn.bpId = bpId;
+
+        taskManager.AddTask(setTurn);
     }
 
     public void Order_Move()

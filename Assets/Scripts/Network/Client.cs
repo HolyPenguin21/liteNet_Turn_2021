@@ -56,6 +56,7 @@ public class Client : MonoBehaviour
         clientSubscriptions.HeroChange();
         clientSubscriptions.PVPGameStart();
         clientSubscriptions.CreateCharacter();
+        clientSubscriptions.SetTurn();
     }
 
     private void Update()

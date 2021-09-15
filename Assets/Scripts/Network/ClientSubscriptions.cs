@@ -68,6 +68,15 @@ public class ClientSubscriptions
         });
     }
 
+    public void SetTurn()
+    {
+        netProcessor.SubscribeReusable<SetTurn>((data) => {
+            Debug.Log("Client > SetTurn order from Server. Task id : " + data.taskId);
+            SetTurn setTurn = data;
+            GameData.inst.StartCoroutine(setTurn.Implementation_Client());
+        });
+    }
+
     public void MoveOrder()
     {
         netProcessor.SubscribeReusable<Move>((data) => {
