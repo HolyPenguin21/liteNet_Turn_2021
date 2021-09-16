@@ -17,5 +17,7 @@ public class Spearman : Character
         cCost = 10;
         cName = "Spearman";
         cImage = cd.Get_CharacterImage_ById(cId);
+
+        char_Move.movePoints_max = 4;
     }
 }

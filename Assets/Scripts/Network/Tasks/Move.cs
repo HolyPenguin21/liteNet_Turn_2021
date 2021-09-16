@@ -19,13 +19,12 @@ public class Move : GeneralNetworkTask
         if(server == null) yield return null;
         SendToClients(server);
 
-        Debug.Log("Server > Implementing Move");
-        Debug.Log("Start : " + start_x + " / " + start_y);
-        Debug.Log("End : " + end_x + " / " + end_y);
-        Debug.Log("MP left : " + mpLeft);
-        Debug.Log("Move path : " + path);
-        yield return new WaitForSeconds(3f);
-        Debug.Log("Server Done > Implementing Move");
+        SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
+        Character c = Utility.Get_Hex_ByCoords(this.start_x, this.start_y).character;
+        List<Hex> hexPath = Utility.Get_HexPath_ByCoords(this.path);
+
+        c.char_Move.movePoints_cur = this.mpLeft;
+        yield return c.Move(hexPath);
 
         TaskDone(taskId);
     }

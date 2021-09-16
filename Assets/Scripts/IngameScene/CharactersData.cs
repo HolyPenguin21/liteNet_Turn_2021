@@ -32,6 +32,8 @@ public class CharactersData
         character.owner = owner;
 
         hex.character = character;
+
+        owner.ingameCharacters.Add(character);
     }
 
     public Character Get_Character_ById(int id)

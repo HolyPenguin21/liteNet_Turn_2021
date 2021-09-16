@@ -7,10 +7,6 @@ public class GameMain : MonoBehaviour
 {
     public TaskManager taskManager;
 
-#region Pregame
-        
-#endregion
-
 #region Ingame
     public void Order_CreateCharacter(Hex hex, int cId, BattlePlayer owner)
     {
@@ -26,6 +22,7 @@ public class GameMain : MonoBehaviour
         taskManager.AddTask(cr_character);
     }
 
+    #region Turn management
     public void Order_SetTurn(int bpId)
     {
         SetTurn setTurn = new SetTurn();
@@ -37,21 +34,54 @@ public class GameMain : MonoBehaviour
         taskManager.AddTask(setTurn);
     }
 
-    public void Order_Move()
+    public void Request_EndTurn()
+    {
+        SetTurn setTurn = new SetTurn();
+        setTurn.RequestServer();
+    }
+    #endregion
+
+    #region Movement
+    public void On_Move(Pathfinding pathfinding, Hex from, Hex to)
+    {
+        List<Hex> generalPath = pathfinding.Get_Path(from, to);
+        if(generalPath == null || generalPath.Count == 0) return;
+
+        List<Hex> realPath = pathfinding.Get_RealPath(from.character, generalPath);
+        if(realPath == null || realPath.Count == 0) return;
+        
+        int mpLeft = from.character.char_Move.movePoints_cur - pathfinding.Get_PathCost(from.character, realPath);
+
+        string somePath = "";
+        for(int x = 0; x < realPath.Count; x++) {
+            Hex h = realPath[x];
+            somePath += h.coord_x + "," + h.coord_y + ";";
+        }
+        if(somePath != "") somePath = somePath.Remove(somePath.Length - 1);
+
+        Order_Move(from, to, mpLeft, somePath);
+    }
+    public void Order_Move(Hex from, Hex to, int mpLeft, string path)
     {
         Move move = new Move();
         move.taskId = Utility.RandomValueGenerator();
         move.AssignToAll();
 
-        move.start_x = 3;
-        move.start_y = 4;
-        move.end_x = 5;
-        move.end_y = 6;
-        move.mpLeft = 2;
-        move.path = "1,2;3,4;5,6;7,8";
+        move.start_x = from.coord_x;
+        move.start_y = from.coord_y;
+        move.end_x = to.coord_x;
+        move.end_y = to.coord_y;
+        move.mpLeft = mpLeft;
+        move.path = path;
 
         taskManager.AddTask(move);
     }
+
+    public void Request_Move(Hex from, Hex to)
+    {
+
+    }
+    #endregion
     #endregion
 
 #region Lobby_HeroChange

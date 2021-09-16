@@ -219,6 +219,8 @@ public class MenuSceneMain : MonoBehaviour
         loggedInMenu.Hide();
         GameData.inst.CreateHost();
         p2PLobbyMenu.Show();
+
+        p2PLobbyMenu.startGame_Button.interactable = true;
     }
 
     public void Button_P2P_Client()

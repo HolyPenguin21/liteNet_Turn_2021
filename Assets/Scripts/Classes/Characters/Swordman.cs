@@ -17,5 +17,7 @@ public class Swordman : Character
         cCost = 15;
         cName = "Swordman";
         cImage = cd.Get_CharacterImage_ById(cId);
+
+        char_Move.movePoints_max = 4;
     }
 }

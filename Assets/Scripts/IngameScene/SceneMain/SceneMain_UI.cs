@@ -5,6 +5,7 @@ using UnityEngine;
 public class SceneMain_UI : MonoBehaviour
 {
     private SceneMain sm;
+    private GameMain gm;
     private ClickHandler clickHandler;
     private Pathfinding pathfinding;
 
@@ -28,6 +29,7 @@ public class SceneMain_UI : MonoBehaviour
     {
         scene_Camera = Camera.main;
         sm = GetComponent<SceneMain>();
+        gm = GameData.inst.gameMain;
         clickHandler = new ClickHandler(this);
     }
 
@@ -78,26 +80,54 @@ public class SceneMain_UI : MonoBehaviour
 
     private void Mouse_DoubleClick_Input()
     {
-        Hex clickedHex = HittedObject();
-        if (clickedHex == null)
+        Server server = GameData.inst.server;
+        Client client = GameData.inst.client;
+
+        Hex clicked_Hex = HittedObject();
+        if (clicked_Hex == null)
         {
             Reset_All();
             return;
         }
 
-        if (selected_Hex == null || selected_Hex != clickedHex)
+        if(selected_Hex == null)
         {
-            SelectHex(clickedHex);
+           SelectHex(clicked_Hex);
+           return;
+        }
+
+        Character selected_Character = selected_Hex.character;
+        if (selected_Character == null)
+        {
+            SelectHex(clicked_Hex);
             return;
         }
 
-        // Character selected_Character = selectedHex.character;
-        // if (selectedChar == null)
-        // {
-        //     SelectHex(clickedHex);
-        //     pathfinding.Hide_Path();
-        //     return;
-        // }
+        if (Utility.IsMyCharacter(selected_Character))
+        {
+            if(clicked_Hex.character != null) { // there is character in clicked hex
+                // select if character belong to us
+                // attack if character belong to enemy
+            }
+            else { // clicked hex is empty
+                if(selected_Character.char_Move.movePoints_cur > 0)
+                {
+                    if(server != null) gm.On_Move(pathfinding, selected_Hex, clicked_Hex);
+                    else gm.Request_Move(selected_Hex, clicked_Hex);
+                    return;
+                }
+                else
+                {
+                    SelectHex(clicked_Hex);
+                    return;
+                }
+            }
+        }
+        else
+        {
+            SelectHex(clicked_Hex);
+            return;
+        }
     }
 
     private void Path_Display()
@@ -133,7 +163,7 @@ public class SceneMain_UI : MonoBehaviour
         if (Physics.Raycast(mouseRay, out mouseHit, 50.0f))
         {
             if (mouseHit.collider.CompareTag("Hex"))
-                return sm.Get_Hex_ByTransform(mouseHit.collider.transform);
+                return Utility.Get_Hex_ByTransform(mouseHit.collider.transform);
         }
 
         return null;

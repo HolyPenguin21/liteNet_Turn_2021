@@ -7,11 +7,15 @@ public class P2PLobbyMenu : UI_Menu_Canvas
 {
     private GameMain gameMain;
     public Text connectedPlayersList;
+    public Button startGame_Button;
 
     public P2PLobbyMenu (GameObject gameObject)
     {
         go = gameObject;
         this.connectedPlayersList = go.transform.Find("Panel").transform.Find("Connected_Panel").transform.Find("PlayersList_Text").GetComponent<Text>();
+        this.startGame_Button = go.transform.Find("Panel").transform.Find("StartGame_Button").GetComponent<Button>();
+
+        this.startGame_Button.interactable = false;
     }
 
     public void UpdateConnectedPlayersList()

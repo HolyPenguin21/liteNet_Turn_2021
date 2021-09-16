@@ -23,7 +23,7 @@ public class SetTurn : GeneralNetworkTask
 
     public override void SendToClients(Server server)
     {
-        Debug.Log("Server > Sending to clients : HeroChange, id : " + taskId);
+        Debug.Log("Server > Sending to clients : SetTurn, id : " + taskId);
         for (int x = 0; x < server.players.Count; x++)
         {
             Account acc = server.players[x];
@@ -51,9 +51,9 @@ public class SetTurn : GeneralNetworkTask
     private bool Implementation()
     {
         SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
-        sm.currentTurn = sm.bPlayers[bpId];
-        sm.currentTurn_Text.text = "Current turn for : " + sm.currentTurn.name;
+        sm.currentTurn = sm.bPlayers[this.bpId];
 
+        sm.On_TurnChange();
         return true;
     }
 }

@@ -19,6 +19,15 @@ public class ServerSubscriptions
         this.gameMain = GameObject.Find("GameMain").GetComponent<GameMain>();
     }
 
+    public void SetTurn()
+    {
+        netProcessor.SubscribeReusable<SetTurn>((data) => {
+            // Debug.Log("Server > ChangeTurn request recieved.");
+            SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
+            sm.Button_EndTurn();
+        });
+    }
+
     public void LoginResponse()
     {
         netProcessor.SubscribeReusable<LoginResponse, NetPeer>((data, client) => {

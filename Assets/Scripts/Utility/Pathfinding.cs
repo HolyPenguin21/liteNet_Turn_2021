@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pathfinding
 {
-    private LineRenderer pathVisual;
+    public LineRenderer pathVisual;
     public List<Hex> path;
     private List<Hex> temp_path;
     private List<Hex> visual_path;
@@ -95,5 +95,61 @@ public class Pathfinding
         path = finalPath;
         
         return finalPath;
+    }
+
+    public List<Hex> Get_RealPath(Character character, List<Hex> somePath)
+    {
+        if (somePath == null) return null;
+
+        List<Hex> realPath = new List<Hex>();
+
+        int movePointsLeft = character.char_Move.movePoints_cur;
+        Hex current = character.hex;
+        Hex next = somePath[0];
+
+        for (int x = 0; x < somePath.Count; x++)
+        {
+            movePointsLeft -= somePath[x].moveCost;
+            if (Utility.EnemyInNeighbors(character, current) && Utility.EnemyInNeighbors(character, next))
+                movePointsLeft -= Utility.enemyHexValue;
+
+            if (movePointsLeft >= 0)
+                realPath.Add(somePath[x]);
+
+            if (x != somePath.Count - 1)
+            {
+                current = somePath[x];
+                next = somePath[x + 1];
+            }
+        }
+
+        if (realPath.Count == 0)
+            return null;
+        else
+            return realPath;
+    }
+
+    public int Get_PathCost(Character character, List<Hex> path)
+    {
+        if (path == null) return 0;
+
+        int cost = 0;
+        Hex current = character.hex;
+        Hex next = path[0];
+
+        for (int x = 0; x < path.Count; x++)
+        {
+            cost += path[x].moveCost;
+            if (Utility.EnemyInNeighbors(character, current) && Utility.EnemyInNeighbors(character, next))
+                cost += Utility.enemyHexValue;
+
+            if (x != path.Count - 1)
+            {
+                current = path[x];
+                next = path[x + 1];
+            }
+        }
+
+        return cost;
     }
 }

@@ -17,5 +17,7 @@ public class Knight : Character
         cCost = 20;
         cName = "Knight";
         cImage = cd.Get_CharacterImage_ById(cId);
+
+        char_Move.movePoints_max = 4;
     }
 }

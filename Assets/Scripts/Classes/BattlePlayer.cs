@@ -15,17 +15,17 @@ public class BattlePlayer
 
     public List<PlayerItem> items;
 
-    public BattlePlayer(Account player, bool aiPlayer)
+    public BattlePlayer(Account acc, bool aiPlayer)
     {
         this.aiPlayer = aiPlayer;
-        this.name = player.name;
+        this.name = acc.name;
         this.availableCharacters = new List<Character>();
         this.ingameCharacters = new List<Character>();
         this.items = new List<PlayerItem>();
 
         if(aiPlayer) return;
 
-        this.hero = player.heroes[player.battleHeroId];
+        this.hero = acc.heroes[acc.battleHeroId];
 
         for(int x = 0; x < this.hero.battleCharacters.Count; x++)
         {
@@ -33,9 +33,9 @@ public class BattlePlayer
             this.availableCharacters.Add(c);
         }
 
-        for(int x = 0; x < player.items.Count; x++)
+        for(int x = 0; x < acc.items.Count; x++)
         {
-            PlayerItem pi = player.items[x];
+            PlayerItem pi = acc.items[x];
             this.items.Add(pi);
         }
     }

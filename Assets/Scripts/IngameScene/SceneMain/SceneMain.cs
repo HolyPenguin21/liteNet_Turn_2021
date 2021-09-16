@@ -10,20 +10,22 @@ public class SceneMain : MonoBehaviour
     public List<Hex> startPoints = new List<Hex>();
     public List<Hex> bossSpawners = new List<Hex>();
 
+    public BattlePlayer myBPlayer;
     public List<BattlePlayer> bPlayers = new List<BattlePlayer>();
     public BattlePlayer currentTurn;
 
     public Utility.GameType gameType;
     public List<PlayerItem> rewards = new List<PlayerItem>();
 
-
     // UI
     public Text currentTurn_Text;
+    public Button endTurn_Button;
 
     private void Awake()
     {
         // UI
         currentTurn_Text = GameObject.Find("CurrentTurn_Text").GetComponent<Text>();
+        endTurn_Button = GameObject.Find("EndTurn_Button").GetComponent<Button>();
     }
 
     private IEnumerator Start()
@@ -37,6 +39,9 @@ public class SceneMain : MonoBehaviour
     private IEnumerator Setup_Game()
     {
         gameType = GameData.inst.gameType;
+
+        // UI
+        endTurn_Button.interactable = false;
 
         if(gameType == Utility.GameType.solo)
         {
@@ -71,6 +76,44 @@ public class SceneMain : MonoBehaviour
 
         yield return null;
     }
+
+    public void Button_EndTurn()
+    {
+        Server server = GameData.inst.server;
+        Client client = GameData.inst.client;
+
+        if(server != null) {
+            int bpId = bPlayers.IndexOf(currentTurn);
+            bpId++;
+            if(bpId >= bPlayers.Count) bpId = 0;
+            gm.Order_SetTurn(bpId);
+        }
+        else {
+            gm.Request_EndTurn();
+        }
+    }
+
+    // Will be called on both Host and Client
+    public void On_TurnChange()
+    {
+        currentTurn_Text.text = "Current turn for : " + currentTurn.name;
+
+        if(myBPlayer == currentTurn) endTurn_Button.interactable = true;
+        else endTurn_Button.interactable = false;
+
+        for(int x = 0; x < bPlayers.Count; x++) {
+            BattlePlayer bp = bPlayers[x];
+            for(int y = 0; y < bp.ingameCharacters.Count; y++) {
+                Character character = bp.ingameCharacters[y];
+                if(bp == currentTurn) {
+                    character.char_Move.movePoints_cur = character.char_Move.movePoints_max;
+                }
+                else {
+                    character.char_Move.movePoints_cur = 0;
+                }
+            }
+        }
+    }
     #endregion
 
     #region GameStart
@@ -83,14 +126,18 @@ public class SceneMain : MonoBehaviour
             for(int x = 0; x < server.players.Count; x++)
             {
                 Account acc = server.players[x];
-                bPlayers.Add(new BattlePlayer(acc, false));
+                BattlePlayer bp = new BattlePlayer(acc, false);
+                bPlayers.Add(bp);
+                if(bp.name == GameData.inst.account.name) myBPlayer = bp;
             }
         }
         else {
             for(int x = 0; x < client.players.Count; x++)
             {
                 Account acc = client.players[x];
-                bPlayers.Add(new BattlePlayer(acc, false));
+                BattlePlayer bp = new BattlePlayer(acc, false);
+                bPlayers.Add(bp);
+                if(bp.name == GameData.inst.account.name) myBPlayer = bp;
             }
         }
         yield return null;
@@ -112,17 +159,6 @@ public class SceneMain : MonoBehaviour
         }
 
         yield return null;
-    }
-    #endregion
-
-    #region Other
-    public Hex Get_Hex_ByTransform(Transform tr) {
-        for(int x = 0 ; x < grid.Length; x++) {
-            Hex h = grid[x];
-            if(h.tr == tr) return h;
-        }
-
-        return null;
     }
     #endregion
 }

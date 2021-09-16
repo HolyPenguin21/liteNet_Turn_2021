@@ -94,19 +94,51 @@ public static class Utility
         return null;
     }
 
-    public static Hex Get_Hex_ByCoords(int coord_x, int coord_y)
-    {
+    public static Hex Get_Hex_ByCoords(int coord_x, int coord_y) {
         SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
 
-        for(int x = 0; x < sm.grid.Length; x++)
-        {
+        for(int x = 0; x < sm.grid.Length; x++) {
             Hex h = sm.grid[x];
-
             if(h.coord_x == coord_x && h.coord_y == coord_y)
                 return h;
         }
 
         return null;
+    }
+
+    public static Hex Get_Hex_ByTransform(Transform tr) {
+        SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
+
+        for(int x = 0 ; x < sm.grid.Length; x++) {
+            Hex h = sm.grid[x];
+            if(h.tr == tr) return h;
+        }
+
+        return null;
+    }
+
+    public static List<Hex> Get_HexPath_ByCoords(string coords)
+    {
+        List<Hex> path = new List<Hex>();
+
+        string[] pathData = coords.Split(';');
+        for (int x = 0; x < pathData.Length; x++)
+        {
+            string[] hexCoords = pathData[x].Split(',');
+            int posX = int.Parse(hexCoords[0]);
+            int posY = int.Parse(hexCoords[1]);
+
+            path.Add(Get_Hex_ByCoords(posX, posY));
+        }
+
+        return path;
+    }
+
+    public static bool IsMyCharacter(Character character)
+    {
+        SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
+        if(character.owner == sm.myBPlayer) return true;
+        return false;
     }
 
     public static bool EnemyInNeighbors(Character character, Hex current)
