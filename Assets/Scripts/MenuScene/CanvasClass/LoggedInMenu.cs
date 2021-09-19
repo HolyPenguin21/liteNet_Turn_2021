@@ -31,7 +31,7 @@ public class LoggedInMenu : UI_Menu_Canvas
             selected_pHero_Characters_Text.text = "Selected characters :\n";
             for(int x = 0; x < h.battleCharacters.Count; x++)
             {
-                selected_pHero_Characters_Text.text += " - " + h.battleCharacters[x].cName + "\n";
+                selected_pHero_Characters_Text.text += " - " + h.battleCharacters[x].name + "\n";
             }
             selected_pHero_Characters_Text.text = selected_pHero_Characters_Text.text.Remove(selected_pHero_Characters_Text.text.Length - 1);
         }

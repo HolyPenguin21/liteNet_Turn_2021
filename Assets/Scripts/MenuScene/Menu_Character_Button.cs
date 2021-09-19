@@ -28,9 +28,9 @@ public class Menu_Character_Button : MonoBehaviour
         this.ui_Char_Button = ui_Char_Button;
 
         if (hero.name != "") transform.Find("Text").GetComponent<Text>().text = hero.name;
-        else transform.Find("Text").GetComponent<Text>().text = character.cName;
+        else transform.Find("Text").GetComponent<Text>().text = character.name;
 
-        characterImage.sprite = character.cImage;
+        characterImage.sprite = character.image;
     }
 
     public void TaskOnClick()
@@ -43,18 +43,18 @@ public class Menu_Character_Button : MonoBehaviour
         switch(ui_Char_Button)
         {
             case Utility.UI_Char_Button.hero :
-                pmm.selected_hero_Name_Text.text = character.cName;
+                pmm.selected_hero_Name_Text.text = character.name;
                 pmm.selected_hero_id = Get_Id_SelectedCharacter();
                 pmm.Update_HeroCharactersView();
             break;
 
             case Utility.UI_Char_Button.battleChar :
-                pmm.selected_hCharacter_Name_Text.text = character.cName;
+                pmm.selected_hCharacter_Name_Text.text = character.name;
                 pmm.selected_hCharacter_id = Get_Id_SelectedCharacter();
             break;
 
             case Utility.UI_Char_Button.accChar :
-                pmm.selected_pCharacter_Name_Text.text = character.cName;
+                pmm.selected_pCharacter_Name_Text.text = character.name;
                 pmm.selected_pCharacter_id = Get_Id_SelectedCharacter();
             break;
         }

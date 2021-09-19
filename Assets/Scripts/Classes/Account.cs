@@ -53,7 +53,7 @@ public class Account
         {
             Hero hero = heroes[x];
 
-            data += hero.name + "," + hero.character.cId + ":";
+            data += hero.name + "," + hero.character.id + ":";
             if(hero.battleCharacters.Count > 0) data += Get_Hero_CharactersData(hero);
 
             data += ";";
@@ -70,7 +70,7 @@ public class Account
         for(int x = 0; x < hero.battleCharacters.Count; x++)
         {
             Character c = hero.battleCharacters[x];
-            data += c.cId + ",";
+            data += c.id + ",";
         }
         if(data != "") data = data.Remove(data.Length - 1);
 
@@ -114,7 +114,7 @@ public class Account
         for(int x = 0; x < сharacters.Count; x++)
         {
             Character c = сharacters[x];
-            data += c.cId + ",";
+            data += c.id + ",";
         }
         if(data != "") data = data.Remove(data.Length - 1);
 

@@ -68,8 +68,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -678349737
-  m_SortingLayer: 4
+  m_SortingLayerID: 1326742941
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 60eca750643bf13488824a7ff7404365, type: 3}
   m_Color: {r: 0, g: 1, b: 0.11855674, a: 0.5529412}
@@ -150,8 +150,8 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 78300039
-  m_SortingLayer: 5
+  m_SortingLayerID: 1326742941
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -372,6 +372,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   bossSpawners: []
+  myBPlayer:
+    aiPlayer: 0
+    name: 
+    hero:
+      name: 
   bPlayers: []
   currentTurn:
     aiPlayer: 0
@@ -379,6 +384,8 @@ MonoBehaviour:
     hero:
       name: 
   gameType: 0
+  currentTurn_Text: {fileID: 0}
+  endTurn_Button: {fileID: 0}
 --- !u!114 &8419341594589096098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,8 +468,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -678349737
-  m_SortingLayer: 4
+  m_SortingLayerID: 1326742941
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 055725bea37dc5b41b554f5e45564a50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -543,8 +550,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -678349737
-  m_SortingLayer: 4
+  m_SortingLayerID: 1326742941
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 0a26826c5c38f9349bccd2ebf6468e04, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
@@ -658,8 +665,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -678349737
-  m_SortingLayer: 4
+  m_SortingLayerID: 1326742941
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 055725bea37dc5b41b554f5e45564a50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

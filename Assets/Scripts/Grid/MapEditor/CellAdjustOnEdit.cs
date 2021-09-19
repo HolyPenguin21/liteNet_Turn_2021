@@ -7,26 +7,32 @@ using UnityEditor;
 // Disable before PlayMode and on Build
 public class CellAdjustOnEdit : MonoBehaviour
 {
-    private GridBuilder gridBuilder;
-    private SpriteRenderer spriteRenderer;
+    private Transform tr;
     private Hex hex;
+    private GridBuilder gridBuilder;
+
+    private Transform[] allChildren;
 
     void Start()
     {
+        tr = transform;
         hex = GetComponent<Hex>();
         gridBuilder = GameObject.Find("GridBuilder").GetComponent<GridBuilder>();
-        spriteRenderer = transform.Find("background").GetComponent<SpriteRenderer>();
+        
+        allChildren = GetComponentsInChildren<Transform>();
     }
 
     void Update()
     {
-        transform.position = Get_ClosestGridPos(hex);
+        Utility.GridCoord closestGridCoord = Get_ClosestGridCoord(hex);
+        tr.position = closestGridCoord.wPos;
+        Adjust_Visual(closestGridCoord);
     }
 
-    public Vector3 Get_ClosestGridPos(Hex hex)
+    private Utility.GridCoord Get_ClosestGridCoord(Hex hex)
     {
+        Utility.GridCoord closestGridCoord = gridBuilder.temp_GridCoord[0];
         float curDist = 10000f;
-        Vector3 closestPos = Vector3.zero;
 
         for (int x = 0; x < gridBuilder.temp_GridCoord.Length; x++)
         {
@@ -36,11 +42,30 @@ public class CellAdjustOnEdit : MonoBehaviour
             if (dist < curDist)
             {
                 curDist = dist;
-                closestPos = gc.wPos;
-                spriteRenderer.sortingOrder = gc.rendValue;
+                closestGridCoord = gc;
             }
         }
 
-        return closestPos;
+        return closestGridCoord;
+    }
+
+    private void Adjust_Visual(Utility.GridCoord gridCoord)
+    {
+        hex.rendValue = gridCoord.rendValue;
+        foreach(Transform child in allChildren)
+        {
+            SpriteRenderer childRend = child.GetComponent<SpriteRenderer>();
+            if(childRend == null) continue;
+
+
+            if(child.name == "background")
+            {
+                if(childRend != null) childRend.sortingOrder = gridCoord.rendValue;
+            }
+            else
+            {
+                if(childRend != null) childRend.sortingOrder = gridCoord.rendValue - 1;
+            }
+        }
     }
 }

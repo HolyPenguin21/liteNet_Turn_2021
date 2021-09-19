@@ -52,11 +52,11 @@ public class Client : MonoBehaviour
         // Custom methods
         clientSubscriptions.LoginRequest();
         clientSubscriptions.PlayersData();
-        clientSubscriptions.MoveOrder();
         clientSubscriptions.HeroChange();
         clientSubscriptions.PVPGameStart();
         clientSubscriptions.CreateCharacter();
         clientSubscriptions.SetTurn();
+        clientSubscriptions.Move();
     }
 
     private void Update()

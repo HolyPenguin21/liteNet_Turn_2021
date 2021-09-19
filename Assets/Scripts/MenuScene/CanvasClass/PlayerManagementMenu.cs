@@ -315,8 +315,8 @@ public class PlayerManagementMenu : UI_Menu_Canvas
 
     private void Update_CharacterInfo_OnBuy(Character c)
     {
-        characterToBuy_info_Text.text = c.cName + "\n\n";
-        characterToBuy_info_Text.text += c.cCost + "\n\n";
+        characterToBuy_info_Text.text = c.name + "\n\n";
+        characterToBuy_info_Text.text += c.cost + "\n\n";
         characterToBuy_info_Text.text += "Attack : \n";
         characterToBuy_info_Text.text += "Defence : \n";
         characterToBuy_info_Text.text += "Skills : \n";
@@ -327,9 +327,9 @@ public class PlayerManagementMenu : UI_Menu_Canvas
         Debug.Log("Character to buy id : " + characterIdToBuy);
         Character c = cd.Get_Character_ById(characterIdToBuy);
 
-        if(account.acc_gold < c.cCost) return;
+        if(account.acc_gold < c.cost) return;
         
-        account.acc_gold -= c.cCost;
+        account.acc_gold -= c.cost;
         account.сharacters.Add(c);
 
         Button_Back_CharacterBuy();

@@ -101,6 +101,7 @@ public class Server : MonoBehaviour
         serverSubscriptions.HeroChange();
         serverSubscriptions.TaskDone();
         serverSubscriptions.SetTurn();
+        serverSubscriptions.RequestMove();
     }
 
     private void Update()

@@ -30,6 +30,8 @@ public class CharactersData
 
         character.hex = hex;
         character.owner = owner;
+        character.Get_Visual();
+        character.Set_Visual();
 
         hex.character = character;
 

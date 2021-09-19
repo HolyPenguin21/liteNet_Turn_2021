@@ -32,7 +32,7 @@ public class AnimationController : MonoBehaviour
     public GameObject aDeathRight_go;
     public Animator aDeathRight;
 
-    private void Start()
+    private void Awake()
     {
         aIdleLeft_go = transform.Find("Anim_Idle_Left").gameObject;
         aIdleLeft = aIdleLeft_go.GetComponent<Animator>();
@@ -59,24 +59,7 @@ public class AnimationController : MonoBehaviour
         aDeathRight = aDeathRight_go.GetComponent<Animator>();
 
         Anim_Play_Idle();
-        // StartCoroutine(Test());
     }
-
-    // private IEnumerator Test()
-    // {
-    //     SwitchAnimOrientation();
-    //     yield return Anim_Play_Attack();
-    //     yield return Anim_Play_Cast();
-    //     yield return Anim_Play_Death();
-    //     SwitchAnimOrientation();
-    //     yield return Anim_Play_Attack();
-    //     yield return Anim_Play_Cast();
-    //     yield return Anim_Play_Death();
-    //     SwitchAnimOrientation();
-    //     yield return Anim_Play_Attack();
-    //     yield return Anim_Play_Cast();
-    //     yield return Anim_Play_Death();
-    // }
 
     public void Anim_Play_Idle()
     {
@@ -116,6 +99,7 @@ public class AnimationController : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
+        
         Anim_Play_Idle();
     }
 
@@ -184,19 +168,9 @@ public class AnimationController : MonoBehaviour
 
     public void SwitchAnimOrientation()
     {
-        if(aOrientationLeft)
-        {
-            aIdleLeft_go.SetActive(false);
-            aIdleRight_go.SetActive(true);
-            currentAnimation = aIdleRight;
-            aOrientationLeft = false;
-        }
-        else 
-        {
-            aIdleRight_go.SetActive(false);
-            aIdleLeft_go.SetActive(true);
-            currentAnimation = aIdleLeft;
-            aOrientationLeft = true;
-        }
+        if(aOrientationLeft) aOrientationLeft = false;
+        else aOrientationLeft = true;
+
+        Anim_Play_Idle();
     }
 }

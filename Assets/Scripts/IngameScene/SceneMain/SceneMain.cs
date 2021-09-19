@@ -98,6 +98,8 @@ public class SceneMain : MonoBehaviour
     {
         currentTurn_Text.text = "Current turn for : " + currentTurn.name;
 
+        if(GameData.inst.server != null && currentTurn.aiPlayer) Button_EndTurn(); // put AI logic here
+
         if(myBPlayer == currentTurn) endTurn_Button.interactable = true;
         else endTurn_Button.interactable = false;
 
@@ -106,10 +108,10 @@ public class SceneMain : MonoBehaviour
             for(int y = 0; y < bp.ingameCharacters.Count; y++) {
                 Character character = bp.ingameCharacters[y];
                 if(bp == currentTurn) {
-                    character.char_Move.movePoints_cur = character.char_Move.movePoints_max;
+                    character.movement.movePoints_cur = character.movement.movePoints_max;
                 }
                 else {
-                    character.char_Move.movePoints_cur = 0;
+                    character.movement.movePoints_cur = 0;
                 }
             }
         }
@@ -140,6 +142,10 @@ public class SceneMain : MonoBehaviour
                 if(bp.name == GameData.inst.account.name) myBPlayer = bp;
             }
         }
+
+        BattlePlayer bpAI = new BattlePlayer(null, true);
+        bPlayers.Add(bpAI);
+
         yield return null;
     }
 
@@ -149,11 +155,13 @@ public class SceneMain : MonoBehaviour
         if(server == null) yield break;
 
         for(int x = 0; x < bPlayers.Count; x++) {
+            if (bPlayers[x].aiPlayer) continue;
+
             Hex startPoint = startPoints[Random.Range(0,startPoints.Count)];
             startPoints.Remove(startPoint);
 
             BattlePlayer bp = bPlayers[x];
-            int characterId = bp.hero.character.cId;
+            int characterId = bp.hero.character.id;
             
             gm.Order_CreateCharacter(startPoint, characterId, bp);
         }

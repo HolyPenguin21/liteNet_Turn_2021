@@ -8,16 +8,17 @@ public class Spearman : Character
     {
         go = go_;
         if (go != null) tr = go_.transform;
+
         hex = hex_;
         owner = owner_;
 
         CharactersData cd = new CharactersData();
         // Edit
-        cId = 2;
-        cCost = 10;
-        cName = "Spearman";
-        cImage = cd.Get_CharacterImage_ById(cId);
+        id = 2;
+        cost = 10;
+        name = "Spearman";
+        image = cd.Get_CharacterImage_ById(id);
 
-        char_Move.movePoints_max = 4;
+        movement.movePoints_max = 4;
     }
 }

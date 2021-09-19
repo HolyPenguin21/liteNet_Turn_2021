@@ -50,7 +50,7 @@ public class GameMain : MonoBehaviour
         List<Hex> realPath = pathfinding.Get_RealPath(from.character, generalPath);
         if(realPath == null || realPath.Count == 0) return;
         
-        int mpLeft = from.character.char_Move.movePoints_cur - pathfinding.Get_PathCost(from.character, realPath);
+        int mpLeft = from.character.movement.movePoints_cur - pathfinding.Get_PathCost(from.character, realPath);
 
         string somePath = "";
         for(int x = 0; x < realPath.Count; x++) {
@@ -61,6 +61,7 @@ public class GameMain : MonoBehaviour
 
         Order_Move(from, to, mpLeft, somePath);
     }
+    
     public void Order_Move(Hex from, Hex to, int mpLeft, string path)
     {
         Move move = new Move();
@@ -79,10 +80,16 @@ public class GameMain : MonoBehaviour
 
     public void Request_Move(Hex from, Hex to)
     {
+        RequestMove requestMove = new RequestMove();
+        requestMove.start_x = from.coord_x;
+        requestMove.start_y = from.coord_y;
+        requestMove.end_x = to.coord_x;
+        requestMove.end_y = to.coord_y;
 
+        requestMove.RequestServer();
     }
     #endregion
-    #endregion
+#endregion
 
 #region Lobby_HeroChange
     public void Order_HeroChange(string pName, int hId)

@@ -103,7 +103,7 @@ public class Pathfinding
 
         List<Hex> realPath = new List<Hex>();
 
-        int movePointsLeft = character.char_Move.movePoints_cur;
+        int movePointsLeft = character.movement.movePoints_cur;
         Hex current = character.hex;
         Hex next = somePath[0];
 

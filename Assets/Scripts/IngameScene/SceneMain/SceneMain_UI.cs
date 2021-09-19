@@ -7,7 +7,7 @@ public class SceneMain_UI : MonoBehaviour
     private SceneMain sm;
     private GameMain gm;
     private ClickHandler clickHandler;
-    private Pathfinding pathfinding;
+    public Pathfinding pathfinding;
 
     private LineRenderer pathVisual;
     private Transform hover_effect;
@@ -110,10 +110,11 @@ public class SceneMain_UI : MonoBehaviour
                 // attack if character belong to enemy
             }
             else { // clicked hex is empty
-                if(selected_Character.char_Move.movePoints_cur > 0)
+                if(selected_Character.movement.movePoints_cur > 0)
                 {
                     if(server != null) gm.On_Move(pathfinding, selected_Hex, clicked_Hex);
                     else gm.Request_Move(selected_Hex, clicked_Hex);
+                    pathfinding.Hide_Path();
                     return;
                 }
                 else

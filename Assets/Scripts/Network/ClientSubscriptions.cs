@@ -77,7 +77,7 @@ public class ClientSubscriptions
         });
     }
 
-    public void MoveOrder()
+    public void Move()
     {
         netProcessor.SubscribeReusable<Move>((data) => {
             Debug.Log("Client > Move order from Server. Task id : " + data.taskId);

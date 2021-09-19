@@ -8,16 +8,17 @@ public class Knight : Character
     {
         go = go_;
         if (go != null) tr = go_.transform;
+
         hex = hex_;
         owner = owner_;
         
         CharactersData cd = new CharactersData();
         // Edit
-        cId = 3;
-        cCost = 20;
-        cName = "Knight";
-        cImage = cd.Get_CharacterImage_ById(cId);
+        id = 3;
+        cost = 20;
+        name = "Knight";
+        image = cd.Get_CharacterImage_ById(id);
 
-        char_Move.movePoints_max = 4;
+        movement.movePoints_max = 4;
     }
 }

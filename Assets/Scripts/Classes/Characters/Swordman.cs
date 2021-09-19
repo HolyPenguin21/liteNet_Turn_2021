@@ -8,16 +8,17 @@ public class Swordman : Character
     {
         go = go_;
         if (go != null) tr = go_.transform;
+
         hex = hex_;
         owner = owner_;
 
         CharactersData cd = new CharactersData();
         // Edit
-        cId = 1;
-        cCost = 15;
-        cName = "Swordman";
-        cImage = cd.Get_CharacterImage_ById(cId);
+        id = 1;
+        cost = 15;
+        name = "Swordman";
+        image = cd.Get_CharacterImage_ById(id);
 
-        char_Move.movePoints_max = 4;
+        movement.movePoints_max = 4;
     }
 }

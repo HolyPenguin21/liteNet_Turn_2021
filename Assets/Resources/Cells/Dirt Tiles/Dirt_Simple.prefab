@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 980651953239548308}
   - component: {fileID: 6767800579688692570}
   m_Layer: 0
-  m_Name: BlackSand_Tile
+  m_Name: Dirt_Simple
   m_TagString: Hex
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tr: {fileID: 0}
+  rendValue: 0
   coord_x: 0
   coord_y: 0
   neighbors: []

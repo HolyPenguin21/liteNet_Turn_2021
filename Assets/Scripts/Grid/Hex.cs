@@ -5,10 +5,12 @@ using UnityEngine;
 public class Hex : MonoBehaviour
 {
     public Transform tr;
-
+    
+    public int rendValue;
     public int coord_x;
     public int coord_y;
     public List<Hex> neighbors = new List<Hex>();
+
     public bool groundMove;
     public int moveCost = 1;
 

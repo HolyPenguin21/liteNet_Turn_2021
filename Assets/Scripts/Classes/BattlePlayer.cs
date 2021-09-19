@@ -18,7 +18,10 @@ public class BattlePlayer
     public BattlePlayer(Account acc, bool aiPlayer)
     {
         this.aiPlayer = aiPlayer;
-        this.name = acc.name;
+        
+        if(acc != null) this.name = acc.name;
+        else this.name = "AI";
+
         this.availableCharacters = new List<Character>();
         this.ingameCharacters = new List<Character>();
         this.items = new List<PlayerItem>();
