@@ -27,6 +27,7 @@ public class CellAdjustOnEdit : MonoBehaviour
         Utility.GridCoord closestGridCoord = Get_ClosestGridCoord(hex);
         tr.position = closestGridCoord.wPos;
         Adjust_Visual(closestGridCoord);
+        EditorUtility.SetDirty(this); // COMMENT
     }
 
     private Utility.GridCoord Get_ClosestGridCoord(Hex hex)
@@ -51,21 +52,12 @@ public class CellAdjustOnEdit : MonoBehaviour
 
     private void Adjust_Visual(Utility.GridCoord gridCoord)
     {
-        hex.rendValue = gridCoord.rendValue;
         foreach(Transform child in allChildren)
         {
             SpriteRenderer childRend = child.GetComponent<SpriteRenderer>();
             if(childRend == null) continue;
-
-
-            if(child.name == "background")
-            {
-                if(childRend != null) childRend.sortingOrder = gridCoord.rendValue;
-            }
-            else
-            {
-                if(childRend != null) childRend.sortingOrder = gridCoord.rendValue - 1;
-            }
+            
+            childRend.sortingOrder = gridCoord.rendValue - 1;
         }
     }
 }

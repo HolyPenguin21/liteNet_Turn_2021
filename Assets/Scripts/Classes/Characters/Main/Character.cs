@@ -13,6 +13,7 @@ public abstract class Character
     // Ingame vars
     public Hex hex;
     public BattlePlayer owner;
+    public bool canAct;
 
     // Character specific vars
     public int id;
@@ -21,6 +22,7 @@ public abstract class Character
     public string name;
     
     public CharVars.char_Move movement;
+    public List<CharVars.char_Attack> attacks;
 
     #region Movement
     public IEnumerator Move(List<Hex> somePath)

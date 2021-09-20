@@ -22,6 +22,26 @@ public class GameMain : MonoBehaviour
         taskManager.AddTask(cr_character);
     }
 
+    #region Attack
+    public void On_Attack(Pathfinding pathfinding,Hex aHex, Hex tHex)
+    {
+        Character attacker = aHex.character;
+        Character target = tHex.character;
+
+        List<Hex> attackPath = new List<Hex>(pathfinding.Get_Path(aHex, tHex));
+        attackPath.RemoveAt(attackPath.Count - 1);
+
+        GameObject.Find("SceneMain").GetComponent<SceneMain_UI>().attackPanel.Show(attacker, target);
+
+        // ui_Ingame.Show_AttackPanel(attacker, target);
+
+        // string somePath = "";
+        // for(int x = 0; x < attackPath.Count; x++)
+        //     somePath += attackPath[x].coord_x + "-" + attackPath[x].coord_y + " ";
+        // Debug.Log(somePath);
+    }
+    #endregion
+
     #region Turn management
     public void Order_SetTurn(int bpId)
     {

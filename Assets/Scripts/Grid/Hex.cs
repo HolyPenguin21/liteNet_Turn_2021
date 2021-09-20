@@ -23,6 +23,7 @@ public class Hex : MonoBehaviour
     private void Awake()
     {
         tr = transform;
+        VisualAdjust();
     }
 
     public void Set_Editor_Name()
@@ -34,5 +35,10 @@ public class Hex : MonoBehaviour
         if(rootCastle != null) result += " -SummonPoint";
 
         gameObject.name = result;
+    }
+
+    private void VisualAdjust()
+    {
+        rendValue = tr.Find("background").GetComponent<SpriteRenderer>().sortingOrder;
     }
 }

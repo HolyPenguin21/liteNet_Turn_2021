@@ -103,14 +103,20 @@ public class SceneMain : MonoBehaviour
         if(myBPlayer == currentTurn) endTurn_Button.interactable = true;
         else endTurn_Button.interactable = false;
 
-        for(int x = 0; x < bPlayers.Count; x++) {
+        for(int x = 0; x < bPlayers.Count; x++) 
+        {
             BattlePlayer bp = bPlayers[x];
-            for(int y = 0; y < bp.ingameCharacters.Count; y++) {
+            for(int y = 0; y < bp.ingameCharacters.Count; y++) 
+            {
                 Character character = bp.ingameCharacters[y];
-                if(bp == currentTurn) {
+                if(bp == currentTurn) 
+                {
+                    character.canAct = true;
                     character.movement.movePoints_cur = character.movement.movePoints_max;
                 }
-                else {
+                else 
+                {
+                    character.canAct = false;
                     character.movement.movePoints_cur = 0;
                 }
             }

@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class SceneMain_UI : MonoBehaviour
 {
-    private SceneMain sm;
     private GameMain gm;
+    private SceneMain sm;
     private ClickHandler clickHandler;
     public Pathfinding pathfinding;
+    public AttackPanel attackPanel;
 
     private LineRenderer pathVisual;
     private Transform hover_effect;
@@ -31,6 +32,8 @@ public class SceneMain_UI : MonoBehaviour
         sm = GetComponent<SceneMain>();
         gm = GameData.inst.gameMain;
         clickHandler = new ClickHandler(this);
+
+        attackPanel = new AttackPanel();
     }
 
     void Start()
@@ -50,6 +53,9 @@ public class SceneMain_UI : MonoBehaviour
     {
         clickHandler.Update();
         Mouse_Hover_Input();
+
+        if(Input.GetKeyDown(KeyCode.Space))
+            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, 3, sm.bPlayers[1]);
     }
 
     private void Mouse_Hover_Input()
@@ -106,8 +112,24 @@ public class SceneMain_UI : MonoBehaviour
         if (Utility.IsMyCharacter(selected_Character))
         {
             if(clicked_Hex.character != null) { // there is character in clicked hex
-                // select if character belong to us
-                // attack if character belong to enemy
+                if(!Utility.IsMyCharacter(clicked_Hex.character))
+                {
+                    if(selected_Character.canAct)
+                    {
+                        gm.On_Attack(pathfinding, selected_Hex, clicked_Hex);
+                        pathfinding.Hide_Path();
+                    }
+                    else
+                    {
+                        SelectHex(clicked_Hex);
+                        return;
+                    }
+                }
+                else
+                {
+                    SelectHex(clicked_Hex);
+                    return;
+                }
             }
             else { // clicked hex is empty
                 if(selected_Character.movement.movePoints_cur > 0)

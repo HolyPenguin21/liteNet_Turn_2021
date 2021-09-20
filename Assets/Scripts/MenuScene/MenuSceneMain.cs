@@ -265,7 +265,7 @@ public class MenuSceneMain : MonoBehaviour
 
     public void Button_StartGame()
     {
-        GameObject.Find("GameMain").GetComponent<GameMain>().Order_StartGame(2);
+        GameObject.Find("GameMain").GetComponent<GameMain>().Order_StartGame(3);
     }
 
     public void Button_P2P_Lobby_Back()
