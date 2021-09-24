@@ -26,11 +26,13 @@ public class SceneMain : MonoBehaviour
         // UI
         currentTurn_Text = GameObject.Find("CurrentTurn_Text").GetComponent<Text>();
         endTurn_Button = GameObject.Find("EndTurn_Button").GetComponent<Button>();
+
+        gm = GameData.inst.gameMain;
+        gm.sceneMain = this;
     }
 
     private IEnumerator Start()
     {
-        gm = GameData.inst.gameMain;
         yield return Setup_Game();
 
         yield return null;
@@ -171,6 +173,14 @@ public class SceneMain : MonoBehaviour
             
             gm.Order_CreateCharacter(startPoint, characterId, bp);
         }
+
+        yield return null;
+    }
+    #endregion
+
+    #region GameEnd
+    public IEnumerator Check_Dead(Character character)
+    {
 
         yield return null;
     }

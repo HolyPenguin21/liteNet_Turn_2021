@@ -94,24 +94,26 @@ public static class Utility
         return null;
     }
 
-    public static Hex Get_Hex_ByCoords(int coord_x, int coord_y) {
+    public static Hex Get_Hex_ByCoords(int coord_x, int coord_y) 
+    {
         SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
 
         for(int x = 0; x < sm.grid.Length; x++) {
-            Hex h = sm.grid[x];
-            if(h.coord_x == coord_x && h.coord_y == coord_y)
-                return h;
+            Hex hex = sm.grid[x];
+            if(hex.coord_x == coord_x && hex.coord_y == coord_y)
+                return hex;
         }
 
         return null;
     }
 
-    public static Hex Get_Hex_ByTransform(Transform tr) {
+    public static Hex Get_Hex_ByTransform(Transform tr) 
+    {
         SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
 
         for(int x = 0 ; x < sm.grid.Length; x++) {
-            Hex h = sm.grid[x];
-            if(h.tr == tr) return h;
+            Hex hex = sm.grid[x];
+            if(hex.tr == tr) return hex;
         }
 
         return null;
@@ -174,5 +176,22 @@ public static class Utility
         }
 
         return Convert.ToInt32(value);
+    }
+
+    public static void set_InputType()
+    {
+        // Text tooltipInput = GameObject.Find("Tooltip_Input_Text").GetComponent<Text>();
+        if (Input.touchSupported && Application.platform != RuntimePlatform.WebGLPlayer)
+        {
+            GameData.inst.inputPc = false;
+            GameData.inst.panCamera = true;
+            // tooltipInput.text = "Input : Android";
         }
+        else
+        {
+            GameData.inst.inputPc = true;
+            GameData.inst.panCamera = false;
+            // tooltipInput.text = "Input : PC";
+        }
+    }
 }

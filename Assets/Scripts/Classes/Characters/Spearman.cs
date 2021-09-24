@@ -19,7 +19,14 @@ public class Spearman : Character
         name = "Spearman";
         image = cd.Get_CharacterImage_ById(id);
 
-        movement.movePoints_max = 4;
+        health = new CharVars.char_Hp(25);
+        movement = new CharVars.char_Move(4);
+
+        defence.dodgeChance = 20;
+        defence.blade_resistance = 0.0f;
+        defence.pierce_resistance = 0.0f;
+        defence.impact_resistance = 0.0f;
+        defence.magic_resistance = 0.0f;
 
         attacks = new List<CharVars.char_Attack>();
         CharVars.char_Attack attack1 = new CharVars.char_Attack();

@@ -21,12 +21,54 @@ public abstract class Character
     public Sprite image;
     public string name;
     
+    public CharVars.char_Hp health;
+    public CharVars.char_Defence defence;
     public CharVars.char_Move movement;
     public List<CharVars.char_Attack> attacks;
 
+
+    #region Animations
+    public IEnumerator Die_Animation()
+    {
+        yield return aController.Anim_Play_Death();
+    }
+    #endregion
+
+    #region Attack
+    public IEnumerator Attack_Start(Hex hex)
+    {
+        CheckOrientation(hex);
+
+        float t = 0f;
+        Vector3 attackVector = tr.position + (hex.tr.position - tr.position) / 4; // A+(B-A)/2 - vector middle
+        while (t < 1f)
+        {
+            tr.position = Vector3.Lerp(tr.position, attackVector, t);
+            t += Time.deltaTime * 6;
+            yield return null;
+        }
+    }
+
+    public IEnumerator Attack_Animation()
+    {
+        yield return aController.Anim_Play_Attack();
+    }
+
+    public IEnumerator Attack_End()
+    {
+        float t = 0f;
+        while (t < 1f)
+        {
+            tr.position = Vector3.Lerp(tr.position, hex.tr.position, t);
+            t += Time.deltaTime * 3;
+            yield return null;
+        }
+    }
+    #endregion
+
     #region Movement
     public IEnumerator Move(List<Hex> somePath)
-	{
+    {
         List<Hex> path = new List<Hex>(somePath);
         while (path.Count > 0)
         {
@@ -41,34 +83,37 @@ public abstract class Character
 
             path.RemoveAt(0);
         }
-		// if (Utility.IsMyCharacter(this))
-		// 	GameMain.inst.ui_Input.SelectHex(hex);
-
-		// if (charMovement.movePoints_cur == 0)
-		// 	GameMain.inst.fog.UpdateFog_PlayerView();
-	}
-
-	private IEnumerator ActualMove(Hex hexToMove)
-	{
-		float t2 = 0f;
-		while (t2 < 1f)
-		{
-			t2 += Time.deltaTime * 3;
-			t2 = Mathf.Clamp(t2 + Time.deltaTime * 0.01f, 0f, 1f);
-			tr.position = Vector3.Lerp(tr.position, hexToMove.transform.position, t2);
-			yield return null;
-		}
-
-		// GameMain.inst.fog.UpdateFog_PlayerView();
-	}
-
-    private void CheckOrientation(Hex nextHex)
-    {
-        if(hex.tr.position.x < nextHex.tr.position.x && aController.aOrientationLeft)
-            aController.SwitchAnimOrientation();
-        else if(hex.tr.position.x > nextHex.tr.position.x && !aController.aOrientationLeft)
-            aController.SwitchAnimOrientation();
     }
+
+    private IEnumerator ActualMove(Hex hexToMove)
+    {
+        float time = 0f;
+        while (time < 1f)
+        {
+            time += Time.deltaTime * 3;
+            time = Mathf.Clamp(time + Time.deltaTime * 0.01f, 0f, 1f);
+            tr.position = Vector3.Lerp(tr.position, hexToMove.tr.position, time);
+            yield return null;
+        }
+        tr.position = hexToMove.tr.position;
+    }
+    #endregion
+
+    #region Heath
+    public IEnumerator Set_Health(int hp_target)
+	{
+        if(health.hp_cur > hp_target)
+        {
+            //Damage effect
+        }
+        else
+        {
+            //Heal effect
+        }
+        health.hp_cur = hp_target;
+
+        yield return null;
+	}
     #endregion
 
     #region Visual
@@ -92,6 +137,17 @@ public abstract class Character
         {
             aSpriteRenderers[x].sortingOrder = hex.rendValue;
         }
+    }
+
+    private void CheckOrientation(Hex nextHex)
+    {
+        float cur_hexPos = hex.coord_x;
+        float next_hexPos = nextHex.coord_x;
+
+        if(cur_hexPos < next_hexPos && aController.aOrientationLeft)
+            aController.SwitchAnimOrientation();
+        else if(cur_hexPos > next_hexPos && !aController.aOrientationLeft)
+            aController.SwitchAnimOrientation();
     }
     #endregion
 }

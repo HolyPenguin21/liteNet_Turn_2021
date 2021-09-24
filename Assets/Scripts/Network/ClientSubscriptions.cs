@@ -50,12 +50,33 @@ public class ClientSubscriptions
         });
     }
 
-    public void HeroChange()
+    public void DieOrder()
     {
-        netProcessor.SubscribeReusable<HeroChange>((data) => {
-            // Debug.Log("Client > HeroChange order recieved.");
-            HeroChange heroChange = data;
-            GameData.inst.StartCoroutine(heroChange.Implementation_Client());
+        netProcessor.SubscribeReusable<DieOrder>((data) => {
+            Debug.Log("Client > DieOrder from Server. Task id : " + data.taskId);
+
+            DieOrder dieOrder = data;
+            GameData.inst.StartCoroutine(dieOrder.Implementation_Client());
+        });
+    }
+
+    public void AttackOrder()
+    {
+        netProcessor.SubscribeReusable<AttackOrder>((data) => {
+            Debug.Log("Client > AttackOrder from Server. Task id : " + data.taskId);
+
+            AttackOrder attackOrder = data;
+            GameData.inst.StartCoroutine(attackOrder.Implementation_Client());
+        });
+    }
+
+    public void BlockCharacter()
+    {
+        netProcessor.SubscribeReusable<BlockCharacter>((data) => {
+            Debug.Log("Client > BlockCharacter order from Server.");
+
+            BlockCharacter blockCharacter = data;
+            GameData.inst.StartCoroutine(blockCharacter.Implementation_Client());
         });
     }
 
@@ -63,6 +84,7 @@ public class ClientSubscriptions
     {
         netProcessor.SubscribeReusable<CreateCharacter>((data) => {
             Debug.Log("Client > CreateCharacter order from Server. Task id : " + data.taskId);
+
             CreateCharacter charCreation = data;
             GameData.inst.StartCoroutine(charCreation.Implementation_Client());
         });
@@ -72,17 +94,27 @@ public class ClientSubscriptions
     {
         netProcessor.SubscribeReusable<SetTurn>((data) => {
             Debug.Log("Client > SetTurn order from Server. Task id : " + data.taskId);
+
             SetTurn setTurn = data;
             GameData.inst.StartCoroutine(setTurn.Implementation_Client());
         });
     }
 
-    public void Move()
+    public void MoveOrder()
     {
-        netProcessor.SubscribeReusable<Move>((data) => {
+        netProcessor.SubscribeReusable<MoveOrder>((data) => {
             Debug.Log("Client > Move order from Server. Task id : " + data.taskId);
-            Move move = data;
-            GameData.inst.StartCoroutine(move.Implementation_Client());
+            MoveOrder moveOrder = data;
+            GameData.inst.StartCoroutine(moveOrder.Implementation_Client());
+        });
+    }
+
+    public void HeroChange()
+    {
+        netProcessor.SubscribeReusable<HeroChange>((data) => {
+            // Debug.Log("Client > HeroChange order recieved.");
+            HeroChange heroChange = data;
+            GameData.inst.StartCoroutine(heroChange.Implementation_Client());
         });
     }
 

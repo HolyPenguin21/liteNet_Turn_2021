@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[ExecuteInEditMode] // COMMENT
+// [ExecuteInEditMode] // COMMENT
 // Disable before PlayMode and on Build
 public class CellAdjustOnEdit : MonoBehaviour
 {
@@ -27,7 +27,6 @@ public class CellAdjustOnEdit : MonoBehaviour
         Utility.GridCoord closestGridCoord = Get_ClosestGridCoord(hex);
         tr.position = closestGridCoord.wPos;
         Adjust_Visual(closestGridCoord);
-        EditorUtility.SetDirty(this); // COMMENT
     }
 
     private Utility.GridCoord Get_ClosestGridCoord(Hex hex)

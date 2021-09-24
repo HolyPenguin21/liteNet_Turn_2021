@@ -4,7 +4,7 @@ using UnityEngine;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-public class Move : GeneralNetworkTask
+public class MoveOrder : GeneralNetworkTask
 {
     public int start_x { get; set; }
     public int start_y { get; set; }

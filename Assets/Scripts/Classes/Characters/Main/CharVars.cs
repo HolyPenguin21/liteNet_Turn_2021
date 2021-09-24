@@ -12,6 +12,11 @@ public static class CharVars
     {
         public int movePoints_cur;
         public int movePoints_max;
+        public char_Move(int movePoints_max)
+        {
+            this.movePoints_max = movePoints_max;
+            this.movePoints_cur = 0;
+        }
     }
 
     [System.Serializable]
@@ -22,5 +27,27 @@ public static class CharVars
         public int attacksCount;
         public int attackDmg_base;
         public int attackDmg_cur;
+    }
+
+    [System.Serializable]
+    public struct char_Hp
+    {
+        public int hp_cur;
+        public int hp_max;
+        public char_Hp(int hp_max)
+        {
+            this.hp_max = hp_max;
+            this.hp_cur = hp_max;
+        }
+    }
+
+    [System.Serializable]
+    public struct char_Defence
+    {
+        public int dodgeChance;
+        public float blade_resistance;
+        public float pierce_resistance;
+        public float impact_resistance;
+        public float magic_resistance;
     }
 }

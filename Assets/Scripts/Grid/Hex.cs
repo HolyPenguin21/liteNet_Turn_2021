@@ -13,6 +13,7 @@ public class Hex : MonoBehaviour
 
     public bool groundMove;
     public int moveCost = 1;
+    public int dodge = 0;
 
     public Hex rootCastle;      // set in editor
     public bool isStartPoint;   // set in editor

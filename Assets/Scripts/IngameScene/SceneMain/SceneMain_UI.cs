@@ -18,6 +18,7 @@ public class SceneMain_UI : MonoBehaviour
     private Transform selected_effect;
 
     // Mouse input
+    public bool mouseOverUI = false;
     private Camera scene_Camera;
     private Ray mouseRay;
     private RaycastHit mouseHit;
@@ -31,9 +32,10 @@ public class SceneMain_UI : MonoBehaviour
         scene_Camera = Camera.main;
         sm = GetComponent<SceneMain>();
         gm = GameData.inst.gameMain;
-        clickHandler = new ClickHandler(this);
+        gm.sceneMain_ui = this;
 
-        attackPanel = new AttackPanel();
+        clickHandler = new ClickHandler(this);
+        attackPanel = new AttackPanel(this);
     }
 
     void Start()
@@ -51,10 +53,16 @@ public class SceneMain_UI : MonoBehaviour
 
     void Update()
     {
+        if(mouseOverUI) return;
+
         clickHandler.Update();
         Mouse_Hover_Input();
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, 1, sm.bPlayers[1]);
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, 2, sm.bPlayers[1]);
+        if(Input.GetKeyDown(KeyCode.Alpha3))
             GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, 3, sm.bPlayers[1]);
     }
 
@@ -116,7 +124,7 @@ public class SceneMain_UI : MonoBehaviour
                 {
                     if(selected_Character.canAct)
                     {
-                        gm.On_Attack(pathfinding, selected_Hex, clicked_Hex);
+                        gm.On_Attack(selected_Hex, clicked_Hex);
                         pathfinding.Hide_Path();
                     }
                     else
@@ -134,7 +142,7 @@ public class SceneMain_UI : MonoBehaviour
             else { // clicked hex is empty
                 if(selected_Character.movement.movePoints_cur > 0)
                 {
-                    if(server != null) gm.On_Move(pathfinding, selected_Hex, clicked_Hex);
+                    if(server != null) gm.On_Move(selected_Hex, clicked_Hex);
                     else gm.Request_Move(selected_Hex, clicked_Hex);
                     pathfinding.Hide_Path();
                     return;
@@ -155,8 +163,10 @@ public class SceneMain_UI : MonoBehaviour
 
     private void Path_Display()
     {
-        if(!hover_Hex.groundMove || selected_Hex == null || selected_Hex.character == null)
-        {
+        if(!hover_Hex.groundMove ||
+        selected_Hex == null ||
+        selected_Hex.character == null ||
+        !Utility.IsMyCharacter(selected_Hex.character)) {
             pathfinding.Hide_Path();
             return;
         }

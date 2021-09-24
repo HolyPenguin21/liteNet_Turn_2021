@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameData : MonoBehaviour
 {
     public static GameData inst;
-    public GameMain gameMain;
 
     public Account account;
 
@@ -14,6 +13,10 @@ public class GameData : MonoBehaviour
     public Client client;
 
     public Utility.GameType gameType;
+    public bool inputPc = false;
+    public bool panCamera = false;
+
+    public GameMain gameMain;
 
     private void Awake()
     {

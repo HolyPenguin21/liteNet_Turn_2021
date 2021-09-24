@@ -19,23 +19,22 @@ public class Knight : Character
         name = "Knight";
         image = cd.Get_CharacterImage_ById(id);
 
-        movement.movePoints_max = 4;
+        health = new CharVars.char_Hp(50);
+        movement = new CharVars.char_Move(4);
+
+        defence.dodgeChance = 20;
+        defence.blade_resistance = 0.0f;
+        defence.pierce_resistance = 0.0f;
+        defence.impact_resistance = 0.0f;
+        defence.magic_resistance = 0.0f;
 
         attacks = new List<CharVars.char_Attack>();
         CharVars.char_Attack attack1 = new CharVars.char_Attack();
         attack1.attackType = CharVars.attackType.Melee;
-        attack1.attackDmgType = CharVars.attackDmgType.Impact;
-        attack1.attacksCount = 3;
-        attack1.attackDmg_base = 5;
+        attack1.attackDmgType = CharVars.attackDmgType.Blade;
+        attack1.attacksCount = 2;
+        attack1.attackDmg_base = 10;
         attack1.attackDmg_cur = attack1.attackDmg_base;
         attacks.Add(attack1);
-
-        CharVars.char_Attack attack2 = new CharVars.char_Attack();
-        attack2.attackType = CharVars.attackType.Melee;
-        attack2.attackDmgType = CharVars.attackDmgType.Blade;
-        attack2.attacksCount = 2;
-        attack2.attackDmg_base = 4;
-        attack2.attackDmg_cur = attack2.attackDmg_base;
-        attacks.Add(attack2);
     }
 }

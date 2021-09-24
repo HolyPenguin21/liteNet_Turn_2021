@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 1740009800219897076}
   - component: {fileID: 4705104648410034318}
   - component: {fileID: 1867069046040529414}
+  - component: {fileID: 4381486206905746173}
   - component: {fileID: 5304921931403464904}
   m_Layer: 0
   m_Name: Dirt_DeadForest_0
@@ -159,16 +160,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c21aff70c1bf4c49b95d0aa7a123774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tr: {fileID: 0}
-  rendValue: 0
-  coord_x: 0
-  coord_y: 0
+  coord: {fileID: 0}
   neighbors: []
   groundMove: 1
   moveCost: 1
+  dodge: 0
   rootCastle: {fileID: 0}
   isStartPoint: 0
   isBossSpawner: 0
+--- !u!114 &4381486206905746173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740009800219897074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf77e18b8d01f304f8f661c64fff4eed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 0
+  y: 0
+  wPos: {x: 0, y: 0, z: 0}
+  rendValue: 0
 --- !u!136 &5304921931403464904
 CapsuleCollider:
   m_ObjectHideFlags: 0

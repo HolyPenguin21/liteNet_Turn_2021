@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 9221108920803381333}
   - component: {fileID: 2781491444041452591}
   - component: {fileID: 9095896184387172007}
+  - component: {fileID: 3583009349977463675}
   - component: {fileID: 7610333359249897362}
   m_Layer: 0
   m_Name: Camp
@@ -239,16 +240,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c21aff70c1bf4c49b95d0aa7a123774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tr: {fileID: 0}
-  rendValue: 0
-  coord_x: 0
-  coord_y: 0
+  coord: {fileID: 0}
   neighbors: []
   groundMove: 1
   moveCost: 1
+  dodge: 0
   rootCastle: {fileID: 0}
   isStartPoint: 1
   isBossSpawner: 0
+--- !u!114 &3583009349977463675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9221108920803381331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf77e18b8d01f304f8f661c64fff4eed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 0
+  y: 0
+  wPos: {x: 0, y: 0, z: 0}
+  rendValue: 0
 --- !u!136 &7610333359249897362
 CapsuleCollider:
   m_ObjectHideFlags: 0

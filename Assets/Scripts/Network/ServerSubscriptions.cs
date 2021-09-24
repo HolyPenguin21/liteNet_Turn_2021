@@ -19,12 +19,21 @@ public class ServerSubscriptions
         this.gameMain = GameObject.Find("GameMain").GetComponent<GameMain>();
     }
 
-    public void RequestMove()
+    public void AttackRequest()
     {
-        netProcessor.SubscribeReusable<RequestMove>((data) => {
+        netProcessor.SubscribeReusable<AttackRequest>((data) => {
+            Debug.Log("Server > RequestAttack request recieved.");
+            AttackRequest attackRequest = data;
+            GameData.inst.StartCoroutine(attackRequest.Implementation_Server());
+        });
+    }
+
+    public void MoveRequest()
+    {
+        netProcessor.SubscribeReusable<MoveRequest>((data) => {
             // Debug.Log("Server > RequestMove request recieved.");
-            RequestMove requestMove = data;
-            GameData.inst.StartCoroutine(requestMove.Implementation_Server());
+            MoveRequest moveRequest = data;
+            GameData.inst.StartCoroutine(moveRequest.Implementation_Server());
         });
     }
 

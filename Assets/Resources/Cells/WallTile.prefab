@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 1707525700049609082}
   - component: {fileID: -3010164054445849493}
   - component: {fileID: -1781344971247863690}
+  - component: {fileID: -106035792079632365}
   - component: {fileID: 7973927938960040137}
   m_Layer: 0
   m_Name: WallTile
@@ -155,15 +156,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c21aff70c1bf4c49b95d0aa7a123774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tr: {fileID: 0}
-  coord_x: 0
-  coord_y: 0
+  coord: {fileID: 0}
   neighbors: []
   groundMove: 0
   moveCost: 1
+  dodge: 0
   rootCastle: {fileID: 0}
   isStartPoint: 0
   isBossSpawner: 0
+--- !u!114 &-106035792079632365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707525700049609080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf77e18b8d01f304f8f661c64fff4eed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 0
+  y: 0
+  wPos: {x: 0, y: 0, z: 0}
+  rendValue: 0
 --- !u!136 &7973927938960040137
 CapsuleCollider:
   m_ObjectHideFlags: 0

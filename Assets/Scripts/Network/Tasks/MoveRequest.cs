@@ -4,7 +4,7 @@ using UnityEngine;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-public class RequestMove : GeneralNetworkTask
+public class MoveRequest : GeneralNetworkTask
 {
     public int start_x { get; set; }
     public int start_y { get; set; }
@@ -13,13 +13,12 @@ public class RequestMove : GeneralNetworkTask
 
     public override IEnumerator Implementation_Server()
     {
-        SceneMain_UI smu = GameObject.Find("SceneMain").GetComponent<SceneMain_UI>();
         GameMain gm = GameObject.Find("GameMain").GetComponent<GameMain>();
 
         Hex from = Utility.Get_Hex_ByCoords(this.start_x, this.start_y);
         Hex to = Utility.Get_Hex_ByCoords(this.end_x, this.end_y);
 
-        gm.On_Move(smu.pathfinding, from, to);
+        gm.On_Move(from, to);
         yield return null;
     }
 
