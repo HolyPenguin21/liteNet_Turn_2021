@@ -33,6 +33,8 @@ public class SceneMain : MonoBehaviour
 
     private IEnumerator Start()
     {
+        Utility.Set_InputType();
+
         yield return Setup_Game();
 
         yield return null;

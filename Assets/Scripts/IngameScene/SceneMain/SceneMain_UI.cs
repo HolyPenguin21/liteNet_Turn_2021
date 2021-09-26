@@ -64,6 +64,8 @@ public class SceneMain_UI : MonoBehaviour
             GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, 2, sm.bPlayers[1]);
         if(Input.GetKeyDown(KeyCode.Alpha3))
             GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, 3, sm.bPlayers[1]);
+        if(Input.GetKeyDown(KeyCode.Alpha4))
+            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, 4, sm.bPlayers[1]);
     }
 
     private void Mouse_Hover_Input()

@@ -178,7 +178,7 @@ public static class Utility
         return Convert.ToInt32(value);
     }
 
-    public static void set_InputType()
+    public static void Set_InputType()
     {
         // Text tooltipInput = GameObject.Find("Tooltip_Input_Text").GetComponent<Text>();
         if (Input.touchSupported && Application.platform != RuntimePlatform.WebGLPlayer)
