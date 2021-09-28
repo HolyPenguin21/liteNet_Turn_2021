@@ -186,12 +186,14 @@ public static class Utility
             GameData.inst.inputPc = false;
             GameData.inst.panCamera = true;
             // tooltipInput.text = "Input : Android";
+            Debug.Log("PC input is set");
         }
         else
         {
             GameData.inst.inputPc = true;
             GameData.inst.panCamera = false;
             // tooltipInput.text = "Input : PC";
+            Debug.Log("Android input is set");
         }
     }
 }

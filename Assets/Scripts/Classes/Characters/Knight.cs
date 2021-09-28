@@ -15,7 +15,8 @@ public class Knight : Character
         CharactersData cd = new CharactersData();
         // Edit
         id = 3;
-        cost = 20;
+        acc_cost = 20;
+        ingame_cost = 5;
         name = "Knight";
         image = cd.Get_CharacterImage_ById(id);
 

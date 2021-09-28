@@ -15,7 +15,8 @@ public class Spearman : Character
         CharactersData cd = new CharactersData();
         // Edit
         id = 2;
-        cost = 10;
+        acc_cost = 10;
+        ingame_cost = 2;
         name = "Spearman";
         image = cd.Get_CharacterImage_ById(id);
 

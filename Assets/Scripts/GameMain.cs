@@ -10,7 +10,7 @@ public class GameMain : MonoBehaviour
     public TaskManager taskManager;
 
 #region Ingame
-    public void Order_CreateCharacter(Hex hex, int cId, BattlePlayer owner)
+    public void Order_CreateCharacter(Hex hex, BattlePlayer owner, int cId)
     {
         CreateCharacter cr_character = new CreateCharacter();
         cr_character.taskId = Utility.RandomValueGenerator();
@@ -23,6 +23,58 @@ public class GameMain : MonoBehaviour
 
         taskManager.AddTask(cr_character);
     }
+
+    public void Order_ChangeGold(int value, string accName)
+    {
+        ChangeGoldOrder changeGoldOrder = new ChangeGoldOrder();
+        changeGoldOrder.taskId = Utility.RandomValueGenerator();
+        changeGoldOrder.AssignToAll();
+
+        changeGoldOrder.value = value;
+        changeGoldOrder.accName = accName;
+
+        Debug.Log(value);
+
+        taskManager.AddTask(changeGoldOrder);
+    }
+
+    #region Hire character
+    public void Request_Hire(Hex hex, BattlePlayer owner, int characterId)
+    {
+        HireRequest hireRequest = new HireRequest();
+        
+        hireRequest.hex_x = hex.coord_x;
+        hireRequest.hex_y = hex.coord_y;
+        hireRequest.ownerName = owner.name;
+        hireRequest.characterId = characterId;
+
+        hireRequest.RequestServer();
+    }
+
+    public void On_Hire(Hex hex, BattlePlayer owner, int characterId)
+    {
+        CharactersData charData = new CharactersData();
+        Character character = owner.availableCharacters[characterId];
+        if(Utility.Get_Server_Player_ByName(owner.name).acc_gold < character.ingame_cost) return;
+
+        Order_ChangeGold(-character.ingame_cost, owner.name);
+        Order_Hire(hex, owner, characterId);
+    }
+
+    public void Order_Hire(Hex hex, BattlePlayer owner, int characterId)
+    {
+        HireOrder hireOrder = new HireOrder();
+        hireOrder.taskId = Utility.RandomValueGenerator();
+        hireOrder.AssignToAll();
+
+        hireOrder.hex_x = hex.coord_x;
+        hireOrder.hex_y = hex.coord_y;
+        hireOrder.ownerName = owner.name;
+        hireOrder.characterId = characterId;
+
+        taskManager.AddTask(hireOrder);
+    }
+    #endregion
 
     #region Block character actions
     public void Order_BlockCharacter(Hex hex)

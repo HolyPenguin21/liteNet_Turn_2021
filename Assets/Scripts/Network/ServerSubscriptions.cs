@@ -19,6 +19,15 @@ public class ServerSubscriptions
         this.gameMain = GameObject.Find("GameMain").GetComponent<GameMain>();
     }
 
+    public void HireRequest()
+    {
+        netProcessor.SubscribeReusable<HireRequest>((data) => {
+            Debug.Log("Server > HireRequest request recieved.");
+            HireRequest hireRequest = data;
+            GameData.inst.StartCoroutine(hireRequest.Implementation_Server());
+        });
+    }
+
     public void AttackRequest()
     {
         netProcessor.SubscribeReusable<AttackRequest>((data) => {

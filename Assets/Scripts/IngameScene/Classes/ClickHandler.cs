@@ -21,23 +21,23 @@ public class ClickHandler
 
     public void Update()
     {
-        // if (Settings.inputPc)
+        if (GameData.inst.inputPc)
             Input_Pc();
-        // else
-        //     Input_Android();
+        else
+            Input_Android();
     }
 
     private void Input_Pc()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            input.OnDoubleClick();
+            input.OnClick();
         }
 
-        // if (Input.GetKeyDown(KeyCode.Mouse1))
-        // {
-        //     input.OnHold();
-        // }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            input.OnHold();
+        }
     }
 
     private void Input_Android()
@@ -64,7 +64,7 @@ public class ClickHandler
         {
             double_timer = 0.0f;
             clickCount = 0;
-            input.OnDoubleClick();
+            input.OnClick();
         }
 
         if (double_timer >= clickDelay)
@@ -79,7 +79,7 @@ public class ClickHandler
         if (hold_timer >= holdDelay && !holdOn)
         {
             holdOn = true;
-            // input.OnHold();
+            input.OnHold();
         }
     }
 }

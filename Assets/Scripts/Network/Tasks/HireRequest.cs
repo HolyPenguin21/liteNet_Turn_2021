@@ -4,27 +4,28 @@ using UnityEngine;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-public class MoveRequest : GeneralNetworkTask
+public class HireRequest : GeneralNetworkTask
 {
-    public int start_x { get; set; }
-    public int start_y { get; set; }
-    public int end_x { get; set; }
-    public int end_y { get; set; }
+    public int hex_x { get; set; }
+    public int hex_y { get; set; }
+    public string ownerName { get; set; }
+    public int characterId { get; set; }
 
     public override IEnumerator Implementation_Server()
     {
         GameMain gm = GameData.inst.gameMain;
 
-        Hex from = Utility.Get_Hex_ByCoords(this.start_x, this.start_y);
-        Hex to = Utility.Get_Hex_ByCoords(this.end_x, this.end_y);
+        Hex hex = Utility.Get_Hex_ByCoords(hex_x, hex_y);
+        BattlePlayer owner = Utility.Get_BattlePlayer_ByName(ownerName);
 
-        gm.On_Move(from, to);
+        gm.On_Hire(hex, owner, this.characterId);
+        
         yield return null;
     }
 
     public override void SendToClients(Server server)
     {
-
+       
     }
 
     public override IEnumerator Implementation_Client()

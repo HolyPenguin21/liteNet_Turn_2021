@@ -15,7 +15,8 @@ public class Swordman : Character
         CharactersData cd = new CharactersData();
         // Edit
         id = 1;
-        cost = 15;
+        acc_cost = 15;
+        ingame_cost = 4;
         name = "Swordman";
         image = cd.Get_CharacterImage_ById(id);
 

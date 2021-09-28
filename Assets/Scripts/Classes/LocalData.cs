@@ -16,12 +16,12 @@ public class LocalData
     public void Save_PlayerData(Account acc)
     {
         AccountData accountData = new AccountData();
-        accountData.acc_Data = acc.Get_Acc_Data();
+        accountData.data = acc.Get_Acc_Data();
         accountData.heroes = acc.Get_Acc_Heroes_Data();
         accountData.characters = acc.Get_Acc_CharactersData();
         accountData.items = acc.Get_Acc_ItemsData();
 
-        string[] accData = accountData.acc_Data.Split(',');
+        string[] accData = accountData.data.Split(',');
 
         string jsonData = JsonUtility.ToJson(accountData);
         PlayerPrefs.SetString(accData[0], jsonData);
@@ -36,10 +36,10 @@ public class LocalData
         string jsonData = PlayerPrefs.GetString(accName);
         AccountData accountData = JsonUtility.FromJson<AccountData>(jsonData);
         
-        string[] accData = accountData.acc_Data.Split(',');
+        string[] accData = accountData.data.Split(',');
 
         Account acc = new Account(accData[0]);
-        acc.Set_Acc_Data(accountData.acc_Data);
+        acc.Set_Acc_Data(accountData.data);
         acc.Set_Acc_Heroes_Data(accountData.heroes);
         acc.Set_Acc_CharactersData(accountData.characters);
         acc.Set_Acc_ItemsData(accountData.items);
@@ -51,7 +51,7 @@ public class LocalData
 [System.Serializable]
 public class AccountData
 {
-    public string acc_Data;
+    public string data;
     public string heroes; // heroName:characterId - hName:1; hName:2; hName:3; ...
     public string characters; // characterIdList - 1,2,3,4 ...
     public string items; // playerItemIdList - 1,2,3,4 ...

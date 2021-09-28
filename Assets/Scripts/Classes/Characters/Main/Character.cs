@@ -17,7 +17,8 @@ public abstract class Character
 
     // Character specific vars
     public int id;
-    public int cost;
+    public int acc_cost;
+    public int ingame_cost;
     public Sprite image;
     public string name;
     
@@ -141,8 +142,8 @@ public abstract class Character
 
     private void CheckOrientation(Hex nextHex)
     {
-        float cur_hexPos = hex.coord_x;
-        float next_hexPos = nextHex.coord_x;
+        float cur_hexPos = hex.tr.position.x;
+        float next_hexPos = nextHex.tr.position.x;
 
         if(cur_hexPos < next_hexPos && aController.aOrientationLeft)
             aController.SwitchAnimOrientation();

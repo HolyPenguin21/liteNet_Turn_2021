@@ -50,6 +50,16 @@ public class ClientSubscriptions
         });
     }
 
+    public void ChangeGoldOrder()
+    {
+        netProcessor.SubscribeReusable<ChangeGoldOrder>((data) => {
+            Debug.Log("Client > ChangeGoldOrder from Server. Task id : " + data.taskId);
+
+            ChangeGoldOrder changeGoldOrder = data;
+            GameData.inst.StartCoroutine(changeGoldOrder.Implementation_Client());
+        });
+    }
+
     public void DieOrder()
     {
         netProcessor.SubscribeReusable<DieOrder>((data) => {
@@ -57,6 +67,16 @@ public class ClientSubscriptions
 
             DieOrder dieOrder = data;
             GameData.inst.StartCoroutine(dieOrder.Implementation_Client());
+        });
+    }
+
+    public void HireOrder()
+    {
+        netProcessor.SubscribeReusable<HireOrder>((data) => {
+            Debug.Log("Client > HireOrder from Server. Task id : " + data.taskId);
+
+            HireOrder hireOrder = data;
+            GameData.inst.StartCoroutine(hireOrder.Implementation_Client());
         });
     }
 

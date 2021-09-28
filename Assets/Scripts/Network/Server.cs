@@ -103,6 +103,7 @@ public class Server : MonoBehaviour
         serverSubscriptions.SetTurn();
         serverSubscriptions.MoveRequest();
         serverSubscriptions.AttackRequest();
+        serverSubscriptions.HireRequest();
     }
 
     private void Update()

@@ -134,7 +134,8 @@ public class SceneMain : MonoBehaviour
         Server server = GameData.inst.server;
         Client client = GameData.inst.client;
         
-        if(server != null) {
+        if(server != null) 
+        {
             for(int x = 0; x < server.players.Count; x++)
             {
                 Account acc = server.players[x];
@@ -143,7 +144,8 @@ public class SceneMain : MonoBehaviour
                 if(bp.name == GameData.inst.account.name) myBPlayer = bp;
             }
         }
-        else {
+        else 
+        {
             for(int x = 0; x < client.players.Count; x++)
             {
                 Account acc = client.players[x];
@@ -164,7 +166,8 @@ public class SceneMain : MonoBehaviour
         Server server = GameData.inst.server;
         if(server == null) yield break;
 
-        for(int x = 0; x < bPlayers.Count; x++) {
+        for(int x = 0; x < bPlayers.Count; x++)
+        {
             if (bPlayers[x].aiPlayer) continue;
 
             Hex startPoint = startPoints[Random.Range(0,startPoints.Count)];
@@ -173,7 +176,7 @@ public class SceneMain : MonoBehaviour
             BattlePlayer bp = bPlayers[x];
             int characterId = bp.hero.character.id;
             
-            gm.Order_CreateCharacter(startPoint, characterId, bp);
+            gm.Order_CreateCharacter(startPoint, bp, characterId);
         }
 
         yield return null;
@@ -183,6 +186,7 @@ public class SceneMain : MonoBehaviour
     #region GameEnd
     public IEnumerator Check_Dead(Character character)
     {
+        
 
         yield return null;
     }

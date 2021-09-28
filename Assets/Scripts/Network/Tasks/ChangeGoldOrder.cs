@@ -4,10 +4,10 @@ using UnityEngine;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-public class DieOrder : GeneralNetworkTask
+public class ChangeGoldOrder : GeneralNetworkTask
 {
-    public int coord_x { get; set; }
-    public int coord_y { get; set; }
+    public int value { get; set; }
+    public string accName { get; set; }
 
     public override IEnumerator Implementation_Server()
     {
@@ -48,20 +48,30 @@ public class DieOrder : GeneralNetworkTask
 
     private IEnumerator Implementation()
     {
-        Hex hex = Utility.Get_Hex_ByCoords(coord_x, coord_y);
-        Character character = hex.character;
-        BattlePlayer owner = character.owner;
-        SceneMain sceneMain = GameObject.Find("SceneMain").GetComponent<SceneMain>();
+        Server server = GameData.inst.server;
+        Client client = GameData.inst.client;
 
-        yield return character.Die_Animation();
+        LocalData localData = new LocalData();
 
-        owner.ingameCharacters.Remove(character);
-        character.hex = null;
-        hex.character = null;
+        Account acc_ToChange = null;
+        Account account = GameData.inst.account;
 
-        if(GameData.inst.server != null) yield return sceneMain.Check_Dead(character);
-
-        MonoBehaviour.Destroy(character.go);
+        if(server != null)
+        {
+            acc_ToChange = Utility.Get_Server_Player_ByName(accName);
+            acc_ToChange.acc_gold += this.value;
+            if(account == acc_ToChange) localData.Save_PlayerData(account);
+        }
+        else
+        {
+            acc_ToChange = Utility.Get_Client_Player_ByName(accName);
+            acc_ToChange.acc_gold += this.value;
+            if(account.name == acc_ToChange.name)
+            {
+                account.acc_gold += this.value;
+                localData.Save_PlayerData(account);
+            }
+        }
 
         yield return null;
     }

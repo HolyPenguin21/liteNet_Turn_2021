@@ -4,10 +4,12 @@ using UnityEngine;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-public class DieOrder : GeneralNetworkTask
+public class HireOrder : GeneralNetworkTask
 {
-    public int coord_x { get; set; }
-    public int coord_y { get; set; }
+    public int hex_x { get; set; }
+    public int hex_y { get; set; }
+    public string ownerName { get; set; }
+    public int characterId { get; set; }
 
     public override IEnumerator Implementation_Server()
     {
@@ -48,20 +50,19 @@ public class DieOrder : GeneralNetworkTask
 
     private IEnumerator Implementation()
     {
-        Hex hex = Utility.Get_Hex_ByCoords(coord_x, coord_y);
-        Character character = hex.character;
-        BattlePlayer owner = character.owner;
-        SceneMain sceneMain = GameObject.Find("SceneMain").GetComponent<SceneMain>();
+        GameMain gm = GameData.inst.gameMain;
 
-        yield return character.Die_Animation();
+        Hex hex = Utility.Get_Hex_ByCoords(hex_x, hex_y);
+        BattlePlayer owner = Utility.Get_BattlePlayer_ByName(ownerName);
 
-        owner.ingameCharacters.Remove(character);
-        character.hex = null;
-        hex.character = null;
+        Character character = owner.availableCharacters[this.characterId];
+        owner.availableCharacters.Remove(character);
+        owner.ingameCharacters.Add(character);
+        
+        if(GameData.inst.server == null) yield break;
 
-        if(GameData.inst.server != null) yield return sceneMain.Check_Dead(character);
-
-        MonoBehaviour.Destroy(character.go);
+        int charId = character.id;
+        gm.Order_CreateCharacter(hex, owner, charId);
 
         yield return null;
     }

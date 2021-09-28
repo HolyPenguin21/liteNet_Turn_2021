@@ -60,6 +60,8 @@ public class Client : MonoBehaviour
         clientSubscriptions.BlockCharacter();
         clientSubscriptions.AttackOrder();
         clientSubscriptions.DieOrder();
+        clientSubscriptions.HireOrder();
+        clientSubscriptions.ChangeGoldOrder();
     }
 
     private void Update()

@@ -5,10 +5,12 @@ using UnityEngine;
 public class SceneMain_UI : MonoBehaviour
 {
     private GameMain gm;
-    private SceneMain sm;
+    private SceneMain sceneMain;
     private ClickHandler clickHandler;
     public Pathfinding pathfinding;
+
     public AttackPanel attackPanel;
+    public HirePanel hirePanel;
 
     private LineRenderer pathVisual;
     private Transform hover_effect;
@@ -30,12 +32,13 @@ public class SceneMain_UI : MonoBehaviour
     private void Awake()
     {
         scene_Camera = Camera.main;
-        sm = GetComponent<SceneMain>();
+        sceneMain = GetComponent<SceneMain>();
         gm = GameData.inst.gameMain;
         gm.sceneMain_ui = this;
 
         clickHandler = new ClickHandler(this);
         attackPanel = new AttackPanel(this);
+        hirePanel = new HirePanel(this, sceneMain);
     }
 
     void Start()
@@ -59,13 +62,13 @@ public class SceneMain_UI : MonoBehaviour
         Mouse_Hover_Input();
 
         if(Input.GetKeyDown(KeyCode.Alpha1))
-            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, 1, sm.bPlayers[1]);
+            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, sceneMain.bPlayers[1], 1);
         if(Input.GetKeyDown(KeyCode.Alpha2))
-            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, 2, sm.bPlayers[1]);
+            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, sceneMain.bPlayers[1], 2);
         if(Input.GetKeyDown(KeyCode.Alpha3))
-            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, 3, sm.bPlayers[1]);
+            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, sceneMain.bPlayers[1], 3);
         if(Input.GetKeyDown(KeyCode.Alpha4))
-            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, 4, sm.bPlayers[1]);
+            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, sceneMain.bPlayers[1], 4);
     }
 
     private void Mouse_Hover_Input()
@@ -78,7 +81,8 @@ public class SceneMain_UI : MonoBehaviour
         Path_Display();
     }
 
-    public void OnDoubleClick()
+    #region Click input
+    public void OnClick()
     {
         // if (mouseOverUI) return;
         // if (uI_Ingame.somePanelIsOn) return;
@@ -91,10 +95,10 @@ public class SceneMain_UI : MonoBehaviour
         //     if (!GameMain.inst.client.player.isAvailable) return;
         // }
 
-        Mouse_DoubleClick_Input();
+        Mouse_Click_Input();
     }
 
-    private void Mouse_DoubleClick_Input()
+    private void Mouse_Click_Input()
     {
         Server server = GameData.inst.server;
         Client client = GameData.inst.client;
@@ -162,20 +166,33 @@ public class SceneMain_UI : MonoBehaviour
             return;
         }
     }
+    #endregion
 
-    private void Path_Display()
+    #region Hold Input
+    public void OnHold()
     {
-        if(!hover_Hex.groundMove ||
-        selected_Hex == null ||
-        selected_Hex.character == null ||
-        !Utility.IsMyCharacter(selected_Hex.character)) {
-            pathfinding.Hide_Path();
-            return;
-        }
+        if (mouseOverUI) return;
 
-        pathfinding.Show_Path(selected_Hex, hover_Hex);
+        Hex clickedHex = HittedObject();
+        if (clickedHex == null) return;
+
+        MouseInput_Hold();
     }
 
+    private void MouseInput_Hold()
+    {
+        Hex clickedHex = HittedObject();
+        if (clickedHex == null) return;
+
+        if(clickedHex.rootCastle == null) return;
+        if(clickedHex.rootCastle.character == null || !Utility.IsMyCharacter(clickedHex.rootCastle.character)) return;
+        if(clickedHex.character != null) return;
+
+        hirePanel.Show(clickedHex);
+    }
+    #endregion
+
+    #region Other
     public void SelectHex(Hex hex)
     {
         selected_Hex = hex;
@@ -190,6 +207,19 @@ public class SceneMain_UI : MonoBehaviour
         //     if(Utility.CharacterIsVisible(selectedHex.character))
         //         GameMain.inst.fog.UpdateFog_CharacterView(selectedHex.character);
         // }
+    }
+
+    private void Path_Display()
+    {
+        if(!hover_Hex.groundMove ||
+        selected_Hex == null ||
+        selected_Hex.character == null ||
+        !Utility.IsMyCharacter(selected_Hex.character)) {
+            pathfinding.Hide_Path();
+            return;
+        }
+
+        pathfinding.Show_Path(selected_Hex, hover_Hex);
     }
 
     private Hex HittedObject()
@@ -246,4 +276,5 @@ public class SceneMain_UI : MonoBehaviour
 
         // GameMain.inst.fog.UpdateFog_PlayerView();
     }
+    #endregion
 }

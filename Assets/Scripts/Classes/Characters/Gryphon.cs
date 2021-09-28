@@ -15,7 +15,8 @@ public class Gryphon : Character
         CharactersData cd = new CharactersData();
         // Edit
         id = 4;
-        cost = 40;
+        acc_cost = 40;
+        ingame_cost = 10;
         name = "Gryphon";
         image = cd.Get_CharacterImage_ById(id);
 

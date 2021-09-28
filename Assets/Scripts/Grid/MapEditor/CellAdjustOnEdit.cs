@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[ExecuteInEditMode] // COMMENT
+// [ExecuteInEditMode] // COMMENT
 // Disable before PlayMode and on Build
 public class CellAdjustOnEdit : MonoBehaviour
 {
@@ -56,7 +56,7 @@ public class CellAdjustOnEdit : MonoBehaviour
             SpriteRenderer childRend = child.GetComponent<SpriteRenderer>();
             if(childRend == null) continue;
             
-            childRend.sortingOrder = gridCoord.rendValue - 1;
+            childRend.sortingOrder = gridCoord.rendValue;
         }
     }
 }

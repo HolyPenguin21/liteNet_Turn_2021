@@ -7,7 +7,7 @@ public class AttackPanel
 {
     private SceneMain_UI sceneUI;
 
-    public GameObject canvas_Go;
+    private GameObject canvas_Go;
     public GameObject aButton_Content;
     private Button confirm_Button;
     private Button cancel_Button;
@@ -16,8 +16,8 @@ public class AttackPanel
     private Character target;
     private List<AttackButton> attackButtons = new List<AttackButton>();
 
-    public int a_AttackId = 0;
-    public int t_AttackId = 0;
+    private int a_AttackId = 0;
+    private int t_AttackId = 0;
 
     public AttackPanel(SceneMain_UI sceneUI)
     {
