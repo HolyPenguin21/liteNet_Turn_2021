@@ -6,11 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayersData : GeneralNetworkTask
 {
-    public string accounts { get; set; }
-    public string pHeroes { get; set; }
-    public string pCharacters { get; set; }
-    public string pItems { get; set; }
-
     public string playersData { get; set; }
 
     // Data to be send to all Clients to update them
@@ -24,6 +19,7 @@ public class PlayersData : GeneralNetworkTask
             Account acc = server.players[x];
             
             AccountData accountData = new AccountData();
+            accountData.name = acc.name;
             accountData.data = acc.Get_Acc_Data();
             accountData.heroes = acc.Get_Acc_Heroes_Data();
             accountData.characters = acc.Get_Acc_CharactersData();
@@ -44,14 +40,14 @@ public class PlayersData : GeneralNetworkTask
         AllNetworkAccountData allNetworkAccountData = JsonUtility.FromJson<AllNetworkAccountData>(this.playersData);
         for(int x = 0; x < allNetworkAccountData.netAccountsData.Count; x++)
         {
-            AccountData netAccountData = allNetworkAccountData.netAccountsData[x];
+            AccountData accountData = allNetworkAccountData.netAccountsData[x];
 
-            string[] acc_data = netAccountData.data.Split(',');
-            Account acc = new Account(acc_data[0]);
-            acc.Set_Acc_Data(netAccountData.data);
-            acc.Set_Acc_Heroes_Data(netAccountData.heroes);
-            acc.Set_Acc_CharactersData(netAccountData.characters);
-            acc.Set_Acc_ItemsData(netAccountData.items);
+            Account acc = new Account();
+            acc.name = accountData.name;
+            acc.Set_Acc_Data(accountData.data);
+            acc.Set_Acc_Heroes_Data(accountData.heroes);
+            acc.Set_Acc_CharactersData(accountData.characters);
+            acc.Set_Acc_ItemsData(accountData.items);
 
             client.players.Add(acc);
         }

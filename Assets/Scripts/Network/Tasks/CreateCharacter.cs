@@ -8,8 +8,8 @@ public class CreateCharacter : GeneralNetworkTask
 {
     public int coord_x { get; set; }
     public int coord_y { get; set; }
-    public int characterId { get; set; }
     public string ownerName { get; set; }
+    public int characterId { get; set; }
 
     public override IEnumerator Implementation_Server()
     {
@@ -25,7 +25,7 @@ public class CreateCharacter : GeneralNetworkTask
 
     public override void SendToClients(Server server)
     {
-        Debug.Log("Server > Sending to clients : HeroChange, id : " + taskId);
+        Debug.Log("Server > Sending to clients : Create character, id : " + taskId);
         for (int x = 0; x < server.players.Count; x++)
         {
             Account acc = server.players[x];
@@ -54,9 +54,13 @@ public class CreateCharacter : GeneralNetworkTask
     {
         Hex hex = Utility.Get_Hex_ByCoords(this.coord_x, this.coord_y);
         BattlePlayer owner = Utility.Get_BattlePlayer_ByName(this.ownerName);
+        Character character = owner.availableCharacters[this.characterId];
+
+        owner.availableCharacters.Remove(character);
+        owner.ingameCharacters.Add(character);
 
         CharactersData cd = new CharactersData();
-        cd.Create_Character(hex, this.characterId, owner);
+        cd.Create_Character(hex, owner, character);
 
         return true;
     }

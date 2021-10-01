@@ -16,18 +16,16 @@ public class LocalData
     public void Save_PlayerData(Account acc)
     {
         AccountData accountData = new AccountData();
+        accountData.name = acc.name;
         accountData.data = acc.Get_Acc_Data();
         accountData.heroes = acc.Get_Acc_Heroes_Data();
         accountData.characters = acc.Get_Acc_CharactersData();
         accountData.items = acc.Get_Acc_ItemsData();
 
-        string[] accData = accountData.data.Split(',');
-
         string jsonData = JsonUtility.ToJson(accountData);
-        PlayerPrefs.SetString(accData[0], jsonData);
+        PlayerPrefs.SetString(acc.name, jsonData);
         PlayerPrefs.Save();
-        
-        Debug.Log("Player data is saved : " + accData[0]);
+        // Debug.Log("Player data is saved : " + acc.name);
     }
 
     public Account Load_PlayerData(string accName)
@@ -35,10 +33,9 @@ public class LocalData
         Debug.Log("Loading data for " + accName);
         string jsonData = PlayerPrefs.GetString(accName);
         AccountData accountData = JsonUtility.FromJson<AccountData>(jsonData);
-        
-        string[] accData = accountData.data.Split(',');
 
-        Account acc = new Account(accData[0]);
+        Account acc = new Account();
+        acc.name = accountData.name;
         acc.Set_Acc_Data(accountData.data);
         acc.Set_Acc_Heroes_Data(accountData.heroes);
         acc.Set_Acc_CharactersData(accountData.characters);
@@ -51,6 +48,7 @@ public class LocalData
 [System.Serializable]
 public class AccountData
 {
+    public string name;
     public string data;
     public string heroes; // heroName:characterId - hName:1; hName:2; hName:3; ...
     public string characters; // characterIdList - 1,2,3,4 ...

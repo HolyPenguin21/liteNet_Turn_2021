@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-public class SetTurn : GeneralNetworkTask
+public class CreateHeroCharacter : GeneralNetworkTask
 {
-    public int bpId { get; set; }
+    public int coord_x { get; set; }
+    public int coord_y { get; set; }
+    public string ownerName { get; set; }
 
     public override IEnumerator Implementation_Server()
     {
@@ -23,7 +24,7 @@ public class SetTurn : GeneralNetworkTask
 
     public override void SendToClients(Server server)
     {
-        Debug.Log("Server > Sending to clients : SetTurn, id : " + taskId);
+        Debug.Log("Server > Sending to clients : HeroChange, id : " + taskId);
         for (int x = 0; x < server.players.Count; x++)
         {
             Account acc = server.players[x];
@@ -50,10 +51,16 @@ public class SetTurn : GeneralNetworkTask
 
     private bool Implementation()
     {
-        SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
-        sm.currentTurn = sm.battlePlayers[this.bpId];
+        Hex hex = Utility.Get_Hex_ByCoords(this.coord_x, this.coord_y);
+        BattlePlayer owner = Utility.Get_BattlePlayer_ByName(this.ownerName);
+        Character character = owner.hero.character;
 
-        sm.On_TurnChange();
+        owner.availableCharacters.Remove(character);
+        owner.ingameCharacters.Add(character);
+
+        CharactersData cd = new CharactersData();
+        cd.Create_Character(hex, owner, owner.hero.character);
+
         return true;
     }
 }

@@ -60,13 +60,9 @@ public class ServerSubscriptions
         netProcessor.SubscribeReusable<LoginResponse, NetPeer>((data, client) => {
             Debug.Log("Server > Client has logged in : " + client);
 
-            for(int x = 0; x < GameData.inst.server.players.Count; x++)
-                if(GameData.inst.server.players[x].address == client)
-                {
-                    string[] acc_Data_Recieved = data.acc_Data.Split(',');
-                    GameData.inst.server.players[x].name = acc_Data_Recieved[0];
-                    break;
-                }
+            Account acc = Utility.Get_Server_Player_ByAddress(client);
+            AccountData accData = JsonUtility.FromJson<AccountData>(data.playerData);
+            acc.name = accData.name;
 
             LoginResponse loginResponse = data;
             GameData.inst.StartCoroutine(loginResponse.Implementation_Server());

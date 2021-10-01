@@ -11,7 +11,6 @@ public class HireButton
 
     private int id;
     private Character character;
-    
 
     public HireButton(HirePanel hPanel, int id, Character character)
     {

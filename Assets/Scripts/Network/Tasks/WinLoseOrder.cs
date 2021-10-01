@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-public class SetTurn : GeneralNetworkTask
+public class WinLoseOrder : GeneralNetworkTask
 {
-    public int bpId { get; set; }
+    public string winerName { get; set; }
+    public string rewardsList { get; set; }
 
     public override IEnumerator Implementation_Server()
     {
@@ -16,19 +16,18 @@ public class SetTurn : GeneralNetworkTask
         SendToClients(server);
 
         yield return Implementation();
-
+       
         TaskDone(taskId);
-        yield return null;
     }
 
     public override void SendToClients(Server server)
     {
-        Debug.Log("Server > Sending to clients : SetTurn, id : " + taskId);
+        Debug.Log("Server > Sending to clients : Move, id : " + taskId);
         for (int x = 0; x < server.players.Count; x++)
         {
-            Account acc = server.players[x];
-            if (acc.isServer) continue;
-            server.netProcessor.Send(acc.address, this, DeliveryMethod.ReliableOrdered);
+            Account player = server.players[x];
+            if (player.isServer) continue;
+            server.netProcessor.Send(player.address, this, DeliveryMethod.ReliableOrdered);
         }
     }
 
@@ -44,16 +43,14 @@ public class SetTurn : GeneralNetworkTask
 
     public override void RequestServer()
     {
-        Client client = GameData.inst.client;
-        client.netProcessor.Send(client.netManager.GetPeerById(0), this, DeliveryMethod.ReliableOrdered);
+        
     }
 
-    private bool Implementation()
+    private IEnumerator Implementation()
     {
-        SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
-        sm.currentTurn = sm.battlePlayers[this.bpId];
+        SceneMain sceneMain = GameObject.Find("SceneMain").GetComponent<SceneMain>();
+        BattlePlayer bp = Utility.Get_BattlePlayer_ByName(this.winerName);
 
-        sm.On_TurnChange();
-        return true;
+        yield return sceneMain.EndGame(bp, this.rewardsList);
     }
 }

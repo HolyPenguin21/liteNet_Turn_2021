@@ -19,10 +19,8 @@ public class Account
     public List<Character> сharacters;
     public List<PlayerItem> items;
 
-    public Account (string name)
+    public Account()
     {
-        this.name = name;
-
         this.heroes = new List<Hero>();
         this.сharacters = new List<Character>();
         this.items = new List<PlayerItem>();
@@ -31,16 +29,14 @@ public class Account
     #region Acc data : get/set
     public string Get_Acc_Data()
     {
-        return name + "," + password + "," + battleHeroId + "," + acc_gold;
+        return battleHeroId + "," + acc_gold;
     }
 
     public void Set_Acc_Data(string data)
     {
         string[] acc_Data = data.Split(',');
-        name = acc_Data[0];
-        password = acc_Data[1];
-        battleHeroId = Convert.ToInt32(acc_Data[2]);
-        acc_gold = Convert.ToInt32(acc_Data[3]);
+        battleHeroId = Convert.ToInt32(acc_Data[0]);
+        acc_gold = Convert.ToInt32(acc_Data[1]);
     }
     #endregion
 

@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class Spearman : Character
 {
-    public Spearman(GameObject go_,Hex hex_, BattlePlayer owner_)
+    public Spearman()
     {
-        go = go_;
-        if (go != null) tr = go_.transform;
-
-        hex = hex_;
-        owner = owner_;
-
         CharactersData cd = new CharactersData();
         // Edit
         id = 2;

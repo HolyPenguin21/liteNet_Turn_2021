@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuSceneMain : MonoBehaviour
 {
     public MainMenu mainMenu;
-    public AccountMenu accountMenu;
-    public LoggedInMenu loggedInMenu;
+    public LocalLogin localLogin_Menu;
+    public AccountOverview accountOverview_Menu;
     public PlayerManagementMenu playerManagementMenu;
     public OnlineMenu onlineMenu;
     public P2PMenu p2PMenu;
@@ -18,10 +17,11 @@ public class MenuSceneMain : MonoBehaviour
 
     private void Awake()
     {
+        localLogin_Menu = new LocalLogin(this);
+        accountOverview_Menu = new AccountOverview(this);
+
         mainMenu = new MainMenu(GameObject.Find("MainMenu_Canvas"));
-        accountMenu = new AccountMenu(GameObject.Find("LocalLogin_Canvas"));
         playerManagementMenu = new PlayerManagementMenu(GameObject.Find("PlayerManagement_Canvas"), this);
-        loggedInMenu = new LoggedInMenu(GameObject.Find("LoggedIn_Canvas"));
         onlineMenu = new OnlineMenu(GameObject.Find("Online_Canvas"));
         p2PMenu = new P2PMenu(GameObject.Find("P2P_Canvas"));
         p2PLobbyMenu = new P2PLobbyMenu(GameObject.Find("P2P_Lobby_Canvas"));
@@ -33,7 +33,9 @@ public class MenuSceneMain : MonoBehaviour
 
     private void HideBeforeStart()
     {
-        loggedInMenu.Hide();
+        mainMenu.Hide();
+        accountOverview_Menu.Hide();
+
         playerManagementMenu.Hide();
         playerManagementMenu.heroCreation_Panel.SetActive(false);
         playerManagementMenu.characterBuy_Panel.SetActive(false);
@@ -46,38 +48,31 @@ public class MenuSceneMain : MonoBehaviour
 
     private void Start()
     {
-        accountMenu.Awailable_Accounts();
+        if(GameData.inst == null) return;
+        if(GameData.inst.account == null) return;
+
+        localLogin_Menu.Hide();
+
+        SingIn();
     }
 
-    #region LocalLogin
-    public void Button_CreatePlayer()
+    #region LocalLogin menu
+    public void SingIn()
     {
-        accountMenu.Create_Player();
-    }
+        accountOverview_Menu.Show();
+        accountOverview_Menu.Update_PlayerInfo();
 
-    public void Button_SingIn()
-    {
-        if (!accountMenu.SingIn()) return;
-
-        accountMenu.Hide();
-        loggedInMenu.Show();
-        loggedInMenu.Update_PlayerInfo();
+        mainMenu.Show();
         p2PMenu.CheckPlayer();
 
         playerManagementMenu.account = GameData.inst.account;
     }
-
-    public void Button_ResetLocalData()
-    {
-        PlayerPrefs.DeleteAll();
-        accountMenu.Awailable_Accounts();
-    }
     #endregion
 
-    #region LoggedIn Menu
-    public void Button_PMM()
+    #region AccountOverview menu
+    public void AccountOverview_ManageAccount()
     {
-        loggedInMenu.Hide();
+        accountOverview_Menu.Hide();
         mainMenu.Hide();
         onlineMenu.Hide();
         p2PMenu.Hide();
@@ -88,10 +83,12 @@ public class MenuSceneMain : MonoBehaviour
         playerManagementMenu.Update_PlayerManagementMenu();
     }
 
-    public void Button_LoggedIn_Back()
+    public void AccountOverview_Back()
     {
-        loggedInMenu.Hide();
-        accountMenu.Show();
+        accountOverview_Menu.Hide();
+
+        localLogin_Menu.Show();
+        mainMenu.Hide();
     }
     #endregion
 
@@ -181,10 +178,10 @@ public class MenuSceneMain : MonoBehaviour
         ld.Save_PlayerData(GameData.inst.account);
 
         playerManagementMenu.Hide();
-        loggedInMenu.Show();
+        accountOverview_Menu.Show();
         mainMenu.Show();
 
-        loggedInMenu.Update_PlayerInfo();
+        accountOverview_Menu.Update_PlayerInfo();
     }
     #endregion
 
@@ -215,8 +212,7 @@ public class MenuSceneMain : MonoBehaviour
     public void Button_P2P_Host()
     {
         p2PMenu.Hide();
-        accountMenu.Hide();
-        loggedInMenu.Hide();
+        accountOverview_Menu.Hide();
         GameData.inst.CreateHost();
         p2PLobbyMenu.Show();
 
@@ -245,8 +241,7 @@ public class MenuSceneMain : MonoBehaviour
     public void Client_OpenLobby_OnConnect()
     {
         p2PMenu.Hide();
-        accountMenu.Hide();
-        loggedInMenu.Hide();
+        accountOverview_Menu.Hide();
         p2PLobbyMenu.Show();
     }
 
@@ -265,7 +260,7 @@ public class MenuSceneMain : MonoBehaviour
 
     public void Button_StartGame()
     {
-        GameObject.Find("GameMain").GetComponent<GameMain>().Order_StartGame(3);
+        GameData.inst.gameMain.Order_StartGame(3);
     }
 
     public void Button_P2P_Lobby_Back()
@@ -274,7 +269,7 @@ public class MenuSceneMain : MonoBehaviour
         p2PLobbyMenu.Remove_AllPlayerPanels();
         p2PLobbyMenu.Hide();
         mainMenu.Show();
-        accountMenu.Show();
+        // accountMenu.Show();
 
         GameData.inst.account.isServer = false;
     }
@@ -291,7 +286,7 @@ public class MenuSceneMain : MonoBehaviour
 
     public void Button_Events()
     {
-        Load_Scene(1);
+        // Utility.Load_Scene(1);
     }
 
     public void Button_Offline_Back()
@@ -314,11 +309,6 @@ public class MenuSceneMain : MonoBehaviour
         mainMenu.Show();
     }
     #endregion
-
-    private void Load_Scene(int sceneId)
-    {
-        SceneManager.LoadScene(sceneId);
-    }
 
     public void Button_Quit()
     {

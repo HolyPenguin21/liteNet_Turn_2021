@@ -17,7 +17,7 @@ public class HirePanel
     private List<HireButton> hireButtons = new List<HireButton>();
 
     private Hex hex;
-    private int selected_Character_Id;
+    private Character selected_Character;
 
     private Image selected_Character_Image;
     private Text selected_Character_Text;
@@ -79,20 +79,19 @@ public class HirePanel
                 hButton.interactable = true;
         }
 
-        selected_Character_Id = id;
-        Character character = sceneMain.myBPlayer.availableCharacters[id];
+        selected_Character = sceneMain.myBPlayer.availableCharacters[id];
 
         selected_Character_Image.gameObject.SetActive(true);
         selected_Character_Text.gameObject.SetActive(true);
 
-        selected_Character_Image.sprite = character.image;
-        selected_Character_Text.text = character.name + "\n\n" +
-        "Cost : " + character.ingame_cost + "\n\n" +
-        "Health : " + character.health.hp_max + "\n" +
-        "Movement : " + character.movement.movePoints_max + "\n" +
-        "Attack : " + Get_CharacterAttacks(character);
+        selected_Character_Image.sprite = selected_Character.image;
+        selected_Character_Text.text = selected_Character.name + "\n\n" +
+        "Cost : " + selected_Character.ingame_cost + "\n\n" +
+        "Health : " + selected_Character.health.hp_max + "\n" +
+        "Movement : " + selected_Character.movement.movePoints_max + "\n" +
+        "Attack : " + Get_CharacterAttacks(selected_Character);
 
-        if(GameData.inst.account.acc_gold >= character.ingame_cost) confirm_Button.interactable = true;
+        if(GameData.inst.account.acc_gold >= selected_Character.ingame_cost) confirm_Button.interactable = true;
     }
 
     private void Confirm_Hire()
@@ -102,11 +101,11 @@ public class HirePanel
 
         if(server != null)
         {
-            GameData.inst.gameMain.On_Hire(this.hex, sceneMain.myBPlayer, selected_Character_Id);
+            GameData.inst.gameMain.On_Hire(this.hex, sceneMain.myBPlayer, selected_Character);
         }
         else
         {
-            GameData.inst.gameMain.Request_Hire(this.hex, sceneMain.myBPlayer, selected_Character_Id);
+            GameData.inst.gameMain.Request_Hire(this.hex, sceneMain.myBPlayer, selected_Character);
         }
 
         Hide();

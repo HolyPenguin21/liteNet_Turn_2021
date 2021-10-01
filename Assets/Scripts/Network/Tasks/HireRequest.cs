@@ -17,8 +17,9 @@ public class HireRequest : GeneralNetworkTask
 
         Hex hex = Utility.Get_Hex_ByCoords(hex_x, hex_y);
         BattlePlayer owner = Utility.Get_BattlePlayer_ByName(ownerName);
+        Character character = owner.availableCharacters[characterId];
 
-        gm.On_Hire(hex, owner, this.characterId);
+        gm.On_Hire(hex, owner, character);
         
         yield return null;
     }
