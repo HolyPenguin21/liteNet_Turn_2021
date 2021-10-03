@@ -4,35 +4,38 @@ using UnityEngine;
 
 public class CharactersData
 {
-    public void Create_Character(Hex hex, int cId, BattlePlayer owner)
+    public void Create_Character(Hex hex, BattlePlayer owner, Character character)
     {
         Vector3 position = hex.transform.position;
-        Character character = null;
 
-        switch (cId)
+        switch (character.id)
         {
             case 1:
                 GameObject swordman_Obj = MonoBehaviour.Instantiate(
                     Resources.Load("Characters/Swordman/Swordman", typeof(GameObject)), position, Quaternion.identity) as GameObject;
-                character = new Swordman(swordman_Obj, hex, owner);
+                character.go = swordman_Obj;
+                character.tr = swordman_Obj.transform;
             break;
             
             case 2:
                 GameObject spearman_Obj = MonoBehaviour.Instantiate(
                     Resources.Load("Characters/Spearman/Spearman", typeof(GameObject)), position, Quaternion.identity) as GameObject;
-                character = new Spearman(spearman_Obj, hex, owner);
+                character.go = spearman_Obj;
+                character.tr = spearman_Obj.transform;
             break;
             
             case 3:
                 GameObject knight_Obj = MonoBehaviour.Instantiate(
                     Resources.Load("Characters/Knight/Knight", typeof(GameObject)), position, Quaternion.identity) as GameObject;
-                character = new Knight(knight_Obj, hex, owner);
+                character.go = knight_Obj;
+                character.tr = knight_Obj.transform;
             break;
 
             case 4:
                 GameObject gryphon_Obj = MonoBehaviour.Instantiate(
                     Resources.Load("Characters/Gryphon/Gryphon", typeof(GameObject)), position, Quaternion.identity) as GameObject;
-                character = new Gryphon(gryphon_Obj, hex, owner);
+                character.go = gryphon_Obj;
+                character.tr = gryphon_Obj.transform;
             break;
         }
 
@@ -42,8 +45,6 @@ public class CharactersData
         character.Set_Visual();
 
         hex.character = character;
-
-        owner.ingameCharacters.Add(character);
     }
 
     public Character Get_Character_ById(int id)
@@ -51,15 +52,15 @@ public class CharactersData
         switch(id)
         {
             case 1:
-                return new Swordman(null, null, null);
+                return new Swordman();
             case 2:
-                return new Spearman(null, null, null);
+                return new Spearman();
             case 3:
-                return new Knight(null, null, null);
+                return new Knight();
             case 4:
-                return new Gryphon(null, null, null);
+                return new Gryphon();
             default:
-                return new Swordman(null, null, null);
+                return new Swordman();
         }
     }
 

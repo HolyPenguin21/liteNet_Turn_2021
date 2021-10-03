@@ -9,7 +9,7 @@ public class IngameUI_Camera : MonoBehaviour
     private float ZoomSpeedMouse = 2.0f;
 
     public float[] BoundsX = new float[]{-4f, 10f};
-    public float[] BoundsZ = new float[]{-4f, 4f};
+    public float[] BoundsY = new float[]{-4f, 4f};
     public float[] ZoomBounds = new float[]{1.25f, 5f};
 
     private Camera cam;
@@ -121,7 +121,7 @@ public class IngameUI_Camera : MonoBehaviour
         // Ensure the camera remains within bounds.
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(transform.position.x, BoundsX[0], BoundsX[1]);
-        pos.z = Mathf.Clamp(transform.position.z, BoundsZ[0], BoundsZ[1]);
+        pos.y = Mathf.Clamp(transform.position.y, BoundsY[0], BoundsY[1]);
         transform.position = pos;
 
         // Cache the position

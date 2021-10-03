@@ -42,7 +42,7 @@ public class Server : MonoBehaviour
         {
             Debug.Log("Server > someone is connected, asking to login..." + client.EndPoint);
 
-            Account somePlayer = new Account("Name_NotLoggedIn");
+            Account somePlayer = new Account();
             somePlayer.address = client;
             players.Add(somePlayer);
 

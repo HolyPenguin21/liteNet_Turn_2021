@@ -18,12 +18,14 @@ public class GameData : MonoBehaviour
 
     public GameMain gameMain;
 
-    private void Awake()
+    private void Start()
     {
+        if (inst == null) inst = this;
+        else if (inst != null && inst != this) Destroy(gameObject);
+
         gameMain = GetComponent<GameMain>();
 
         DontDestroyOnLoad(gameObject);
-        inst = this;
     }
 
     public void CreateHost()

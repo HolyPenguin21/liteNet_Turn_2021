@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class Gryphon : Character
 {
-    public Gryphon(GameObject go_, Hex hex_, BattlePlayer owner_)
+    public Gryphon()
     {
-        go = go_;
-        if (go != null) tr = go_.transform;
-
-        hex = hex_;
-        owner = owner_;
-        
         CharactersData cd = new CharactersData();
         // Edit
         id = 4;

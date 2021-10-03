@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using LiteNetLib;
+using LiteNetLib.Utils;
 
 public static class Utility
 {
@@ -27,6 +30,7 @@ public static class Utility
         }
     }
 
+    #region Get Client Player
     public static Account Get_Client_Player_ByName(string pName)
     {
         for(int x = 0 ; x < GameData.inst.client.players.Count; x ++)
@@ -47,13 +51,17 @@ public static class Utility
 
         return 0;
     }
+    #endregion
 
-    public static Account Get_Server_Player_ByName(string pName)
+    #region Get Server Player
+    public static Account Get_Server_Player_ByAddress(NetPeer client)
     {
-        for(int x = 0 ; x < GameData.inst.server.players.Count; x ++)
+        Server server = GameData.inst.server;
+        for(int x = 0 ; x < server.players.Count; x ++)
         {
-            if(GameData.inst.server.players[x].name == pName)
-                return GameData.inst.server.players[x];
+            Account acc = server.players[x];
+            if(acc.address == client)
+                return acc;
         }
 
         return null;
@@ -68,6 +76,17 @@ public static class Utility
 
         return 0;
     }
+    public static Account Get_Server_Player_ByName(string pName)
+    {
+        for(int x = 0 ; x < GameData.inst.server.players.Count; x ++)
+        {
+            if(GameData.inst.server.players[x].name == pName)
+                return GameData.inst.server.players[x];
+        }
+
+        return null;
+    }
+    #endregion
 
     public static PlayerItem Get_PlayerItem_ById(int id)
     {
@@ -84,11 +103,11 @@ public static class Utility
     {
         SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
 
-        for(int x = 0; x < sm.bPlayers.Count; x++)
+        for(int x = 0; x < sm.battlePlayers.Count; x++)
         {
-            BattlePlayer bp = sm.bPlayers[x];
-            if (bp.name == name)
-                return bp;
+            BattlePlayer battlePlayer = sm.battlePlayers[x];
+            if (battlePlayer.name == name)
+                return battlePlayer;
         }
 
         return null;
@@ -195,5 +214,10 @@ public static class Utility
             // tooltipInput.text = "Input : PC";
             Debug.Log("Android input is set");
         }
+    }
+
+    public static void Load_Scene(int sceneId)
+    {
+        SceneManager.LoadScene(sceneId);
     }
 }

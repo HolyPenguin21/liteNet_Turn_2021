@@ -22,7 +22,7 @@ public class DieOrder : GeneralNetworkTask
 
     public override void SendToClients(Server server)
     {
-        Debug.Log("Server > Sending to clients : Move, id : " + taskId);
+        Debug.Log("Server > Sending to clients : DieOrder, id : " + taskId);
         for (int x = 0; x < server.players.Count; x++)
         {
             Account player = server.players[x];

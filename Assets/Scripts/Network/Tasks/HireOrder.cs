@@ -24,7 +24,7 @@ public class HireOrder : GeneralNetworkTask
 
     public override void SendToClients(Server server)
     {
-        Debug.Log("Server > Sending to clients : Move, id : " + taskId);
+        Debug.Log("Server > Sending to clients : Hire, id : " + taskId);
         for (int x = 0; x < server.players.Count; x++)
         {
             Account player = server.players[x];
@@ -50,19 +50,16 @@ public class HireOrder : GeneralNetworkTask
 
     private IEnumerator Implementation()
     {
+        if(GameData.inst.server == null) yield break;
+
         GameMain gm = GameData.inst.gameMain;
 
         Hex hex = Utility.Get_Hex_ByCoords(hex_x, hex_y);
         BattlePlayer owner = Utility.Get_BattlePlayer_ByName(ownerName);
-
         Character character = owner.availableCharacters[this.characterId];
-        owner.availableCharacters.Remove(character);
-        owner.ingameCharacters.Add(character);
-        
-        if(GameData.inst.server == null) yield break;
 
         int charId = character.id;
-        gm.Order_CreateCharacter(hex, owner, charId);
+        gm.Order_CreateCharacter(hex, owner, character);
 
         yield return null;
     }

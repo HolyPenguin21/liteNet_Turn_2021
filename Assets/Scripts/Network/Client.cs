@@ -54,7 +54,9 @@ public class Client : MonoBehaviour
         clientSubscriptions.PlayersData();
         clientSubscriptions.HeroChange();
         clientSubscriptions.PVPGameStart();
+        clientSubscriptions.CreateHeroCharacter();
         clientSubscriptions.CreateCharacter();
+        clientSubscriptions.CreateAICharacter();
         clientSubscriptions.SetTurn();
         clientSubscriptions.MoveOrder();
         clientSubscriptions.BlockCharacter();
@@ -62,6 +64,7 @@ public class Client : MonoBehaviour
         clientSubscriptions.DieOrder();
         clientSubscriptions.HireOrder();
         clientSubscriptions.ChangeGoldOrder();
+        clientSubscriptions.WinLoseOrder();
     }
 
     private void Update()

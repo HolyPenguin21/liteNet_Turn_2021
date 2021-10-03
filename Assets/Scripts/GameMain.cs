@@ -10,19 +10,51 @@ public class GameMain : MonoBehaviour
     public TaskManager taskManager;
 
 #region Ingame
-    public void Order_CreateCharacter(Hex hex, BattlePlayer owner, int cId)
+    #region Create character
+    public void Order_CreateHeroCharacter(Hex hex, BattlePlayer owner)
     {
+        CreateHeroCharacter cr_HeroCharacter = new CreateHeroCharacter();
+        cr_HeroCharacter.taskId = Utility.RandomValueGenerator();
+        cr_HeroCharacter.AssignToAll();
+
+        cr_HeroCharacter.coord_x = hex.coord_x;
+        cr_HeroCharacter.coord_y = hex.coord_y;
+        cr_HeroCharacter.ownerName = owner.name;
+
+        taskManager.AddTask(cr_HeroCharacter);
+    }
+    
+    public void Order_CreateCharacter(Hex hex, BattlePlayer owner, Character character)
+    {
+        int characterId = owner.availableCharacters.IndexOf(character);
+
         CreateCharacter cr_character = new CreateCharacter();
         cr_character.taskId = Utility.RandomValueGenerator();
         cr_character.AssignToAll();
 
         cr_character.coord_x = hex.coord_x;
         cr_character.coord_y = hex.coord_y;
-        cr_character.characterId = cId;
         cr_character.ownerName = owner.name;
+        cr_character.characterId = characterId;
 
         taskManager.AddTask(cr_character);
     }
+
+    public void Order_CreateAICharacter(Hex hex, BattlePlayer owner, Character character, int isHero)
+    {
+        CreateAICharacter createAICharacter = new CreateAICharacter();
+        createAICharacter.taskId = Utility.RandomValueGenerator();
+        createAICharacter.AssignToAll();
+
+        createAICharacter.coord_x = hex.coord_x;
+        createAICharacter.coord_y = hex.coord_y;
+        createAICharacter.ownerName = owner.name;
+        createAICharacter.characterId = character.id;
+        createAICharacter.isHero = isHero;
+
+        taskManager.AddTask(createAICharacter);
+    }
+    #endregion
 
     public void Order_ChangeGold(int value, string accName)
     {
@@ -33,16 +65,15 @@ public class GameMain : MonoBehaviour
         changeGoldOrder.value = value;
         changeGoldOrder.accName = accName;
 
-        Debug.Log(value);
-
         taskManager.AddTask(changeGoldOrder);
     }
 
     #region Hire character
-    public void Request_Hire(Hex hex, BattlePlayer owner, int characterId)
+    public void Request_Hire(Hex hex, BattlePlayer owner, Character character)
     {
+        int characterId = owner.availableCharacters.IndexOf(character);
+
         HireRequest hireRequest = new HireRequest();
-        
         hireRequest.hex_x = hex.coord_x;
         hireRequest.hex_y = hex.coord_y;
         hireRequest.ownerName = owner.name;
@@ -51,18 +82,20 @@ public class GameMain : MonoBehaviour
         hireRequest.RequestServer();
     }
 
-    public void On_Hire(Hex hex, BattlePlayer owner, int characterId)
+    public void On_Hire(Hex hex, BattlePlayer owner, Character character)
     {
         CharactersData charData = new CharactersData();
-        Character character = owner.availableCharacters[characterId];
+
         if(Utility.Get_Server_Player_ByName(owner.name).acc_gold < character.ingame_cost) return;
 
         Order_ChangeGold(-character.ingame_cost, owner.name);
-        Order_Hire(hex, owner, characterId);
+        Order_Hire(hex, owner, character);
     }
 
-    public void Order_Hire(Hex hex, BattlePlayer owner, int characterId)
+    public void Order_Hire(Hex hex, BattlePlayer owner, Character character)
     {
+        int characterId = owner.availableCharacters.IndexOf(character);
+
         HireOrder hireOrder = new HireOrder();
         hireOrder.taskId = Utility.RandomValueGenerator();
         hireOrder.AssignToAll();
@@ -87,6 +120,20 @@ public class GameMain : MonoBehaviour
         blockCharacter.coord_y = hex.coord_y;
 
         taskManager.AddTask(blockCharacter);
+    }
+    #endregion
+
+    #region WinLose
+    public void Order_WinLose(BattlePlayer winner, string rewardsList)
+    {
+        WinLoseOrder winLoseOrder = new WinLoseOrder();
+        winLoseOrder.taskId = Utility.RandomValueGenerator();
+        winLoseOrder.AssignToAll();
+
+        winLoseOrder.winerName = winner.name;
+        winLoseOrder.rewardsList = rewardsList;
+
+        taskManager.AddTask(winLoseOrder);
     }
     #endregion
 

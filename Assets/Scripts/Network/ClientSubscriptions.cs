@@ -50,6 +50,16 @@ public class ClientSubscriptions
         });
     }
 
+    public void WinLoseOrder()
+    {
+        netProcessor.SubscribeReusable<WinLoseOrder>((data) => {
+            Debug.Log("Client > WinLoseOrder from Server. Task id : " + data.taskId);
+
+            WinLoseOrder winLoseOrder = data;
+            GameData.inst.StartCoroutine(winLoseOrder.Implementation_Client());
+        });
+    }
+
     public void ChangeGoldOrder()
     {
         netProcessor.SubscribeReusable<ChangeGoldOrder>((data) => {
@@ -100,6 +110,16 @@ public class ClientSubscriptions
         });
     }
 
+    public void CreateHeroCharacter()
+    {
+        netProcessor.SubscribeReusable<CreateHeroCharacter>((data) => {
+            Debug.Log("Client > CreateHeroCharacter order from Server. Task id : " + data.taskId);
+
+            CreateHeroCharacter createHeroCharacter = data;
+            GameData.inst.StartCoroutine(createHeroCharacter.Implementation_Client());
+        });
+    }
+
     public void CreateCharacter()
     {
         netProcessor.SubscribeReusable<CreateCharacter>((data) => {
@@ -107,6 +127,16 @@ public class ClientSubscriptions
 
             CreateCharacter charCreation = data;
             GameData.inst.StartCoroutine(charCreation.Implementation_Client());
+        });
+    }
+
+    public void CreateAICharacter()
+    {
+        netProcessor.SubscribeReusable<CreateAICharacter>((data) => {
+            Debug.Log("Client > CreateCharacter order from Server. Task id : " + data.taskId);
+
+            CreateAICharacter createAICharacter = data;
+            GameData.inst.StartCoroutine(createAICharacter.Implementation_Client());
         });
     }
 

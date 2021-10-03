@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
@@ -15,7 +14,7 @@ public class PVPGameStart : GeneralNetworkTask
         if(server == null) yield return null;
         SendToClients(server);
 
-        SceneManager.LoadScene(sceneId);
+        Utility.Load_Scene(sceneId);
 
         TaskDone(taskId);
 
@@ -38,7 +37,7 @@ public class PVPGameStart : GeneralNetworkTask
         Client client = GameData.inst.client;
         if(client == null) yield return null;
 
-        SceneManager.LoadScene(sceneId);
+        Utility.Load_Scene(sceneId);
 
         TaskDone(taskId);
 

@@ -48,12 +48,11 @@ public class SetTurn : GeneralNetworkTask
         client.netProcessor.Send(client.netManager.GetPeerById(0), this, DeliveryMethod.ReliableOrdered);
     }
 
-    private bool Implementation()
+    private IEnumerator Implementation()
     {
         SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
-        sm.currentTurn = sm.bPlayers[this.bpId];
+        sm.currentTurn = sm.battlePlayers[this.bpId];
 
-        sm.On_TurnChange();
-        return true;
+        yield return sm.On_TurnChange();
     }
 }

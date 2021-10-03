@@ -11,6 +11,7 @@ public class SceneMain_UI : MonoBehaviour
 
     public AttackPanel attackPanel;
     public HirePanel hirePanel;
+    public WinLosePanel winLosePanel;
 
     private LineRenderer pathVisual;
     private Transform hover_effect;
@@ -39,6 +40,7 @@ public class SceneMain_UI : MonoBehaviour
         clickHandler = new ClickHandler(this);
         attackPanel = new AttackPanel(this);
         hirePanel = new HirePanel(this, sceneMain);
+        winLosePanel = new WinLosePanel(this, sceneMain);
     }
 
     void Start()
@@ -62,13 +64,25 @@ public class SceneMain_UI : MonoBehaviour
         Mouse_Hover_Input();
 
         if(Input.GetKeyDown(KeyCode.Alpha1))
-            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, sceneMain.bPlayers[1], 1);
+        {
+            Character character = new Swordman();
+            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers[sceneMain.battlePlayers.Count - 1], character, 1);
+        }
         if(Input.GetKeyDown(KeyCode.Alpha2))
-            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, sceneMain.bPlayers[1], 2);
+        {
+            Character character = new Spearman();
+            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers[sceneMain.battlePlayers.Count - 1], character, 1);
+        }
         if(Input.GetKeyDown(KeyCode.Alpha3))
-            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, sceneMain.bPlayers[1], 3);
+        {
+            Character character = new Knight();
+            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers[sceneMain.battlePlayers.Count - 1], character, 1);
+        }
         if(Input.GetKeyDown(KeyCode.Alpha4))
-            GameData.inst.gameMain.Order_CreateCharacter(selected_Hex, sceneMain.bPlayers[1], 4);
+        {
+            Character character = new Gryphon();
+            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers[sceneMain.battlePlayers.Count - 1], character, 1);
+        }
     }
 
     private void Mouse_Hover_Input()
