@@ -130,7 +130,7 @@ public class SceneMain : MonoBehaviour
         }
 
         if(GameData.inst.server != null && currentTurn.aiPlayer) 
-            yield return aiBehaviour.AITurn();
+            StartCoroutine(aiBehaviour.AITurn());
 
         yield return null;
     }

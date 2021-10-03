@@ -70,6 +70,7 @@ public abstract class Character
     #region Movement
     public IEnumerator Move(List<Hex> somePath)
     {
+        // Debug.Log("Character > " + this + " moving.");
         List<Hex> path = new List<Hex>(somePath);
         while (path.Count > 0)
         {
@@ -84,6 +85,9 @@ public abstract class Character
 
             path.RemoveAt(0);
         }
+
+        if(owner.aiPlayer)
+            GameObject.Find("SceneMain").GetComponent<SceneMain>().aiBehaviour.aiInAction = false;
     }
 
     private IEnumerator ActualMove(Hex hexToMove)
