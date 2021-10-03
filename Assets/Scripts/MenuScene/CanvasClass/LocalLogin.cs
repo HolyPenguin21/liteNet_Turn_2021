@@ -9,10 +9,13 @@ public class LocalLogin : UI_Menu_Canvas
 
     private InputField loginInput;
     private InputField passwordInput;
-    private Text message;
+    private Toggle rememberToggle;
+
     private Button singIn_Button;
     private Button createNewPlayer_Button;
     private Button resetData_Button;
+
+    private Text message;
 
     public LocalLogin (MenuSceneMain menuSceneMain)
     {
@@ -21,6 +24,9 @@ public class LocalLogin : UI_Menu_Canvas
 
         this.loginInput = go.transform.Find("Panel").transform.Find("Login_InputField").GetComponent<InputField>();
         this.passwordInput = go.transform.Find("Panel").transform.Find("Password_InputField").GetComponent<InputField>();
+
+        this.rememberToggle = go.transform.Find("Panel").transform.Find("Remember_Toggle").GetComponent<Toggle>();
+        
         this.message = go.transform.Find("Panel").transform.Find("Message_Text").GetComponent<Text>();
 
         this.singIn_Button = go.transform.Find("Panel").transform.Find("SingIn_Button").GetComponent<Button>();
@@ -33,6 +39,7 @@ public class LocalLogin : UI_Menu_Canvas
         this.resetData_Button.onClick.AddListener(ResetLocalData);
 
         Show_AwailableAccounts();
+        Set_Prefill();
     }
 
     private void Create_Player()
@@ -62,6 +69,7 @@ public class LocalLogin : UI_Menu_Canvas
     private void SingIn()
     {
         if (!SingIn_Check()) return;
+        Save_Prefill(rememberToggle.isOn);
         Hide();
 
         menuSceneMain.SingIn();
@@ -83,12 +91,6 @@ public class LocalLogin : UI_Menu_Canvas
         }
 
         return false;
-    }
-
-    private void ResetLocalData()
-    {
-        PlayerPrefs.DeleteAll();
-        Show_AwailableAccounts();
     }
 
     public void Show_AwailableAccounts()
@@ -137,9 +139,49 @@ public class LocalLogin : UI_Menu_Canvas
         return true;
     }
 
+    private void Save_Prefill(bool isOn)
+    {
+        string prefill = "";
+        if (isOn) prefill += "on,";
+        else prefill += "off,";
+        prefill += loginInput.text + "," + passwordInput.text;
+
+        PlayerPrefs.SetString("Prefill", prefill);
+        PlayerPrefs.Save();
+    }
+
+    private void Set_Prefill()
+    {
+        string prefill = PlayerPrefs.GetString("Prefill");
+        if(prefill == "") 
+        {
+            rememberToggle.isOn = false;
+            return;
+        }
+        
+        string[] prefillData = prefill.Split(',');
+
+        if(prefillData[0] != "on") 
+        {
+            rememberToggle.isOn = false;
+            return;
+        }
+
+        rememberToggle.isOn = true;
+        loginInput.text = prefillData[1];
+        passwordInput.text = prefillData[2];
+    }
+
     private bool Validate_Password(string password)
     {
         if(password == "") return false;
         return true;
     }
+
+    private void ResetLocalData()
+    {
+        PlayerPrefs.DeleteAll();
+        Show_AwailableAccounts();
+    }
+
 }
