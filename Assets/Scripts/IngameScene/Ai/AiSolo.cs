@@ -186,7 +186,7 @@ public class AiSolo : AiBehaviour
     private void Create_AiHero(Hex hex)
     {
         CharactersData charactersData = new CharactersData();
-        int randCharacterId = Random.Range(1, 5); // game characters count, edit in future
+        int randCharacterId = Random.Range(1, 7); // game characters count, edit in future
 
         Character character = charactersData.Get_Character_ById(randCharacterId);
         GameData.inst.gameMain.Order_CreateAICharacter(hex, aiBattlePlayer, character, 1);

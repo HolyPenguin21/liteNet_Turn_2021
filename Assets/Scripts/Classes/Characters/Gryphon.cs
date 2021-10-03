@@ -28,7 +28,7 @@ public class Gryphon : Character
         attack1.attackType = CharVars.attackType.Melee;
         attack1.attackDmgType = CharVars.attackDmgType.Blade;
         attack1.attacksCount = 2;
-        attack1.attackDmg_base = 10;
+        attack1.attackDmg_base = 12;
         attack1.attackDmg_cur = attack1.attackDmg_base;
         attacks.Add(attack1);
     }

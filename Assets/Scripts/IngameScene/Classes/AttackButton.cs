@@ -32,7 +32,7 @@ public class AttackButton
         button.onClick.AddListener(TaskOnClick);
 
         CharVars.char_Attack a_Attack = attacker.attacks[a_attackId];
-        button_Go.transform.Find("a_Image").GetComponent<Image>().sprite = Get_DmgTypeImage(a_Attack.attackDmgType);
+        button_Go.transform.Find("a_Image").GetComponent<Image>().sprite = Get_DmgTypeImage(a_Attack);
         button_Go.transform.Find("a_Text").GetComponent<Text>().text = 
         a_Attack.attackType + ", " + a_Attack.attackDmgType + ", " + a_Attack.attacksCount + "x" + attackOrder.DmgCalculation(a_Attack, target);
 
@@ -45,7 +45,7 @@ public class AttackButton
         }
         else
         {
-            button_Go.transform.Find("t_Image").GetComponent<Image>().sprite = Get_DmgTypeImage(t_Attack.attackDmgType);
+            button_Go.transform.Find("t_Image").GetComponent<Image>().sprite = Get_DmgTypeImage(t_Attack);
             button_Go.transform.Find("t_Text").GetComponent<Text>().text = 
             t_Attack.attackType + ", " + t_Attack.attackDmgType + ", " + t_Attack.attacksCount + "x" + attackOrder.DmgCalculation(t_Attack, attacker);
             this.t_attackId = Get_TargetAttackId(target, t_Attack);
@@ -57,15 +57,18 @@ public class AttackButton
         aPanel.SelectAttack(this.a_attackId, this.t_attackId);
     }
     
-    private Sprite Get_DmgTypeImage(CharVars.attackDmgType type)
+    private Sprite Get_DmgTypeImage(CharVars.char_Attack attack)
     {
-        switch(type)
+        switch(attack.attackDmgType)
         {
             case CharVars.attackDmgType.Blade:
                 return Resources.Load("Images/Blade", typeof(Sprite)) as Sprite;
 
             case CharVars.attackDmgType.Pierce:
-                return Resources.Load("Images/Pierce", typeof(Sprite)) as Sprite;
+                if(attack.attackType == CharVars.attackType.Melee)
+                    return Resources.Load("Images/Pierce_meele", typeof(Sprite)) as Sprite;
+                else
+                    return Resources.Load("Images/Pierce_range", typeof(Sprite)) as Sprite;
 
             case CharVars.attackDmgType.Impact:
                 return Resources.Load("Images/Impact", typeof(Sprite)) as Sprite;

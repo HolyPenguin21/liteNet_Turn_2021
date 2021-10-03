@@ -173,7 +173,7 @@ public class SceneMain : MonoBehaviour
             for(int x = 0; x < server.players.Count; x++)
             {
                 account = server.players[x];
-                bp = new BattlePlayer(account, false);
+                bp = new BattlePlayer(this, account, false);
                 battlePlayers.Add(bp);
                 if(bp.name == GameData.inst.account.name)
                 {
@@ -187,7 +187,7 @@ public class SceneMain : MonoBehaviour
             for(int x = 0; x < client.players.Count; x++)
             {
                 account = client.players[x];
-                bp = new BattlePlayer(account, false);
+                bp = new BattlePlayer(this, account, false);
                 battlePlayers.Add(bp);
                 if(bp.name == GameData.inst.account.name)
                 {
@@ -197,7 +197,7 @@ public class SceneMain : MonoBehaviour
             }
         }
 
-        BattlePlayer aiBattlePlayer = new BattlePlayer(null, true);
+        BattlePlayer aiBattlePlayer = new BattlePlayer(this, null, true);
         battlePlayers.Add(aiBattlePlayer);
 
         yield return null;

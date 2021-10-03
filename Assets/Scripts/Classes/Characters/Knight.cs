@@ -9,12 +9,12 @@ public class Knight : Character
         CharactersData cd = new CharactersData();
         // Edit
         id = 3;
-        acc_cost = 20;
-        ingame_cost = 5;
+        acc_cost = 25;
+        ingame_cost = 7;
         name = "Knight";
         image = cd.Get_CharacterImage_ById(id);
 
-        health = new CharVars.char_Hp(50);
+        health = new CharVars.char_Hp(40);
         movement = new CharVars.char_Move(4);
 
         defence.dodgeChance = 20;

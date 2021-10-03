@@ -10,7 +10,7 @@ public class Swordman : Character
         // Edit
         id = 1;
         acc_cost = 15;
-        ingame_cost = 4;
+        ingame_cost = 3;
         name = "Swordman";
         image = cd.Get_CharacterImage_ById(id);
 
@@ -31,13 +31,5 @@ public class Swordman : Character
         attack1.attackDmg_base = 5;
         attack1.attackDmg_cur = attack1.attackDmg_base;
         attacks.Add(attack1);
-
-        CharVars.char_Attack attack2 = new CharVars.char_Attack();
-        attack2.attackType = CharVars.attackType.Ranged;
-        attack2.attackDmgType = CharVars.attackDmgType.Pierce;
-        attack2.attacksCount = 2;
-        attack2.attackDmg_base = 4;
-        attack2.attackDmg_cur = attack2.attackDmg_base;
-        attacks.Add(attack2);
     }
 }

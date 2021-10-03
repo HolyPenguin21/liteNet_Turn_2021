@@ -122,20 +122,6 @@ public abstract class Character
     #endregion
 
     #region Visual
-    public void Get_Visual()
-    {
-        aController = go.GetComponent<AnimationController>();
-        aSpriteRenderers = new List<SpriteRenderer>();
-        aSpriteRenderers.Add(aController.aIdleLeft_go.GetComponent<SpriteRenderer>());
-        aSpriteRenderers.Add(aController.aIdleRight_go.GetComponent<SpriteRenderer>());
-        aSpriteRenderers.Add(aController.aAttackLeft_go.GetComponent<SpriteRenderer>());
-        aSpriteRenderers.Add(aController.aAttackRight_go.GetComponent<SpriteRenderer>());
-        aSpriteRenderers.Add(aController.aCastLeft_go.GetComponent<SpriteRenderer>());
-        aSpriteRenderers.Add(aController.aCastRight_go.GetComponent<SpriteRenderer>());
-        aSpriteRenderers.Add(aController.aDeathLeft_go.GetComponent<SpriteRenderer>());
-        aSpriteRenderers.Add(aController.aDeathRight_go.GetComponent<SpriteRenderer>());
-    }
-
     public void Set_Visual()
     {
         for(int x = 0; x < aSpriteRenderers.Count; x++)

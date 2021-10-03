@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class BattlePlayer
 {
+    public SceneMain sceneMain;
+
     public bool aiPlayer;
 
     public string name;
@@ -15,8 +17,10 @@ public class BattlePlayer
 
     public List<PlayerItem> items = new List<PlayerItem>();
 
-    public BattlePlayer(Account acc, bool aiPlayer)
+    public BattlePlayer(SceneMain sceneMain, Account acc, bool aiPlayer)
     {
+        this.sceneMain = sceneMain;
+
         this.aiPlayer = aiPlayer;
         if(acc == null) this.name = "AI";
         else this.name = acc.name;
