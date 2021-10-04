@@ -22,8 +22,6 @@ public class AccountManagementMenu : UI_Menu_Canvas
 
     private Text accGold_Text;
 
-
-
     // public GameObject heroCreation_Panel;
     // public InputField creation_heroName;
     // public int heroIdToCreate;

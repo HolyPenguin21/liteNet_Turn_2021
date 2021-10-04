@@ -8,19 +8,19 @@ public class CharactersPanel
     private AccountManagementMenu accountManagementMenu;
     public Account account;
 
-    private Text selected_hero_Text;
-    private Text selected_hCharacter_Text;
-    private Text selected_pCharacter_Text;
+    public Text selected_hero_Text;
+    public Text selected_hCharacter_Text;
+    public Text selected_pCharacter_Text;
 
-    public Transform heroContent_tr;
-    public Transform hCharactersContent_tr;
-    public Transform pCharactersContent_tr;
+    private Transform heroContent_tr;
+    private Transform hCharactersContent_tr;
+    private Transform pCharactersContent_tr;
 
     private Button back_Button;
 
-    private int selected_hero_id;
-    private int selected_hCharacter_id;
-    private int selected_pCharacter_id;
+    public int selected_hero_id;
+    public int selected_hCharacter_id;
+    public int selected_pCharacter_id;
 
     public CharactersPanel(AccountManagementMenu accountManagementMenu)
     {
@@ -63,16 +63,16 @@ public class CharactersPanel
         {
             Hero h = account.heroes[x];
 
-            // GameObject cButton_obj = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/Character_Button", typeof(GameObject)), heroContent_tr) as GameObject;
-            // Menu_Character_Button menu_cButton = cButton_obj.GetComponent<Menu_Character_Button>();
-
-            // menu_cButton.hero = h;
-            // menu_cButton.Init(this, h.character, Utility.UI_Char_Button.hero);
-            // if(account.battleHeroId == x) menu_cButton.TaskOnClick();
+            GameObject cButton_obj = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/AccountPanel/Character_Button", typeof(GameObject)), heroContent_tr) as GameObject;
+            
+            Menu_Character_Button menu_cButton = cButton_obj.GetComponent<Menu_Character_Button>();
+            menu_cButton.hero = h;
+            menu_cButton.Init(this, h.character, Utility.UI_Char_Button.hero);
+            if(account.battleHeroId == x) menu_cButton.TaskOnClick();
         }
     }
 
-    private void Update_HeroCharactersView()
+    public void Update_HeroCharactersView()
     {
         // Clear
         foreach (Transform child in hCharactersContent_tr)
@@ -87,11 +87,11 @@ public class CharactersPanel
         for (int x = 0; x < h.battleCharacters.Count; x++)
         {
             Character c = h.battleCharacters[x];
-            // GameObject hCharacterButton = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/Character_Button", typeof(GameObject)), hCharactersContent_tr) as GameObject;
-            // Menu_Character_Button menu_cButton = hCharacterButton.GetComponent<Menu_Character_Button>();
+            GameObject hCharacterButton = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/AccountPanel/Character_Button", typeof(GameObject)), hCharactersContent_tr) as GameObject;
+            Menu_Character_Button menu_cButton = hCharacterButton.GetComponent<Menu_Character_Button>();
             
-            // menu_cButton.Init(this, c, Utility.UI_Char_Button.battleChar);
-            // if(x == 0) menu_cButton.TaskOnClick();
+            menu_cButton.Init(this, c, Utility.UI_Char_Button.battleChar);
+            if(x == 0) menu_cButton.TaskOnClick();
         }
     }
 
@@ -107,11 +107,11 @@ public class CharactersPanel
         for (int x = 0; x < account.сharacters.Count; x++)
         {
             Character c = account.сharacters[x];
-            // GameObject hCharacterButton = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/Character_Button", typeof(GameObject)), pCharactersContent_tr) as GameObject;
-            // Menu_Character_Button menu_cButton = hCharacterButton.GetComponent<Menu_Character_Button>();
+            GameObject hCharacterButton = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/AccountPanel/Character_Button", typeof(GameObject)), pCharactersContent_tr) as GameObject;
+            Menu_Character_Button menu_cButton = hCharacterButton.GetComponent<Menu_Character_Button>();
 
-            // menu_cButton.Init(this, c, Utility.UI_Char_Button.accChar);
-            // if(x == 0) menu_cButton.TaskOnClick();
+            menu_cButton.Init(this, c, Utility.UI_Char_Button.accChar);
+            if(x == 0) menu_cButton.TaskOnClick();
         }
     }
 
