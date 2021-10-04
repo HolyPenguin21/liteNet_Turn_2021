@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AiSolo : AiBehaviour
 {
-    AttackOrder attackOrder = new AttackOrder();
+    private AttackCalculation attackCalculation = new AttackCalculation();
 
     public AiSolo(SceneMain sceneMain, BattlePlayer aiBattlePlayer)
     {
@@ -40,6 +40,7 @@ public class AiSolo : AiBehaviour
             while(aiInAction) yield return null;
 
             yield return Attack_NearbyEnemy(aiChar);
+            while(aiInAction) yield return null;
             // if (aiChar == null) continue;
         }
         yield return null;
@@ -47,58 +48,25 @@ public class AiSolo : AiBehaviour
 
     private IEnumerator Attack_NearbyEnemy(Character character)
     {
-        Hex enemyHex = Get_NearbyEnemyHex(character);
-        if (enemyHex == null) yield break;
-
-        int a_attackId = 0;
-        int curMaxDmg = 0;
-        int t_attackId = 0;
-        for (int x = 0; x < character.attacks.Count; x++)
+        aiInAction = true;
+        Hex t_Hex = Get_NearbyEnemyHex(character);
+        if (t_Hex == null)
         {
-            CharVars.char_Attack a_attack = character.attacks[x];
-            int maxDmg = a_attack.attacksCount * a_attack.attackDmg_base;
-            if (maxDmg > curMaxDmg)
-            {
-                curMaxDmg = maxDmg;
-                a_attackId = x;
-            }
-
-            CharVars.char_Attack t_attack = Get_TargetAttack(character, a_attack, enemyHex.character);
-            t_attackId = Get_TargetAttackId(enemyHex.character, t_attack);
+            aiInAction = false;
+            yield break;
         }
 
-        GameData.inst.gameMain.Order_Attack(character.hex, a_attackId, enemyHex, t_attackId);
+        Hex a_Hex = character.hex;
+        CharVars.char_Attack a_Attack = attackCalculation.Get_MaxDmgAttack(character, t_Hex.character);
+        int a_AttackId = attackCalculation.Get_AttackId(character, a_Attack);
+        Debug.Log(a_AttackId);
+
+        CharVars.char_Attack t_Attack = attackCalculation.Get_ReturnAttack(character, a_AttackId, t_Hex.character);
+        int t_AttackId = attackCalculation.Get_AttackId(t_Hex.character, t_Attack);
+
+        GameData.inst.gameMain.Order_Attack(a_Hex, a_AttackId, t_Hex, t_AttackId);
 
         yield return null;
-    }
-
-    private CharVars.char_Attack Get_TargetAttack(Character a_Character, CharVars.char_Attack a_Attack, Character t_Character)
-    {        
-        List<CharVars.char_Attack> t_Attack_List = new List<CharVars.char_Attack>();
-        for(int x = 0; x < t_Character.attacks.Count; x++)
-            if(t_Character.attacks[x].attackType == a_Attack.attackType)
-                t_Attack_List.Add(t_Character.attacks[x]);
-
-        CharVars.char_Attack t_Attack = new CharVars.char_Attack();
-        t_Attack.attackType = CharVars.attackType.none;
-
-        for(int x = 0; x < t_Attack_List.Count; x++)
-        {
-            int dmgCur = attackOrder.DmgCalculation(t_Attack, a_Character);
-            if(dmgCur < attackOrder.DmgCalculation(t_Attack_List[x], a_Character))
-                t_Attack = t_Attack_List[x];
-        }
-
-        return t_Attack;
-    }
-
-    private int Get_TargetAttackId(Character character, CharVars.char_Attack attack)
-    {
-        for(int x = 0; x < character.attacks.Count; x++)
-            if(character.attacks[x].attackType == attack.attackType && character.attacks[x].attackDmg_cur == attack.attackDmg_cur)
-                return x;
-
-        return -1;
     }
 
     private IEnumerator Move_ToRandomEnemyInRange(Character character)

@@ -64,6 +64,9 @@ public abstract class Character
             t += Time.deltaTime * 3;
             yield return null;
         }
+
+        if(owner.aiPlayer)
+            GameObject.Find("SceneMain").GetComponent<SceneMain>().aiBehaviour.aiInAction = false;
     }
     #endregion
 

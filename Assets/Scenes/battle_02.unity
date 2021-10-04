@@ -3441,6 +3441,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1545800010, guid: d53687cb0b2dec445a583405b0a00d34, type: 3}
+      propertyPath: BoundsX.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1545800010, guid: d53687cb0b2dec445a583405b0a00d34, type: 3}
+      propertyPath: BoundsX.Array.data[1]
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1545800010, guid: d53687cb0b2dec445a583405b0a00d34, type: 3}
+      propertyPath: BoundsY.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1545800010, guid: d53687cb0b2dec445a583405b0a00d34, type: 3}
+      propertyPath: BoundsY.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 989408545214720866, guid: d53687cb0b2dec445a583405b0a00d34, type: 3}
+      propertyPath: BoundsX.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 989408545214720866, guid: d53687cb0b2dec445a583405b0a00d34, type: 3}
+      propertyPath: BoundsX.Array.data[1]
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 989408545214720866, guid: d53687cb0b2dec445a583405b0a00d34, type: 3}
+      propertyPath: BoundsY.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 989408545214720866, guid: d53687cb0b2dec445a583405b0a00d34, type: 3}
+      propertyPath: BoundsY.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 989408545214720867, guid: d53687cb0b2dec445a583405b0a00d34, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3451,7 +3483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 989408545214720867, guid: d53687cb0b2dec445a583405b0a00d34, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 989408545214720867, guid: d53687cb0b2dec445a583405b0a00d34, type: 3}
       propertyPath: m_LocalPosition.z

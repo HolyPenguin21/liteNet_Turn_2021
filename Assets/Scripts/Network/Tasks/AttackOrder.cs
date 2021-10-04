@@ -170,30 +170,11 @@ public class AttackOrder : GeneralNetworkTask
 
     private int AttackResult_Calculation(CharVars.char_Attack a_Attack, Character target)
     {
+        AttackCalculation attackCalculation = new AttackCalculation();
+
         int dodge = target.defence.dodgeChance + target.hex.dodge;
         if (UnityEngine.Random.Range(0, 101) < dodge) return -1;
-        else return DmgCalculation(a_Attack, target);
-    }
-
-    public int DmgCalculation(CharVars.char_Attack a_Attack, Character target)
-    {
-        CharVars.char_Defence t_Defence = target.defence;
-
-        int dmg = a_Attack.attackDmg_cur;
-
-        switch (a_Attack.attackDmgType)
-        {
-            case CharVars.attackDmgType.Blade:
-                return Convert.ToInt32(dmg - dmg * t_Defence.blade_resistance);
-            case CharVars.attackDmgType.Pierce:
-                return Convert.ToInt32(dmg - dmg * t_Defence.pierce_resistance);
-            case CharVars.attackDmgType.Impact:
-                return Convert.ToInt32(dmg - dmg * t_Defence.impact_resistance);
-            case CharVars.attackDmgType.Magic:
-                return Convert.ToInt32(dmg - dmg * t_Defence.magic_resistance);
-        }
-
-        return -999; // should not get here
+        else return attackCalculation.Hit_DmgCalculation(a_Attack, target);
     }
 
     private int Target_HealthCalculation(int a_dmg, int t_Health)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AccountOverview : UI_Menu_Canvas
+public class AccountFastOverview : UI_Menu_Canvas
 {
     private MenuSceneMain menuSceneMain;
 
@@ -11,7 +11,7 @@ public class AccountOverview : UI_Menu_Canvas
     private Button manageAccount_Button;
     private Button back_Button;
 
-    public AccountOverview (MenuSceneMain menuSceneMain)
+    public AccountFastOverview (MenuSceneMain menuSceneMain)
     {
         this.menuSceneMain = menuSceneMain;
         go = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/AccountPanel/AccountData_Canvas", typeof(GameObject))) as GameObject;

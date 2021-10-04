@@ -60,9 +60,6 @@ public class SceneMain : MonoBehaviour
         }
 
         yield return Setup_FirstTurn();
-
-        Debug.Log("Avail, on game start : " + myBPlayer.availableCharacters.Count);
-        Debug.Log("Ingame, on game start : " + myBPlayer.ingameCharacters.Count);
     }
 
     #region Turn management
