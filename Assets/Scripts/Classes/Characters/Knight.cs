@@ -11,6 +11,7 @@ public class Knight : Character
         id = 3;
         acc_cost = 25;
         ingame_cost = 7;
+        faction = CharVars.faction.Castle;
         name = "Knight";
         image = cd.Get_CharacterImage_ById(id);
 

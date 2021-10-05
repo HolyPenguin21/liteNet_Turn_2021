@@ -149,11 +149,12 @@ public class Account
     public void Set_Acc_ItemsData(string data)
     {
         if(data == "") return;
+        PlayerItemsData playerItemsData = new PlayerItemsData();
 
         string[] itemsData = data.Split(',');
         for(int x = 0; x < itemsData.Length; x++)
         {
-            PlayerItem pi = Utility.Get_PlayerItem_ById(Convert.ToInt32(itemsData[x]));
+            PlayerItem pi = playerItemsData.Get_PlayerItem_ById(Convert.ToInt32(itemsData[x]));
             items.Add(pi);
         }
     }

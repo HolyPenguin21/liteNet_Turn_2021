@@ -11,6 +11,7 @@ public class Wolf : Character
         id = 5;
         acc_cost = 8;
         ingame_cost = 2;
+        faction = CharVars.faction.Forest;
         name = "Wolf";
         image = cd.Get_CharacterImage_ById(id);
 

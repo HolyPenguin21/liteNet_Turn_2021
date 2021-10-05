@@ -12,12 +12,18 @@ public class Gold : PlayerItem
         this.id = 1;
         this.name = "Gold";
         this.image = piData.Get_PlayerItemImage_ById(this.id);
+        this.oneTime = true;
 
-        this.value = Random.Range(2, 6);
+        this.value = Random.Range(1, 6);
     }
 
     public override void Effect()
     {
-        Debug.Log("Gold : " + value);
+        Account account = GameData.inst.account;
+        
+        account.acc_gold += value;
+
+        LocalData ld = new LocalData();
+        ld.Save_PlayerData(account);
     }
 }

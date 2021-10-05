@@ -11,6 +11,7 @@ public class Swordman : Character
         id = 1;
         acc_cost = 15;
         ingame_cost = 3;
+        faction = CharVars.faction.General;
         name = "Swordman";
         image = cd.Get_CharacterImage_ById(id);
 

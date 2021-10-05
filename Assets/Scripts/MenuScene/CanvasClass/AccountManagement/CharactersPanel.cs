@@ -16,6 +16,14 @@ public class CharactersPanel
     private Transform hCharactersContent_tr;
     private Transform pCharactersContent_tr;
 
+    private Button buyNewHero;
+    private Button buyNewCharacter;
+
+    private Button setHeroForBattle_Button;
+    private Button removeCharFromHero_Button;
+    private Button addCharToHero_Button;
+
+    private Button deleteHero_Button;
     private Button back_Button;
 
     public int selected_hero_id;
@@ -36,6 +44,24 @@ public class CharactersPanel
         hCharactersContent_tr = accountManagementMenu.charactersPanel_go.transform.Find("hCharacters_ScrollView").transform.Find("Viewport").transform.Find("Content").GetComponent<Transform>();
         pCharactersContent_tr = accountManagementMenu.charactersPanel_go.transform.Find("pCharacters_ScrollView").transform.Find("Viewport").transform.Find("Content").GetComponent<Transform>();
 
+        this.buyNewHero = heroContent_tr.Find("CreateHero_Button").GetComponent<Button>();
+        this.buyNewHero.onClick.AddListener(Buy_Hero);
+
+        this.buyNewCharacter = pCharactersContent_tr.Find("BuyCharacter_Button").GetComponent<Button>();
+        this.buyNewCharacter.onClick.AddListener(Buy_Character);
+
+        this.setHeroForBattle_Button = accountManagementMenu.charactersPanel_go.transform.Find("SetForBattle_Button").GetComponent<Button>();
+        this.setHeroForBattle_Button.onClick.AddListener(SetForBattle_Hero);
+
+        this.removeCharFromHero_Button = accountManagementMenu.charactersPanel_go.transform.Find("RemoveCharacter_Button").GetComponent<Button>();
+        this.removeCharFromHero_Button.onClick.AddListener(RemoveCharacterFromHero);
+
+        this.addCharToHero_Button = accountManagementMenu.charactersPanel_go.transform.Find("AddCharacter_Button").GetComponent<Button>();
+        this.addCharToHero_Button.onClick.AddListener(AddCharacterToHero);
+
+        this.deleteHero_Button = accountManagementMenu.charactersPanel_go.transform.Find("DeleteHero_Button").GetComponent<Button>();
+        this.deleteHero_Button.onClick.AddListener(Delete_Hero);
+
         this.back_Button = accountManagementMenu.charactersPanel_go.transform.Find("Back_Button").GetComponent<Button>();
         this.back_Button.onClick.AddListener(Back);
 
@@ -49,7 +75,7 @@ public class CharactersPanel
         Update_PlayerCharactersView();
     }
 
-    private void Update_HeroView()
+    public void Update_HeroView()
     {
         // Clear
         foreach (Transform child in heroContent_tr)
@@ -95,7 +121,7 @@ public class CharactersPanel
         }
     }
 
-    private void Update_PlayerCharactersView()
+    public void Update_PlayerCharactersView()
     {
         // Clear
         foreach (Transform child in pCharactersContent_tr)
@@ -115,74 +141,85 @@ public class CharactersPanel
         }
     }
 
+    public void Buy_Hero()
+    {
+        accountManagementMenu.buyHeroPanel_go.SetActive(true);
+    }
+
+    public void Buy_Character()
+    {
+        accountManagementMenu.buyCharacterPanel_go.SetActive(true);
+        accountManagementMenu.buyCharacterPanel.Show();
+    }
+
     public void Delete_Hero()
     {
-        // if(account.heroes.Count == 0) return;
-        // Hero h = account.heroes[selected_hero_id];
+        if(account.heroes.Count == 0) return;
+        Hero h = account.heroes[selected_hero_id];
 
-        // List<Character> temp = new List<Character>();
-        // for(int x = 0; x < h.battleCharacters.Count; x++)
-        // {
-        //     Character c = h.battleCharacters[x];
-        //     temp.Add(c);
-        // }
+        List<Character> temp = new List<Character>();
+        for(int x = 0; x < h.battleCharacters.Count; x++)
+        {
+            Character c = h.battleCharacters[x];
+            temp.Add(c);
+        }
 
-        // for(int x = 0; x < temp.Count; x++)
-        // {
-        //     Character c = temp[x];
-        //     account.сharacters.Add(c);
-        // }
+        for(int x = 0; x < temp.Count; x++)
+        {
+            Character c = temp[x];
+            account.сharacters.Add(c);
+        }
 
-        // h.battleCharacters.Clear();
-        // account.heroes.Remove(h);
+        h.battleCharacters.Clear();
+        account.heroes.Remove(h);
 
-        // if(account.heroes.Count == 0) selected_hero_Name_Text.text = "Hero info ...";
+        if(account.heroes.Count == 0) selected_hero_Text.text = "Hero info ...";
 
-        // if (account.battleHeroId == selected_hero_id) account.battleHeroId = 0;
-        // selected_hero_id = 0;
-        // selected_hCharacter_id = 0;
+        if (account.battleHeroId == selected_hero_id) account.battleHeroId = 0;
+        selected_hero_id = 0;
+        selected_hCharacter_id = 0;
 
-        // Update_PlayerManagementMenu();
+        Update_UI();
     }
 
     public void AddCharacterToHero()
     {
-        // if (account.heroes.Count == 0) return;
-        // Hero h = account.heroes[selected_hero_id];
+        if (account.heroes.Count == 0) return;
+        Hero h = account.heroes[selected_hero_id];
 
-        // if (account.сharacters.Count == 0) return;
-        // Character c = account.сharacters[selected_pCharacter_id];
+        if (account.сharacters.Count == 0) return;
+        Character c = account.сharacters[selected_pCharacter_id];
 
-        // if (h.battleCharacters.Count >= 5) return;
+        if (h.battleCharacters.Count >= 5) return;
 
-        // account.сharacters.Remove(c);
-        // h.battleCharacters.Add(c);
+        account.сharacters.Remove(c);
+        h.battleCharacters.Add(c);
 
-        // // UI changes
-        // selected_pCharacter_id = 0;
-        // if (account.сharacters.Count == 0) selected_pCharacter_Name_Text.text = "Character info ...";
+        // UI changes
+        selected_pCharacter_id = 0;
+        if (account.сharacters.Count == 0) selected_pCharacter_Text.text = "Character info ...";
 
-        // Update_HeroCharactersView();
-        // Update_PlayerCharactersView();
+        Update_HeroCharactersView();
+        Update_PlayerCharactersView();
     }
 
     public void RemoveCharacterFromHero()
-    {        
-        // if (account.heroes.Count == 0) return;
-        // Hero h = account.heroes[selected_hero_id];
+    {
+        if (account.heroes.Count == 0) return;
+        Hero h = account.heroes[selected_hero_id];
 
-        // if (h.battleCharacters.Count == 0) return;
-        // Character c = h.battleCharacters[selected_hCharacter_id];
+        if (h.battleCharacters.Count == 0) return;
+        Character c = h.battleCharacters[selected_hCharacter_id];
 
-        // h.battleCharacters.Remove(c);
-        // account.сharacters.Add(c);
+        h.battleCharacters.Remove(c);
+        account.сharacters.Add(c);
 
-        // // UI changes
-        // selected_hCharacter_id = 0;
-        // if (h.battleCharacters.Count == 0) selected_hCharacter_Name_Text.text = "Hero character info ...";
+        // UI changes
+        selected_hCharacter_id = 0;
+        if (h.battleCharacters.Count == 0) selected_hCharacter_Text.text = "Hero character info ...";
 
-        // Update_HeroCharactersView();
-        // Update_PlayerCharactersView();
+        Update_HeroCharactersView();
+        Update_PlayerCharactersView();
     }
 
     public void SetForBattle_Hero()

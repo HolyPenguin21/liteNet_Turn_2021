@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 715758929038800313}
   - component: {fileID: 715758929038800312}
   m_Layer: 5
-  m_Name: AccountData_Canvas
+  m_Name: AccountFastOverview_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

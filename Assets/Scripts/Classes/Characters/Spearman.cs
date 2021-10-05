@@ -11,6 +11,7 @@ public class Spearman : Character
         id = 2;
         acc_cost = 10;
         ingame_cost = 2;
+        faction = CharVars.faction.General;
         name = "Spearman";
         image = cd.Get_CharacterImage_ById(id);
 

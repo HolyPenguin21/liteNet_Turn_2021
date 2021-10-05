@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,7 +76,7 @@ public class SceneMain : MonoBehaviour
         }
         else if(gameType == Utility.GameType.pvp)
         {
-            bpId = Random.Range(0, battlePlayers.Count);
+            bpId = UnityEngine.Random.Range(0, battlePlayers.Count);
         }
 
         gm.Order_SetTurn(bpId);
@@ -152,8 +153,39 @@ public class SceneMain : MonoBehaviour
         Server server = GameData.inst.server;
         if(server == null) yield break;
 
-        rewards.Add(new Gold());
-        rewards.Add(new Gold());
+        int randRewardCount = UnityEngine.Random.Range(1, 10);
+        for(int x = 0; x < randRewardCount; x++)
+        {
+            int chanceOfDrop = UnityEngine.Random.Range(1, 101);
+            if(chanceOfDrop <= 50) continue;
+
+            int rarityValue = UnityEngine.Random.Range(1, 101);
+            if(rarityValue <= 5)
+            {
+                int rareDropValue = UnityEngine.Random.Range(3, 6);
+                switch (rareDropValue)
+                {
+                    case 3:
+                        rewards.Add(new Token_Castle());
+                    break;
+                    case 4:
+                        rewards.Add(new Token_Forest());
+                    break;
+                    case 5:
+                        rewards.Add(new Token_Dark());
+                    break;
+                }
+            }
+            else if(rarityValue > 5 && rarityValue <= 50)
+            {
+                rewards.Add(new Gold());
+            }
+            else if(rarityValue > 50 && rarityValue <= 100)
+            {
+                rewards.Add(new Gold());
+            }
+        }
+        
         yield return null;
     }
 
@@ -209,7 +241,7 @@ public class SceneMain : MonoBehaviour
         {
             if (battlePlayers[x].aiPlayer) continue;
 
-            Hex startPoint = startPoints[Random.Range(0,startPoints.Count)];
+            Hex startPoint = startPoints[UnityEngine.Random.Range(0,startPoints.Count)];
             startPoints.Remove(startPoint);
 
             BattlePlayer bp = battlePlayers[x];
@@ -273,6 +305,7 @@ public class SceneMain : MonoBehaviour
             if(bp != myBPlayer || bp != winner) continue;
 
             yield return ReturnCharacters(bp);
+            yield return Give_Reward(rewardsList);
         }
     }
 
@@ -303,6 +336,21 @@ public class SceneMain : MonoBehaviour
 
         LocalData localData = new LocalData();
         localData.Save_PlayerData(account);
+        yield return null;
+    }
+
+    private IEnumerator Give_Reward(string rewardsList)
+    {
+        Account account = GameData.inst.account;
+
+        PlayerItemsData playerItemsData = new PlayerItemsData();
+        string[] rewardsData = rewardsList.Split(',');
+        for(int x = 0; x < rewardsData.Length; x++)
+        {
+            PlayerItem playerItem = playerItemsData.Get_PlayerItem_ById(Convert.ToInt32(rewardsData[x]));
+            account.items.Add(playerItem);
+        }
+
         yield return null;
     }
     #endregion

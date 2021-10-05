@@ -6,17 +6,21 @@ using UnityEngine.UI;
 public class Menu_Character_Button : MonoBehaviour
 {
     private CharactersPanel charPanel;
-    private Button b;
+
+    private Button button;
+
     private Image characterImage;
+
     private Character character;
+
     public Hero hero; // in case when button meant for hero;
 
     private Utility.UI_Char_Button ui_Char_Button;
 
     private void Start()
     {
-        b = GetComponent<Button>();
-        b.onClick.AddListener(TaskOnClick);
+        button = GetComponent<Button>();
+        button.onClick.AddListener(TaskOnClick);
     }
 
     public void Init(CharactersPanel charPanel, Character character, Utility.UI_Char_Button ui_Char_Button)
@@ -37,8 +41,8 @@ public class Menu_Character_Button : MonoBehaviour
     {
         Enable_Neighbours();
 
-        if(b == null) GetComponent<Button>().interactable = false;
-        else b.interactable = false;
+        if(button == null) button = GetComponent<Button>();
+        button.interactable = false;
 
         switch(ui_Char_Button)
         {

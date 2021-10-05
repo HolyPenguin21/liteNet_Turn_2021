@@ -198,8 +198,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2824317582765184596}
   m_HandleRect: {fileID: 2824317582765184597}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1.0000031
+  m_Size: 0.68915635
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1612,7 +1612,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2824317584129812063}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.010651654, y: 0.5266645}
   m_AnchorMax: {x: 0.23834835, y: 0.563}
@@ -1781,7 +1781,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2824317583618290300}
   m_HandleRect: {fileID: 2824317583618290301}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1821,7 +1821,7 @@ RectTransform:
   - {fileID: 2824317584052057486}
   - {fileID: 2824317582118938805}
   m_Father: {fileID: 2824317584129812063}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.010651654, y: 0.5795911}
   m_AnchorMax: {x: 0.23834835, y: 0.94061667}
@@ -2000,7 +2000,7 @@ RectTransform:
   m_Children:
   - {fileID: 2824317584006484040}
   m_Father: {fileID: 2824317584129812063}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.24681984, y: 0.578454}
   m_AnchorMax: {x: 0.40934837, y: 0.65786296}
@@ -2171,7 +2171,7 @@ RectTransform:
   - {fileID: 2824317584024301909}
   - {fileID: 2824317583822202629}
   m_Father: {fileID: 2824317584129812063}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.010651654, y: 0.15}
   m_AnchorMax: {x: 0.23834835, y: 0.51128113}
@@ -2276,7 +2276,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2824317584129812063}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.24681984, y: 0.66886324}
   m_AnchorMax: {x: 0.4747749, y: 0.94061667}
@@ -2363,7 +2363,7 @@ RectTransform:
   m_Children:
   - {fileID: 2824317582559551395}
   m_Father: {fileID: 2824317584129812063}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.24681984, y: 0.025}
   m_AnchorMax: {x: 0.3718318, y: 0.062000003}
@@ -2805,7 +2805,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2824317584129812063}
-  m_RootOrder: 8
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.7596517, y: 0.94061667}
   m_AnchorMax: {x: 0.9876967, y: 0.99179554}
@@ -2884,7 +2884,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2824317584129812063}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.24681984, y: 0.23900001}
   m_AnchorMax: {x: 0.4747749, y: 0.51128113}
@@ -3060,7 +3060,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2824317582801677248}
   m_HandleRect: {fileID: 2824317582801677249}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3595,7 +3595,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2824317582634784370}
   m_HandleRect: {fileID: 2824317582634784371}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3847,7 +3847,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2824317584094125832}
   m_HandleRect: {fileID: 2824317584094125833}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4260,14 +4260,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2824317584088383601}
+  - {fileID: 2824317583144397558}
+  - {fileID: 2824317583675386641}
   - {fileID: 2824317583264731613}
   - {fileID: 2824317583522903763}
   - {fileID: 2824317583416581219}
   - {fileID: 2824317583540880673}
-  - {fileID: 2824317583144397558}
   - {fileID: 2824317583468490518}
   - {fileID: 2824317583722780237}
-  - {fileID: 2824317583675386641}
   - {fileID: 2824317582327978424}
   - {fileID: 2824317583891685035}
   - {fileID: 2824317582839471148}

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CharactersData
 {
+    public int currentCharactersCount = 7;
+
     public void Create_Character(Hex hex, BattlePlayer owner, Character character)
     {
         Vector3 position = hex.transform.position;

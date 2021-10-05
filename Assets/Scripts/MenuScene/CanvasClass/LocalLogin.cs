@@ -51,13 +51,13 @@ public class LocalLogin : UI_Menu_Canvas
         acc.password = passwordInput.text;
 
         acc.сharacters.Add(new Swordman());
-        acc.сharacters.Add(new Swordman());
-        acc.сharacters.Add(new Swordman());
         acc.сharacters.Add(new Spearman());
         acc.сharacters.Add(new Spearman());
-        acc.сharacters.Add(new Knight());
 
-        acc.acc_gold = 50;
+        acc.items.Add(new Gold());
+        acc.items.Add(new Token_General());
+
+        acc.acc_gold = 45;
 
         LocalData localData = new LocalData();
         localData.Save_PlayerData(acc);

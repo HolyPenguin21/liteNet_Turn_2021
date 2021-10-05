@@ -11,6 +11,7 @@ public class Gryphon : Character
         id = 4;
         acc_cost = 40;
         ingame_cost = 10;
+        faction = CharVars.faction.Forest;
         name = "Gryphon";
         image = cd.Get_CharacterImage_ById(id);
 

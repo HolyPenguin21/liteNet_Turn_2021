@@ -88,17 +88,6 @@ public static class Utility
     }
     #endregion
 
-    public static PlayerItem Get_PlayerItem_ById(int id)
-    {
-        switch(id)
-        {
-            case 1:
-                return new TreasureChest();
-            default:
-                return new TreasureChest();
-        }
-    }
-
     public static BattlePlayer Get_BattlePlayer_ByName(string name)
     {
         SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();

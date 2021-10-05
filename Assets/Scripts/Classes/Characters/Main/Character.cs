@@ -19,6 +19,7 @@ public abstract class Character
     public int id;
     public int acc_cost;
     public int ingame_cost;
+    public CharVars.faction faction;
     public Sprite image;
     public string name;
     

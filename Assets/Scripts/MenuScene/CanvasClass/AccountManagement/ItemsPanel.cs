@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class ItemsPanel
 {
-    private AccountManagementMenu accountManagementMenu;
+    public AccountManagementMenu accountManagementMenu;
+    public Account account;
+
+    private GameObject panel_Content;
 
     private Button back_Button;
 
@@ -13,6 +16,8 @@ public class ItemsPanel
     {
         this.accountManagementMenu = accountManagementMenu;
         accountManagementMenu.itemsPanel_go = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/AccountPanel/Items_Panel", typeof(GameObject)), accountManagementMenu.go.transform) as GameObject;
+
+        this.panel_Content = accountManagementMenu.itemsPanel_go.transform.Find("Items_View").transform.Find("Viewport").transform.Find("Content").gameObject;
 
         this.back_Button = accountManagementMenu.itemsPanel_go.transform.Find("Back_Button").GetComponent<Button>();
         this.back_Button.onClick.AddListener(Back);
@@ -22,7 +27,19 @@ public class ItemsPanel
 
     public void Show()
     {
+        // Clear
+        foreach (Transform child in panel_Content.transform)
+            GameObject.Destroy(child.gameObject);
+
         accountManagementMenu.itemsPanel_go.SetActive(true);
+
+        for(int x = 0; x < account.items.Count; x++)
+        {
+            PlayerItem item = account.items[x];
+            GameObject button_go = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/AccountPanel/PlayerItem_Button", typeof(GameObject)), panel_Content.transform) as GameObject;
+            Menu_PlayerItem_Button playerItem_Button = button_go.GetComponent<Menu_PlayerItem_Button>();
+            playerItem_Button.Init(this, account, item);
+        }
     }
 
     private void Back()

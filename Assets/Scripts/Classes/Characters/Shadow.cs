@@ -11,6 +11,7 @@ public class Shadow : Character
         id = 6;
         acc_cost = 20;
         ingame_cost = 5;
+        faction = CharVars.faction.Dark;
         name = "Shadow";
         image = cd.Get_CharacterImage_ById(id);
 

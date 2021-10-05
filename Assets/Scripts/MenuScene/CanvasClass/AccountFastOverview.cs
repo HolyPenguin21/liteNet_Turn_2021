@@ -14,7 +14,7 @@ public class AccountFastOverview : UI_Menu_Canvas
     public AccountFastOverview (MenuSceneMain menuSceneMain)
     {
         this.menuSceneMain = menuSceneMain;
-        go = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/AccountPanel/AccountData_Canvas", typeof(GameObject))) as GameObject;
+        go = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/AccountFastOverview_Canvas", typeof(GameObject))) as GameObject;
 
         this.pInfo_Text = go.transform.Find("Panel").transform.Find("pInfo_Text").GetComponent<Text>();
         

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class CharVars
 {
+    public enum faction { General, Castle, Forest, Dark};
     public enum attackType { none, Melee, Ranged };
     public enum attackDmgType { Blade, Pierce, Impact, Magic };
 
