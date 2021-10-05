@@ -33,22 +33,22 @@ public class PlayerItemsData
         switch(id)
         {
             case 1:
-                return Resources.Load<Sprite>("PlayerItem/Gold/Gold");
+                return Resources.Load<Sprite>("PlayerItem/Gold");
 
             case 2:
-                return Resources.Load<Sprite>("PlayerItem/Gold/Gold");
+                return Resources.Load<Sprite>("PlayerItem/TokenGeneral");
 
             case 3:
-                return Resources.Load<Sprite>("PlayerItem/Gold/Gold");
+                return Resources.Load<Sprite>("PlayerItem/TokenCastle");
 
             case 4:
-                return Resources.Load<Sprite>("PlayerItem/Gold/Gold");
+                return Resources.Load<Sprite>("PlayerItem/TokenForest");
 
             case 5:
-                return Resources.Load<Sprite>("PlayerItem/Gold/Gold");
+                return Resources.Load<Sprite>("PlayerItem/TokenDark");
 
             default:
-                return Resources.Load<Sprite>("PlayerItem/Gold/Gold");
+                return Resources.Load<Sprite>("PlayerItem/Gold");
         }
     }
 }

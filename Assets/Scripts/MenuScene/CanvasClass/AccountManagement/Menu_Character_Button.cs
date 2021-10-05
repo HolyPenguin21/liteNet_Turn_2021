@@ -47,18 +47,27 @@ public class Menu_Character_Button : MonoBehaviour
         switch(ui_Char_Button)
         {
             case Utility.UI_Char_Button.hero :
-                charPanel.selected_hero_Text.text = character.name;
+                string heroInfo = character.name + "\n";
+                heroInfo += "Health: " + character.health.hp_cur + "/" + character.health.hp_max;
+                charPanel.selected_hero_Text.text = heroInfo;
+
                 charPanel.selected_hero_id = Get_Id_SelectedCharacter();
                 charPanel.Update_HeroCharactersView();
             break;
 
             case Utility.UI_Char_Button.battleChar :
-                charPanel.selected_hCharacter_Text.text = character.name;
+                string bCharInfo = character.name + "\n";
+                bCharInfo += "Health: " + character.health.hp_cur + "/" + character.health.hp_max;
+                charPanel.selected_hCharacter_Text.text = bCharInfo;
+
                 charPanel.selected_hCharacter_id = Get_Id_SelectedCharacter();
             break;
 
             case Utility.UI_Char_Button.accChar :
-                charPanel.selected_pCharacter_Text.text = character.name;
+                string charInfo = character.name + "\n";
+                charInfo += "Health: " + character.health.hp_cur + "/" + character.health.hp_max;
+                charPanel.selected_pCharacter_Text.text = charInfo;
+
                 charPanel.selected_pCharacter_id = Get_Id_SelectedCharacter();
             break;
         }

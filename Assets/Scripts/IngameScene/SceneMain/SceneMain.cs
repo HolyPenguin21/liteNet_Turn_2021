@@ -302,6 +302,7 @@ public class SceneMain : MonoBehaviour
         for(int x = 0; x < battlePlayers.Count; x++)
         {
             BattlePlayer bp = battlePlayers[x];
+            bp.hero.character.health.hp_cur = bp.hero.character.health.hp_max;
             if(bp != myBPlayer || bp != winner) continue;
 
             yield return ReturnCharacters(bp);
@@ -331,6 +332,8 @@ public class SceneMain : MonoBehaviour
         for(int y = 0; y < tempCharList.Count; y++)
         {
             Character character = tempCharList[y];
+            character.health.hp_cur = character.health.hp_max;
+
             account.heroes[account.battleHeroId].battleCharacters.Add(character);
         }
 

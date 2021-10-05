@@ -62,22 +62,22 @@ public class AttackButton
         switch(attack.attackDmgType)
         {
             case CharVars.attackDmgType.Blade:
-                return Resources.Load("Images/Blade", typeof(Sprite)) as Sprite;
+                return Resources.Load("AttackTypes/Blade", typeof(Sprite)) as Sprite;
 
             case CharVars.attackDmgType.Pierce:
                 if(attack.attackType == CharVars.attackType.Melee)
-                    return Resources.Load("Images/Pierce_meele", typeof(Sprite)) as Sprite;
+                    return Resources.Load("AttackTypes/Pierce_meele", typeof(Sprite)) as Sprite;
                 else
-                    return Resources.Load("Images/Pierce_range", typeof(Sprite)) as Sprite;
+                    return Resources.Load("AttackTypes/Pierce_range", typeof(Sprite)) as Sprite;
 
             case CharVars.attackDmgType.Impact:
-                return Resources.Load("Images/Impact", typeof(Sprite)) as Sprite;
+                return Resources.Load("AttackTypes/Impact", typeof(Sprite)) as Sprite;
 
             case CharVars.attackDmgType.Magic:
-                return Resources.Load("Images/Magic", typeof(Sprite)) as Sprite;
+                return Resources.Load("AttackTypes/Magic", typeof(Sprite)) as Sprite;
 
             default :
-                return Resources.Load("Images/Blade", typeof(Sprite)) as Sprite;
+                return Resources.Load("AttackTypes/Blade", typeof(Sprite)) as Sprite;
         }
     }
 }
