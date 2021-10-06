@@ -66,22 +66,22 @@ public class SceneMain_UI : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             Character character = new Swordman();
-            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers[sceneMain.battlePlayers.Count - 1], character, 1);
+            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers_List[sceneMain.battlePlayers_List.Count - 1], character, 1);
         }
         if(Input.GetKeyDown(KeyCode.Alpha2))
         {
             Character character = new Spearman();
-            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers[sceneMain.battlePlayers.Count - 1], character, 1);
+            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers_List[sceneMain.battlePlayers_List.Count - 1], character, 1);
         }
         if(Input.GetKeyDown(KeyCode.Alpha3))
         {
             Character character = new Knight();
-            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers[sceneMain.battlePlayers.Count - 1], character, 1);
+            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers_List[sceneMain.battlePlayers_List.Count - 1], character, 1);
         }
         if(Input.GetKeyDown(KeyCode.Alpha4))
         {
             Character character = new Gryphon();
-            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers[sceneMain.battlePlayers.Count - 1], character, 1);
+            GameData.inst.gameMain.Order_CreateAICharacter(selected_Hex, sceneMain.battlePlayers_List[sceneMain.battlePlayers_List.Count - 1], character, 1);
         }
     }
 

@@ -45,9 +45,10 @@ public class WinLosePanel
         foreach (Transform child in reward_Content.transform)
             GameObject.Destroy(child.gameObject);
 
-        winLose_Text.text = winner.name + " has win the game. His reward :";
+        winLose_Text.text = winner.account.name + " has win the game. His reward :";
 
         PlayerItemsData playerItemsData = new PlayerItemsData();
+        if(rewardsList == "") return;
         string[] rewardsData = rewardsList.Split(',');
         for(int x = 0; x < rewardsData.Length; x++)
         {

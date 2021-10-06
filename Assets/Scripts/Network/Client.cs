@@ -65,6 +65,7 @@ public class Client : MonoBehaviour
         clientSubscriptions.HireOrder();
         clientSubscriptions.ChangeGoldOrder();
         clientSubscriptions.WinLoseOrder();
+        clientSubscriptions.SetupPvpPlayers();
     }
 
     private void Update()

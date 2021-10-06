@@ -5,40 +5,44 @@ using UnityEngine;
 [System.Serializable]
 public class BattlePlayer
 {
-    public SceneMain sceneMain;
-
     public bool aiPlayer;
+    public Account account;
 
-    public string name;
-    public Hero hero;
-
+    public Character heroCharacter = null;
     public List<Character> availableCharacters = new List<Character>();
     public List<Character> ingameCharacters = new List<Character>();
 
-    public List<PlayerItem> items = new List<PlayerItem>();
-
-    public BattlePlayer(SceneMain sceneMain, Account acc, bool aiPlayer)
+    public BattlePlayer(Account account, bool aiPlayer)
     {
-        this.sceneMain = sceneMain;
-
         this.aiPlayer = aiPlayer;
-        if(acc == null) this.name = "AI";
-        else this.name = acc.name;
-        if(aiPlayer) return;
 
-        this.hero = acc.heroes[acc.battleHeroId];
-        for(int x = 0; x < this.hero.battleCharacters.Count; x++)
+        if(this.aiPlayer) 
         {
-            Character c = this.hero.battleCharacters[x];
-            this.availableCharacters.Add(c);
+            this.account = new Account();
+            this.account.name = "Ai";
+            return;
         }
-        this.hero.battleCharacters.Clear();
-        acc.heroes[acc.battleHeroId].battleCharacters.Clear();
 
-        for(int x = 0; x < acc.items.Count; x++)
+        this.account = account;
+        this.heroCharacter = account.heroes[account.battleHeroId].character;
+
+        Setup_AvailableCharacters();
+        Remove_Characters();
+    }
+
+    private void Setup_AvailableCharacters()
+    {
+        Hero hero = account.heroes[account.battleHeroId];
+
+        for(int x = 0; x < hero.battleCharacters.Count; x++)
         {
-            PlayerItem pi = acc.items[x];
-            this.items.Add(pi);
+            Character character = hero.battleCharacters[x];
+            availableCharacters.Add(character);
         }
+    }
+
+    private void Remove_Characters()
+    {
+        account.heroes[account.battleHeroId].battleCharacters.Clear();
     }
 }

@@ -19,7 +19,7 @@ public class GameMain : MonoBehaviour
 
         cr_HeroCharacter.coord_x = hex.coord_x;
         cr_HeroCharacter.coord_y = hex.coord_y;
-        cr_HeroCharacter.ownerName = owner.name;
+        cr_HeroCharacter.ownerName = owner.account.name;
 
         taskManager.AddTask(cr_HeroCharacter);
     }
@@ -34,7 +34,7 @@ public class GameMain : MonoBehaviour
 
         cr_character.coord_x = hex.coord_x;
         cr_character.coord_y = hex.coord_y;
-        cr_character.ownerName = owner.name;
+        cr_character.ownerName = owner.account.name;
         cr_character.characterId = characterId;
 
         taskManager.AddTask(cr_character);
@@ -48,7 +48,7 @@ public class GameMain : MonoBehaviour
 
         createAICharacter.coord_x = hex.coord_x;
         createAICharacter.coord_y = hex.coord_y;
-        createAICharacter.ownerName = owner.name;
+        createAICharacter.ownerName = owner.account.name;
         createAICharacter.characterId = character.id;
         createAICharacter.isHero = isHero;
 
@@ -68,6 +68,15 @@ public class GameMain : MonoBehaviour
         taskManager.AddTask(changeGoldOrder);
     }
 
+    public void Order_SetupPvpPlayers()
+    {
+        SetupPvpPlayers setupPvpPlayers = new SetupPvpPlayers();
+        setupPvpPlayers.taskId = Utility.RandomValueGenerator();
+        setupPvpPlayers.AssignToAll();
+
+        taskManager.AddTask(setupPvpPlayers);
+    }
+
     #region Hire character
     public void Request_Hire(Hex hex, BattlePlayer owner, Character character)
     {
@@ -76,7 +85,7 @@ public class GameMain : MonoBehaviour
         HireRequest hireRequest = new HireRequest();
         hireRequest.hex_x = hex.coord_x;
         hireRequest.hex_y = hex.coord_y;
-        hireRequest.ownerName = owner.name;
+        hireRequest.ownerName = owner.account.name;
         hireRequest.characterId = characterId;
 
         hireRequest.RequestServer();
@@ -86,9 +95,9 @@ public class GameMain : MonoBehaviour
     {
         CharactersData charData = new CharactersData();
 
-        if(Utility.Get_Server_Player_ByName(owner.name).acc_gold < character.ingame_cost) return;
+        if(Utility.Get_Server_Player_ByName(owner.account.name).acc_gold < character.ingame_cost) return;
 
-        Order_ChangeGold(-character.ingame_cost, owner.name);
+        Order_ChangeGold(-character.ingame_cost, owner.account.name);
         Order_Hire(hex, owner, character);
     }
 
@@ -102,7 +111,7 @@ public class GameMain : MonoBehaviour
 
         hireOrder.hex_x = hex.coord_x;
         hireOrder.hex_y = hex.coord_y;
-        hireOrder.ownerName = owner.name;
+        hireOrder.ownerName = owner.account.name;
         hireOrder.characterId = characterId;
 
         taskManager.AddTask(hireOrder);
@@ -130,7 +139,7 @@ public class GameMain : MonoBehaviour
         winLoseOrder.taskId = Utility.RandomValueGenerator();
         winLoseOrder.AssignToAll();
 
-        winLoseOrder.winerName = winner.name;
+        winLoseOrder.winerName = winner.account.name;
         winLoseOrder.rewardsList = rewardsList;
 
         taskManager.AddTask(winLoseOrder);
@@ -168,7 +177,7 @@ public class GameMain : MonoBehaviour
                 return;
         }
 
-        GameObject.Find("SceneMain").GetComponent<SceneMain_UI>().attackPanel.Show(attacker, target);
+        sceneMain_ui.attackPanel.Show(attacker, target);
     }
 
     public void Request_Attack(Hex aHex, int a_AttackId, Hex tHex, int t_AttackId)

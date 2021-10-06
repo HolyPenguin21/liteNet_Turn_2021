@@ -91,11 +91,10 @@ public static class Utility
     public static BattlePlayer Get_BattlePlayer_ByName(string name)
     {
         SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
-
-        for(int x = 0; x < sm.battlePlayers.Count; x++)
+        for(int x = 0; x < sm.battlePlayers_List.Count; x++)
         {
-            BattlePlayer battlePlayer = sm.battlePlayers[x];
-            if (battlePlayer.name == name)
+            BattlePlayer battlePlayer = sm.battlePlayers_List[x];
+            if (battlePlayer.account.name == name)
                 return battlePlayer;
         }
 
@@ -147,7 +146,7 @@ public static class Utility
     public static bool IsMyCharacter(Character character)
     {
         SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
-        if(character.owner == sm.myBPlayer) return true;
+        if(character.owner == sm.battlePlayer) return true;
         return false;
     }
 

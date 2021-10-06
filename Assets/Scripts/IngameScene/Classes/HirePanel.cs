@@ -57,9 +57,9 @@ public class HirePanel
 
         accGold_Text.text = "Player gold : " + GameData.inst.account.acc_gold;
 
-        for(int x = 0; x < sceneMain.myBPlayer.availableCharacters.Count; x++)
+        for(int x = 0; x < sceneMain.battlePlayer.availableCharacters.Count; x++)
         {
-            Character character = sceneMain.myBPlayer.availableCharacters[x];
+            Character character = sceneMain.battlePlayer.availableCharacters[x];
             HireButton hButton = new HireButton(this, x, character);
             hireButtons.Add(hButton);
         }
@@ -79,7 +79,7 @@ public class HirePanel
                 hButton.interactable = true;
         }
 
-        selected_Character = sceneMain.myBPlayer.availableCharacters[id];
+        selected_Character = sceneMain.battlePlayer.availableCharacters[id];
 
         selected_Character_Image.gameObject.SetActive(true);
         selected_Character_Text.gameObject.SetActive(true);
@@ -101,11 +101,11 @@ public class HirePanel
 
         if(server != null)
         {
-            GameData.inst.gameMain.On_Hire(this.hex, sceneMain.myBPlayer, selected_Character);
+            GameData.inst.gameMain.On_Hire(this.hex, sceneMain.battlePlayer, selected_Character);
         }
         else
         {
-            GameData.inst.gameMain.Request_Hire(this.hex, sceneMain.myBPlayer, selected_Character);
+            GameData.inst.gameMain.Request_Hire(this.hex, sceneMain.battlePlayer, selected_Character);
         }
 
         Hide();

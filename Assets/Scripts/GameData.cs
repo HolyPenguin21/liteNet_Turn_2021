@@ -18,7 +18,7 @@ public class GameData : MonoBehaviour
 
     public GameMain gameMain;
 
-    private void Start()
+    private void Awake()
     {
         if (inst == null) inst = this;
         else if (inst != null && inst != this) Destroy(gameObject);

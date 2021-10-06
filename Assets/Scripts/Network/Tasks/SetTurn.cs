@@ -51,7 +51,7 @@ public class SetTurn : GeneralNetworkTask
     private IEnumerator Implementation()
     {
         SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
-        sm.currentTurn = sm.battlePlayers[this.bpId];
+        sm.currentTurn = sm.battlePlayers_List[this.bpId];
 
         yield return sm.On_TurnChange();
     }

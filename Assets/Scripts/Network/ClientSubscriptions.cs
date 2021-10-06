@@ -159,6 +159,15 @@ public class ClientSubscriptions
         });
     }
 
+    public void SetupPvpPlayers()
+    {
+        netProcessor.SubscribeReusable<SetupPvpPlayers>((data) => {
+            Debug.Log("Client > SetupPvpPlayers order from Server. Task id : " + data.taskId);
+            SetupPvpPlayers setupPvpPlayers = data;
+            GameData.inst.StartCoroutine(setupPvpPlayers.Implementation_Client());
+        });
+    }
+
     public void HeroChange()
     {
         netProcessor.SubscribeReusable<HeroChange>((data) => {

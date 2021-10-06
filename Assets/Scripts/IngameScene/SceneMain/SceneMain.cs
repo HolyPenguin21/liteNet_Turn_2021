@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class SceneMain : MonoBehaviour
 {
-    private GameMain gm;
+    private GameMain gameMain;
     public Hex[] grid;
     public List<Hex> startPoints = new List<Hex>();
     public List<Hex> bossSpawners = new List<Hex>();
 
-    public BattlePlayer myBPlayer;
-    public List<BattlePlayer> battlePlayers = new List<BattlePlayer>();
+    public BattlePlayer battlePlayer;
+    public List<BattlePlayer> battlePlayers_List = new List<BattlePlayer>();
     public BattlePlayer currentTurn;
 
     public Utility.GameType gameType;
@@ -29,35 +29,43 @@ public class SceneMain : MonoBehaviour
         currentTurn_Text = GameObject.Find("CurrentTurn_Text").GetComponent<Text>();
         endTurn_Button = GameObject.Find("EndTurn_Button").GetComponent<Button>();
 
-        gm = GameData.inst.gameMain;
-        gm.sceneMain = this;
+        gameMain = GameData.inst.gameMain;
+        gameMain.sceneMain = this;
+
+        Utility.Set_InputType();
     }
 
     private IEnumerator Start()
     {
-        Utility.Set_InputType();
+        Server server = GameData.inst.server;
+        if(server == null) yield break;
 
-        yield return Setup_Game();
+        yield return new WaitForSeconds(2f);
+        Setup_Reward();
+        gameMain.Order_SetupPvpPlayers();
 
-        yield return null;
+
+
+        // Setup_Players();
+        // yield return Setup_Game();
     }
+
+
 
     private IEnumerator Setup_Game()
     {
         Get_GameType();
-        yield return Setup_Reward();
-        yield return Setup_Players();
         yield return Setup_HeroCharacters();
 
         endTurn_Button.interactable = false;
 
         if(gameType == Utility.GameType.solo)
         {
-            aiBehaviour = new AiSolo(this, battlePlayers[battlePlayers.Count - 1]);
+            aiBehaviour = new AiSolo(this, battlePlayers_List[battlePlayers_List.Count - 1]);
         }
         else if(gameType == Utility.GameType.pvp)
         {
-            aiBehaviour = new AiPvp(this, battlePlayers[battlePlayers.Count - 1]);
+            aiBehaviour = new AiPvp(this, battlePlayers_List[battlePlayers_List.Count - 1]);
         }
 
         yield return Setup_FirstTurn();
@@ -76,10 +84,10 @@ public class SceneMain : MonoBehaviour
         }
         else if(gameType == Utility.GameType.pvp)
         {
-            bpId = UnityEngine.Random.Range(0, battlePlayers.Count);
+            bpId = UnityEngine.Random.Range(0, battlePlayers_List.Count);
         }
 
-        gm.Order_SetTurn(bpId);
+        gameMain.Order_SetTurn(bpId);
 
         yield return null;
     }
@@ -90,27 +98,27 @@ public class SceneMain : MonoBehaviour
         Client client = GameData.inst.client;
 
         if(server != null) {
-            int bpId = battlePlayers.IndexOf(currentTurn);
+            int bpId = battlePlayers_List.IndexOf(currentTurn);
             bpId++;
-            if(bpId >= battlePlayers.Count) bpId = 0;
-            gm.Order_SetTurn(bpId);
+            if(bpId >= battlePlayers_List.Count) bpId = 0;
+            gameMain.Order_SetTurn(bpId);
         }
         else {
-            gm.Request_EndTurn();
+            gameMain.Request_EndTurn();
         }
     }
 
     // Will be called on both Host and Client
     public IEnumerator On_TurnChange()
     {
-        currentTurn_Text.text = "Current turn for : " + currentTurn.name;
+        currentTurn_Text.text = "Current turn for : " + currentTurn.account.name;
 
-        if(myBPlayer == currentTurn) endTurn_Button.interactable = true;
+        if(battlePlayer == currentTurn) endTurn_Button.interactable = true;
         else endTurn_Button.interactable = false;
 
-        for(int x = 0; x < battlePlayers.Count; x++) 
+        for(int x = 0; x < battlePlayers_List.Count; x++) 
         {
-            BattlePlayer bp = battlePlayers[x];
+            BattlePlayer bp = battlePlayers_List[x];
             for(int y = 0; y < bp.ingameCharacters.Count; y++) 
             {
                 Character character = bp.ingameCharacters[y];
@@ -148,105 +156,21 @@ public class SceneMain : MonoBehaviour
         return gameType;
     }
 
-    public IEnumerator Setup_Reward()
-    {
-        Server server = GameData.inst.server;
-        if(server == null) yield break;
-
-        int randRewardCount = UnityEngine.Random.Range(1, 10);
-        for(int x = 0; x < randRewardCount; x++)
-        {
-            int chanceOfDrop = UnityEngine.Random.Range(1, 101);
-            if(chanceOfDrop <= 50) continue;
-
-            int rarityValue = UnityEngine.Random.Range(1, 101);
-            if(rarityValue <= 5)
-            {
-                int rareDropValue = UnityEngine.Random.Range(3, 6);
-                switch (rareDropValue)
-                {
-                    case 3:
-                        rewards.Add(new Token_Castle());
-                    break;
-                    case 4:
-                        rewards.Add(new Token_Forest());
-                    break;
-                    case 5:
-                        rewards.Add(new Token_Dark());
-                    break;
-                }
-            }
-            else if(rarityValue > 5 && rarityValue <= 50)
-            {
-                rewards.Add(new Gold());
-            }
-            else if(rarityValue > 50 && rarityValue <= 100)
-            {
-                rewards.Add(new Gold());
-            }
-        }
-        
-        yield return null;
-    }
-
-    public IEnumerator Setup_Players()
-    {
-        Server server = GameData.inst.server;
-        Client client = GameData.inst.client;
-        Account account = null;
-        BattlePlayer bp = null;
-        LocalData localData = new LocalData();
-        
-        if(server != null) 
-        {
-            for(int x = 0; x < server.players.Count; x++)
-            {
-                account = server.players[x];
-                bp = new BattlePlayer(this, account, false);
-                battlePlayers.Add(bp);
-                if(bp.name == GameData.inst.account.name)
-                {
-                    myBPlayer = bp;
-                    localData.Save_PlayerData(account);
-                }
-            }
-        }
-        else 
-        {
-            for(int x = 0; x < client.players.Count; x++)
-            {
-                account = client.players[x];
-                bp = new BattlePlayer(this, account, false);
-                battlePlayers.Add(bp);
-                if(bp.name == GameData.inst.account.name)
-                {
-                    myBPlayer = bp;
-                    localData.Save_PlayerData(account);
-                }
-            }
-        }
-
-        BattlePlayer aiBattlePlayer = new BattlePlayer(this, null, true);
-        battlePlayers.Add(aiBattlePlayer);
-
-        yield return null;
-    }
-
     public IEnumerator Setup_HeroCharacters()
     {
         Server server = GameData.inst.server;
         if(server == null) yield break;
 
-        for(int x = 0; x < battlePlayers.Count; x++)
+        for(int x = 0; x < battlePlayers_List.Count; x++)
         {
-            if (battlePlayers[x].aiPlayer) continue;
+            if (battlePlayers_List[x].aiPlayer) continue;
 
             Hex startPoint = startPoints[UnityEngine.Random.Range(0,startPoints.Count)];
             startPoints.Remove(startPoint);
 
-            BattlePlayer bp = battlePlayers[x];
+            BattlePlayer bp = battlePlayers_List[x];
 
-            gm.Order_CreateHeroCharacter(startPoint, bp);
+            gameMain.Order_CreateHeroCharacter(startPoint, bp);
         }
 
         yield return null;
@@ -260,9 +184,9 @@ public class SceneMain : MonoBehaviour
         BattlePlayer winner = null;
 
         List<BattlePlayer> tempBpList = new List<BattlePlayer>();
-        for(int x = 0; x < battlePlayers.Count; x++)
+        for(int x = 0; x < battlePlayers_List.Count; x++)
         {
-            BattlePlayer bp = battlePlayers[x];
+            BattlePlayer bp = battlePlayers_List[x];
 
             if(gameType == Utility.GameType.pvp)
                 if(bp.aiPlayer) continue;
@@ -273,7 +197,7 @@ public class SceneMain : MonoBehaviour
         for(int x = 0; x < tempBpList.Count; x++)
         {
             BattlePlayer bp = tempBpList[x];
-            if(character == bp.hero.character)
+            if(character == bp.heroCharacter)
             {
                 tempBpList.Remove(bp);
                 break;
@@ -291,7 +215,7 @@ public class SceneMain : MonoBehaviour
         }
         if(rewardsList != "") rewardsList = rewardsList.Remove(rewardsList.Length - 1);
 
-        gm.Order_WinLose(winner, rewardsList);
+        gameMain.Order_WinLose(winner, rewardsList);
         yield return null;
     }
 
@@ -299,13 +223,18 @@ public class SceneMain : MonoBehaviour
     {
         GetComponent<SceneMain_UI>().winLosePanel.Show(winner, rewardsList);
 
-        for(int x = 0; x < battlePlayers.Count; x++)
+        for(int x = 0; x < battlePlayers_List.Count; x++)
         {
-            BattlePlayer bp = battlePlayers[x];
-            bp.hero.character.health.hp_cur = bp.hero.character.health.hp_max;
-            if(bp != myBPlayer || bp != winner) continue;
+            BattlePlayer someBattlePlayer = battlePlayers_List[x];
+            if(someBattlePlayer.heroCharacter != null)
+            {
+                Character character = someBattlePlayer.heroCharacter;
+                character.health.hp_cur = character.health.hp_max;
+            }
 
-            yield return ReturnCharacters(bp);
+            if(someBattlePlayer != battlePlayer || someBattlePlayer != winner) continue;
+
+            yield return ReturnCharacters(someBattlePlayer);
             yield return Give_Reward(rewardsList);
         }
     }
@@ -323,7 +252,7 @@ public class SceneMain : MonoBehaviour
         for(int y = 0; y < battlePlayer.ingameCharacters.Count; y++)
         {
             Character character = battlePlayer.ingameCharacters[y];
-            if(character == battlePlayer.hero.character) continue;
+            if(character == battlePlayer.heroCharacter) continue;
             
             tempCharList.Add(character);
         }
@@ -357,4 +286,40 @@ public class SceneMain : MonoBehaviour
         yield return null;
     }
     #endregion
+
+    private void Setup_Reward()
+    {
+        int randRewardCount = UnityEngine.Random.Range(1, 10);
+        for(int x = 0; x < randRewardCount; x++)
+        {
+            int chanceOfDrop = UnityEngine.Random.Range(1, 101);
+            if(chanceOfDrop <= 50) continue;
+
+            int rarityValue = UnityEngine.Random.Range(1, 101);
+            if(rarityValue <= 5)
+            {
+                int rareDropValue = UnityEngine.Random.Range(3, 6);
+                switch (rareDropValue)
+                {
+                    case 3:
+                        rewards.Add(new Token_Castle());
+                    break;
+                    case 4:
+                        rewards.Add(new Token_Forest());
+                    break;
+                    case 5:
+                        rewards.Add(new Token_Dark());
+                    break;
+                }
+            }
+            else if(rarityValue > 5 && rarityValue <= 50)
+            {
+                rewards.Add(new Gold());
+            }
+            else if(rarityValue > 50 && rarityValue <= 100)
+            {
+                rewards.Add(new Gold());
+            }
+        }
+    }
 }

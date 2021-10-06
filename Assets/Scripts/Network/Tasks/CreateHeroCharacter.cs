@@ -49,18 +49,17 @@ public class CreateHeroCharacter : GeneralNetworkTask
         client.netProcessor.Send(client.netManager.GetPeerById(0), this, DeliveryMethod.ReliableOrdered);
     }
 
-    private bool Implementation()
+    private IEnumerator Implementation()
     {
         Hex hex = Utility.Get_Hex_ByCoords(this.coord_x, this.coord_y);
         BattlePlayer owner = Utility.Get_BattlePlayer_ByName(this.ownerName);
-        Character character = owner.hero.character;
-
-        owner.availableCharacters.Remove(character);
+        Character character = owner.heroCharacter;
+        
         owner.ingameCharacters.Add(character);
 
         CharactersData cd = new CharactersData();
-        cd.Create_Character(hex, owner, owner.hero.character);
+        cd.Create_Character(hex, owner, owner.heroCharacter);
 
-        return true;
+        yield return null;
     }
 }

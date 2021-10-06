@@ -21,6 +21,7 @@ public class TaskManager
 
         if(server.taskCurrent == null && server.taskList.Count > 0)
         {
+            Debug.Log("Task queue : " + server.taskList.Count);
             server.taskCurrent = server.taskList[0];
             server.taskList.RemoveAt(0);
 

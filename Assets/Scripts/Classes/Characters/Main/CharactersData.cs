@@ -137,17 +137,19 @@ public class CharactersData
 
     private void Set_CharacterIcons(Character character)
     {
-        if(character.owner.hero.character != character)
+        if(character.owner.heroCharacter != character)
             character.tr.Find("Crown").gameObject.SetActive(false);
     }
 
     private void Set_CharacterColor(Character character)
     {
+        SceneMain sceneMain = GameData.inst.gameMain.sceneMain;
+
         SpriteRenderer spriteRenderer = character.tr.Find("Shadow").GetComponent<SpriteRenderer>();
         Color color = Color.white;
-        for(int x = 0; x < character.owner.sceneMain.battlePlayers.Count; x++)
+        for(int x = 0; x < sceneMain.battlePlayers_List.Count; x++)
         {
-            BattlePlayer someBattlePlayer = character.owner.sceneMain.battlePlayers[x];
+            BattlePlayer someBattlePlayer = sceneMain.battlePlayers_List[x];
             if(character.owner != someBattlePlayer) continue;
 
             switch (x)

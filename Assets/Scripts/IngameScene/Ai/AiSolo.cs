@@ -15,7 +15,7 @@ public class AiSolo : AiBehaviour
 
     public override IEnumerator AITurn()
     {
-        if(aiBattlePlayer.hero == null)
+        if(aiBattlePlayer.heroCharacter == null)
         {
             Create_AiHero(Get_StartPoint());
         }
@@ -102,9 +102,9 @@ public class AiSolo : AiBehaviour
     {
         List<Hex> enemyHexes = new List<Hex>();
 
-        for (int x = 0; x < sceneMain.battlePlayers.Count; x++)
+        for (int x = 0; x < sceneMain.battlePlayers_List.Count; x++)
         {
-            BattlePlayer battlePlayer = sceneMain.battlePlayers[x];
+            BattlePlayer battlePlayer = sceneMain.battlePlayers_List[x];
             if(battlePlayer == aiBattlePlayer) continue;
 
             for(int y = 0; y < battlePlayer.ingameCharacters.Count; y++)
