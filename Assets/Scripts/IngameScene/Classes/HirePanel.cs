@@ -22,6 +22,8 @@ public class HirePanel
     private Image selected_Character_Image;
     private Text selected_Character_Text;
 
+    private CharactersData cd;
+
     public HirePanel(SceneMain_UI sceneUI, SceneMain sceneMain)
     {
         this.sceneUI = sceneUI;
@@ -43,6 +45,8 @@ public class HirePanel
         cancel_Button.onClick.AddListener(Hide);
 
         Hide();
+
+        cd = new CharactersData();
     }
 
     public void Show(Hex hex)
@@ -85,11 +89,7 @@ public class HirePanel
         selected_Character_Text.gameObject.SetActive(true);
 
         selected_Character_Image.sprite = selected_Character.image;
-        selected_Character_Text.text = selected_Character.name + "\n\n" +
-        "Cost : " + selected_Character.ingame_cost + "\n\n" +
-        "Health : " + selected_Character.health.hp_max + "\n" +
-        "Movement : " + selected_Character.movement.movePoints_max + "\n" +
-        "Attack : " + Get_CharacterAttacks(selected_Character);
+        selected_Character_Text.text = cd.Get_Menu_Character_Tooltip(selected_Character);
 
         if(GameData.inst.account.acc_gold >= selected_Character.ingame_cost) confirm_Button.interactable = true;
     }
@@ -115,16 +115,5 @@ public class HirePanel
     {
         if(canvas_Go.activeInHierarchy) canvas_Go.SetActive(false);
         sceneUI.mouseOverUI = false;
-    }
-
-    private string Get_CharacterAttacks(Character character)
-    {
-        string result = "";
-        for(int x = 0; x < character.attacks.Count; x++)
-        {
-            CharVars.char_Attack att = character.attacks[x];
-            result += "\n  - " + att.attackType + ", " + att.attackDmgType + ", " + att.attacksCount + "x" + att.attackDmg_base;
-        }
-        return result;
     }
 }

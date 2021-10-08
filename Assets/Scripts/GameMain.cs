@@ -70,7 +70,7 @@ public class GameMain : MonoBehaviour
 
     public void Order_SetupPvpPlayers()
     {
-        SetupPvpPlayers setupPvpPlayers = new SetupPvpPlayers();
+        PVPSetupPlayers setupPvpPlayers = new PVPSetupPlayers();
         setupPvpPlayers.taskId = Utility.RandomValueGenerator();
         setupPvpPlayers.AssignToAll();
 

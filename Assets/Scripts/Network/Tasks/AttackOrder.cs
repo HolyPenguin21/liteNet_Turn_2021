@@ -30,7 +30,7 @@ public class AttackOrder : GeneralNetworkTask
 
     public override void SendToClients(Server server)
     {
-        Debug.Log("Server > Sending to clients : Move, id : " + taskId);
+        Debug.Log("Server > Sending to clients : Attck order, id : " + taskId);
         for (int x = 0; x < server.players.Count; x++)
         {
             Account player = server.players[x];
@@ -64,7 +64,9 @@ public class AttackOrder : GeneralNetworkTask
 
         // move In
         yield return attacker.Attack_Start(t_Hex);
-        yield return target.Attack_Start(a_Hex);
+        
+        if(target == null) yield break;
+            yield return target.Attack_Start(a_Hex);
 
         string[] data = attackData.Split(';');
         for (int x = 0; x < data.Length; x++)
@@ -83,8 +85,6 @@ public class AttackOrder : GeneralNetworkTask
                     if (healthLeft <= 0)
                     {
                         GameData.inst.gameMain.Order_Die(target.hex);
-                        // yield return GameMain.inst.Server_AddExp(attacker.hex, 7);
-                        break;
                     }
             }
             else
@@ -96,32 +96,22 @@ public class AttackOrder : GeneralNetworkTask
                     if (healthLeft <= 0)
                     {
                         GameData.inst.gameMain.Order_Die(attacker.hex);
-                        // yield return GameMain.inst.Server_AddExp(attacker.hex, 7);
-                        break;
                     }
             }
         }
         // move Out
-        if (attacker.health.hp_cur > 0) yield return attacker.Attack_End();
+        if (attacker.health.hp_cur > 0) 
+        {
+            yield return attacker.Attack_End();
+            if(attacker.owner.aiPlayer)
+                GameData.inst.gameMain.sceneMain.aiBehaviour.aiInAction = false;
+        }
+        else 
+        {
+            if(attacker.owner.aiPlayer) 
+                GameData.inst.gameMain.sceneMain.aiBehaviour.aiInAction = false;
+        }
         if (target.health.hp_cur > 0) yield return target.Attack_End();
-
-        // if (!Utility.IsServer()) yield break;
-
-        // if (attacker.charHp.hp_cur > 0)
-        // {
-        //     yield return GameMain.inst.Server_AddExp(attacker.hex, 1);
-
-        //     if (attacker.charExp.exp_cur >= attacker.charExp.exp_max)
-        //         yield return GameMain.inst.Server_LevelUp(attacker);
-        // }
-
-        // if (target.charHp.hp_cur > 0)
-        // {
-        //     yield return GameMain.inst.Server_AddExp(target.hex, 1);
-
-        //     if (target.charExp.exp_cur >= target.charExp.exp_max)
-        //         yield return GameMain.inst.Server_LevelUp(target);
-        // }
     }
 
     public string Get_AttackData(Character attacker, Character target)

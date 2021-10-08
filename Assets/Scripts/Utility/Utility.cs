@@ -13,6 +13,7 @@ public static class Utility
     public enum Daytime { dawn, day1, day2, evening, night1, night2 };
     public enum UI_Char_Button { hero, battleChar, accChar };
     public enum GameType { solo, pvp };
+    public enum EventType { none, wolf, goblin};
 
     public struct GridCoord
     {
@@ -90,10 +91,11 @@ public static class Utility
 
     public static BattlePlayer Get_BattlePlayer_ByName(string name)
     {
-        SceneMain sm = GameObject.Find("SceneMain").GetComponent<SceneMain>();
-        for(int x = 0; x < sm.battlePlayers_List.Count; x++)
+        SceneMain sceneMain = GameData.inst.gameMain.sceneMain;
+
+        for(int x = 0; x < sceneMain.battlePlayers_List.Count; x++)
         {
-            BattlePlayer battlePlayer = sm.battlePlayers_List[x];
+            BattlePlayer battlePlayer = sceneMain.battlePlayers_List[x];
             if (battlePlayer.account.name == name)
                 return battlePlayer;
         }

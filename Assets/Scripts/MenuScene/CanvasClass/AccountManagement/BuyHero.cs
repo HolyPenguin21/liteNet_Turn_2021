@@ -8,6 +8,7 @@ public class BuyHero
     private AccountManagementMenu accountManagementMenu;
 
     private InputField heroName_Input;
+    private Text heroInfo_Text;
     private Button heroSwordman_Button;
     private Button heroSpearman_Button;
     private int heroIdToCreate;
@@ -20,7 +21,8 @@ public class BuyHero
         this.accountManagementMenu = accountManagementMenu;
 
         this.heroName_Input = accountManagementMenu.buyHeroPanel_go.transform.Find("HeroName_InputField").GetComponent<InputField>();
-        
+        this.heroInfo_Text = accountManagementMenu.buyHeroPanel_go.transform.Find("HeroInfo_Text").GetComponent<Text>();
+
         this.heroSwordman_Button = accountManagementMenu.buyHeroPanel_go.transform.Find("HeroType_Swordman_Button").GetComponent<Button>();
         this.heroSwordman_Button.onClick.AddListener(Select_Swordman_AsHero);
         

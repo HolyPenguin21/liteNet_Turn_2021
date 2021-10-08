@@ -52,6 +52,7 @@ public class AttackPanel
         {
             AttackButton aButton = new AttackButton(this, x, attacker, target);
             attackButtons.Add(aButton);
+            if(x == 0) aButton.TaskOnClick();
         }
     }
 

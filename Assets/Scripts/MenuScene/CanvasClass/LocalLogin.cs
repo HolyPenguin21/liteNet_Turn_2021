@@ -64,6 +64,8 @@ public class LocalLogin : UI_Menu_Canvas
 
         Add_AwailableAccounts(acc);
         message.text = "New local account created : " + acc.name;
+
+        SingIn();
     }
 
     private void SingIn()
@@ -180,6 +182,7 @@ public class LocalLogin : UI_Menu_Canvas
 
     private void ResetLocalData()
     {
+        GameData.inst.account = null;
         PlayerPrefs.DeleteAll();
         Show_AwailableAccounts();
     }

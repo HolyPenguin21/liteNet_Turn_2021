@@ -76,12 +76,8 @@ public class BuyCharacter
         accountManagementMenu.buyCharacterPanel_go.SetActive(false);
     }
 
-    public void Update_CharacterInfo_OnBuy(Character c)
+    public void Update_CharacterInfo_OnBuy(Character character)
     {
-        characterToBuy_info_Text.text = c.name + "\n\n";
-        characterToBuy_info_Text.text += c.acc_cost + "\n\n";
-        characterToBuy_info_Text.text += "Attack : \n";
-        characterToBuy_info_Text.text += "Defence : \n";
-        characterToBuy_info_Text.text += "Skills : \n";
+        characterToBuy_info_Text.text = cd.Get_Menu_Character_Tooltip(character);
     }
 }

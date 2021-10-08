@@ -204,7 +204,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Swordman\n\nCost : 123\n\nSkills :\n - Lorem ipsum\n - Dolor sit\n - Amet"
+  m_Text: Select character ...
 --- !u!1 &445151804101101467
 GameObject:
   m_ObjectHideFlags: 0

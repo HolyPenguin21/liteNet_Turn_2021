@@ -119,6 +119,43 @@ public class CharactersData
         }
     }
 
+    public string Get_Menu_Character_Tooltip(Character character)
+    {
+        string result = character.name;
+        result += "\nCost : " + character.acc_cost;
+        result += "\nSummon cost : " + character.ingame_cost;
+        result += "\nHealth : " + character.health.hp_cur + "/" + character.health.hp_max;
+        result += "\nDodge : " + character.defence.dodgeChance;
+        result += "\nMove points : " + character.movement.movePoints_max;
+        result += "\nAttack : " + Get_CharacterAttacks_Tooltip(character);
+
+        return result;
+    }
+
+    public string Get_Ingame_Character_Tooltip(Character character)
+    {
+        string result = character.name;
+        result += "\nHealth : " + character.health.hp_cur + "/" + character.health.hp_max;
+        result += "\nDodge : " + character.defence.dodgeChance + "+" + character.hex.dodge;
+        if(character.canAct) result += "\nCan act : yes";
+        else result += "\nCan act : no";
+        result += "\nMove points : " + character.movement.movePoints_cur + "/" + character.movement.movePoints_max;
+        result += "\nAttack : " + Get_CharacterAttacks_Tooltip(character);
+
+        return result;
+    }
+
+    private string Get_CharacterAttacks_Tooltip(Character character)
+    {
+        string result = "";
+        for(int x = 0; x < character.attacks.Count; x++)
+        {
+            CharVars.char_Attack att = character.attacks[x];
+            result += "\n  - " + att.attackType + ", " + att.attackDmgType + ", " + att.attacksCount + "x" + att.attackDmg_base;
+        }
+        return result;
+    }
+
     private void Set_CharacterVisual(Character character)
     {
         character.aController = character.go.GetComponent<AnimationController>();

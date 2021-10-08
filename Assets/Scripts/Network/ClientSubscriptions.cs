@@ -161,9 +161,9 @@ public class ClientSubscriptions
 
     public void SetupPvpPlayers()
     {
-        netProcessor.SubscribeReusable<SetupPvpPlayers>((data) => {
+        netProcessor.SubscribeReusable<PVPSetupPlayers>((data) => {
             Debug.Log("Client > SetupPvpPlayers order from Server. Task id : " + data.taskId);
-            SetupPvpPlayers setupPvpPlayers = data;
+            PVPSetupPlayers setupPvpPlayers = data;
             GameData.inst.StartCoroutine(setupPvpPlayers.Implementation_Client());
         });
     }

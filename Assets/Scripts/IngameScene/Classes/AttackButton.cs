@@ -52,7 +52,7 @@ public class AttackButton
         }
     }
 
-    private void TaskOnClick()
+    public void TaskOnClick()
     {
         aPanel.SelectAttack(this.a_attackId, this.t_attackId);
     }

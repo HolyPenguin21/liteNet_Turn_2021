@@ -24,9 +24,9 @@ public class GridBuilder : MonoBehaviour
 
         sceneData = GameObject.Find("SceneMain").GetComponent<SceneMain>();
 
-        CreateGrid(); // COMMENT
-        Assign_HexToGrid(); // COMMENT
-        Assign_Neighbors(); // COMMENT
+        CreateGrid();
+        Assign_HexToGrid();
+        Assign_Neighbors();
     }
 
     // Build it only once, in Editor mode, when scene is loaded.

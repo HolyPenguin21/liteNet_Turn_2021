@@ -20,9 +20,9 @@ public class MenuSceneMain : MonoBehaviour
         main_Menu = new MainMenu(this);
         p2p_Menu = new P2PMenu(this);
         accountManagement_Menu = new AccountManagementMenu(this);
+        offlineMenu = new OfflineMenu(this);
 
         p2PLobbyMenu = new P2PLobbyMenu(GameObject.Find("P2P_Lobby_Canvas"));
-        offlineMenu = new OfflineMenu(GameObject.Find("Offine_Canvas"));
 
         HideBeforeStart();
     }
@@ -84,42 +84,6 @@ public class MenuSceneMain : MonoBehaviour
     #endregion
 
     #region Player Management Menu
-    // Hero Creation
-    // public void Button_HeroCreation_CreateHero()
-    // {
-    //     accountManagement_Menu.Create_Hero();
-    // }
-    // public void Button_HeroType_Swordman()
-    // {
-    //     accountManagement_Menu.Select_Swordman_AsHero();
-    // }
-    // public void Button_HeroType_Spearman()
-    // {
-    //     accountManagement_Menu.Select_Spearman_AsHero();
-    // }
-    // public void Button_HeroType_Knight()
-    // {
-    //     accountManagement_Menu.Select_Knight_AsHero();
-    // }
-
-    // Character Buy
-    // public void Button_CharacterBuy_Buy()
-    // {
-    //     accountManagement_Menu.Buy_Character();
-    // }
-    // public void Button_Buy_Swordman()
-    // {
-    //     accountManagement_Menu.Select_Swordman_ToBuy();
-    // }
-    // public void Button_Buy_Spearman()
-    // {
-    //     accountManagement_Menu.Select_Spearman_ToBuy();
-    // }
-    // public void Button_Buy_Knight()
-    // {
-    //     accountManagement_Menu.Select_Knight_ToBuy();
-    // }
-
     public void Button_AccountManagement_Back()
     {
         LocalData ld = new LocalData();
@@ -190,7 +154,7 @@ public class MenuSceneMain : MonoBehaviour
 
     public void Button_StartGame()
     {
-        GameData.inst.gameMain.Order_StartGame(3);
+        GameData.inst.gameMain.Order_StartGame(4);
     }
 
     public void Button_P2P_Lobby_Back()
@@ -211,12 +175,8 @@ public class MenuSceneMain : MonoBehaviour
         main_Menu.Hide();
         offlineMenu.Show();
 
+        GameData.inst.CreateHost();
         GameData.inst.gameType = Utility.GameType.solo;
-    }
-
-    public void Button_Events()
-    {
-        // Utility.Load_Scene(1);
     }
 
     public void Button_Offline_Back()

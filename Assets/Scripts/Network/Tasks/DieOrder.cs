@@ -48,10 +48,11 @@ public class DieOrder : GeneralNetworkTask
 
     private IEnumerator Implementation()
     {
+        SceneMain sceneMain = GameData.inst.gameMain.sceneMain;
+        
         Hex hex = Utility.Get_Hex_ByCoords(coord_x, coord_y);
         Character character = hex.character;
         BattlePlayer owner = character.owner;
-        SceneMain sceneMain = GameObject.Find("SceneMain").GetComponent<SceneMain>();
 
         yield return character.Die_Animation();
 

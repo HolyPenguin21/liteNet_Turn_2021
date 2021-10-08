@@ -54,8 +54,6 @@ public class CreateHeroCharacter : GeneralNetworkTask
         Hex hex = Utility.Get_Hex_ByCoords(this.coord_x, this.coord_y);
         BattlePlayer owner = Utility.Get_BattlePlayer_ByName(this.ownerName);
         Character character = owner.heroCharacter;
-        
-        owner.ingameCharacters.Add(character);
 
         CharactersData cd = new CharactersData();
         cd.Create_Character(hex, owner, owner.heroCharacter);

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SceneMain : MonoBehaviour
 {
     private GameMain gameMain;
+    public Utility.EventType eventType;
     public Hex[] grid;
     public List<Hex> startPoints = new List<Hex>();
     public List<Hex> bossSpawners = new List<Hex>();
@@ -28,6 +29,7 @@ public class SceneMain : MonoBehaviour
         // UI
         currentTurn_Text = GameObject.Find("CurrentTurn_Text").GetComponent<Text>();
         endTurn_Button = GameObject.Find("EndTurn_Button").GetComponent<Button>();
+        endTurn_Button.interactable = false;
 
         gameMain = GameData.inst.gameMain;
         gameMain.sceneMain = this;
@@ -37,46 +39,26 @@ public class SceneMain : MonoBehaviour
 
     private IEnumerator Start()
     {
+        Get_GameType(); // both
+
         Server server = GameData.inst.server;
         if(server == null) yield break;
 
-        yield return new WaitForSeconds(2f);
-        Setup_Reward();
-        gameMain.Order_SetupPvpPlayers();
+        yield return new WaitForSeconds(0.5f);
+        gameMain.Order_SetupPvpPlayers(); // server with order
 
+        yield return new WaitForSeconds(0.5f);
+        Setup_HeroCharacters(); // server with order
+        Setup_Reward(); // server local
+        Setup_Ai(); // server local
 
-
-        // Setup_Players();
-        // yield return Setup_Game();
-    }
-
-
-
-    private IEnumerator Setup_Game()
-    {
-        Get_GameType();
-        yield return Setup_HeroCharacters();
-
-        endTurn_Button.interactable = false;
-
-        if(gameType == Utility.GameType.solo)
-        {
-            aiBehaviour = new AiSolo(this, battlePlayers_List[battlePlayers_List.Count - 1]);
-        }
-        else if(gameType == Utility.GameType.pvp)
-        {
-            aiBehaviour = new AiPvp(this, battlePlayers_List[battlePlayers_List.Count - 1]);
-        }
-
-        yield return Setup_FirstTurn();
+        yield return new WaitForSeconds(0.5f);
+        Setup_FirstTurn(); // server with order
     }
 
     #region Turn management
-    public IEnumerator Setup_FirstTurn()
+    public void Setup_FirstTurn()
     {
-        Server server = GameData.inst.server;
-        if(server == null) yield break;
-
         int bpId = 0;
         if(gameType == Utility.GameType.solo)
         {
@@ -88,8 +70,6 @@ public class SceneMain : MonoBehaviour
         }
 
         gameMain.Order_SetTurn(bpId);
-
-        yield return null;
     }
 
     public void Button_EndTurn()
@@ -119,77 +99,63 @@ public class SceneMain : MonoBehaviour
         for(int x = 0; x < battlePlayers_List.Count; x++) 
         {
             BattlePlayer bp = battlePlayers_List[x];
-            for(int y = 0; y < bp.ingameCharacters.Count; y++) 
+            if(bp == currentTurn)
             {
-                Character character = bp.ingameCharacters[y];
-                if(bp == currentTurn) 
+                // Hero character
+                if(bp.heroCharacter != null)
                 {
-                    character.canAct = true;
-                    character.movement.movePoints_cur = character.movement.movePoints_max;
+                    Character heroCharacter = bp.heroCharacter;
+                    Character_CanAct(heroCharacter);
                 }
-                else 
+                //Ingame characters
+                for(int y = 0; y < bp.ingameCharacters.Count; y++) 
                 {
-                    character.canAct = false;
-                    character.movement.movePoints_cur = 0;
+                    Character character = bp.ingameCharacters[y];
+                    Character_CanAct(character);
+                }
+            }
+            else
+            {
+                // Hero character
+                if(bp.heroCharacter != null)
+                {
+                    Character heroCharacter = bp.heroCharacter;
+                    Character_CantAct(heroCharacter);
+                }
+                //Ingame characters
+                for(int y = 0; y < bp.ingameCharacters.Count; y++) 
+                {
+                    Character character = bp.ingameCharacters[y];
+                    Character_CantAct(character);
                 }
             }
         }
 
-        if(GameData.inst.server != null && currentTurn.aiPlayer) 
+        if(GameData.inst.server != null && currentTurn.aiPlayer)
             StartCoroutine(aiBehaviour.AITurn());
 
         yield return null;
     }
-    #endregion
-
-    #region GameStart
-    public Utility.GameType Get_GameType()
+    private void Character_CanAct(Character character)
     {
-        gameType = GameData.inst.gameType;
-
-        Server server = GameData.inst.server;
-        if(server == null) return gameType;
-
-        if(server.players.Count == 1) 
-            gameType = Utility.GameType.solo;
-
-        return gameType;
+        character.canAct = true;
+        character.movement.movePoints_cur = character.movement.movePoints_max;
     }
-
-    public IEnumerator Setup_HeroCharacters()
+    private void Character_CantAct(Character character)
     {
-        Server server = GameData.inst.server;
-        if(server == null) yield break;
-
-        for(int x = 0; x < battlePlayers_List.Count; x++)
-        {
-            if (battlePlayers_List[x].aiPlayer) continue;
-
-            Hex startPoint = startPoints[UnityEngine.Random.Range(0,startPoints.Count)];
-            startPoints.Remove(startPoint);
-
-            BattlePlayer bp = battlePlayers_List[x];
-
-            gameMain.Order_CreateHeroCharacter(startPoint, bp);
-        }
-
-        yield return null;
+        character.canAct = false;
+        character.movement.movePoints_cur = 0;
     }
     #endregion
 
     #region GameEnd
     public IEnumerator Check_Dead(Character character)
     {
-        // Server only
-        BattlePlayer winner = null;
-
         List<BattlePlayer> tempBpList = new List<BattlePlayer>();
         for(int x = 0; x < battlePlayers_List.Count; x++)
         {
             BattlePlayer bp = battlePlayers_List[x];
-
-            if(gameType == Utility.GameType.pvp)
-                if(bp.aiPlayer) continue;
+            if(gameType == Utility.GameType.pvp) if(bp.aiPlayer) continue;
 
             tempBpList.Add(bp);
         }
@@ -206,15 +172,9 @@ public class SceneMain : MonoBehaviour
 
         if(tempBpList.Count != 1) yield break;
 
-        winner = tempBpList[0];
+        BattlePlayer winner = tempBpList[0];
 
-        string rewardsList = "";
-        for(int x = 0; x < rewards.Count; x++)
-        {
-            rewardsList += rewards[x].id + ",";
-        }
-        if(rewardsList != "") rewardsList = rewardsList.Remove(rewardsList.Length - 1);
-
+        string rewardsList = Get_RewardList();
         gameMain.Order_WinLose(winner, rewardsList);
         yield return null;
     }
@@ -222,38 +182,59 @@ public class SceneMain : MonoBehaviour
     public IEnumerator EndGame(BattlePlayer winner, string rewardsList)
     {
         GetComponent<SceneMain_UI>().winLosePanel.Show(winner, rewardsList);
+        Heal_AllCharacters();
 
+        if(battlePlayer != winner) yield break;
+
+        ReturnCharacters(winner);
+        Give_Reward(winner, rewardsList);
+
+        yield return null;
+    }
+
+    private void Heal_AllCharacters()
+    {
         for(int x = 0; x < battlePlayers_List.Count; x++)
         {
-            BattlePlayer someBattlePlayer = battlePlayers_List[x];
-            if(someBattlePlayer.heroCharacter != null)
+            BattlePlayer bp = battlePlayers_List[x];
+            if(bp.aiPlayer) return;
+
+            // Heal hero
+            if(bp.heroCharacter != null)
             {
-                Character character = someBattlePlayer.heroCharacter;
+                Character character = bp.heroCharacter;
                 character.health.hp_cur = character.health.hp_max;
             }
 
-            if(someBattlePlayer != battlePlayer || someBattlePlayer != winner) continue;
+            // Heal other
+            for(int y = 0; y < bp.availableCharacters.Count; y++)
+            {
+                Character character = bp.availableCharacters[y];
+                character.health.hp_cur = character.health.hp_max;
+            }
 
-            yield return ReturnCharacters(someBattlePlayer);
-            yield return Give_Reward(rewardsList);
+            for(int y = 0; y < bp.ingameCharacters.Count; y++)
+            {
+                Character character = bp.ingameCharacters[y];
+                character.health.hp_cur = character.health.hp_max;
+            }
         }
     }
 
-    private IEnumerator ReturnCharacters(BattlePlayer battlePlayer)
+    private void ReturnCharacters(BattlePlayer bp)
     {
+        if(bp.aiPlayer) return;
         List<Character> tempCharList = new List<Character>();
 
-        for(int y = 0; y < battlePlayer.availableCharacters.Count; y++)
+        for(int y = 0; y < bp.availableCharacters.Count; y++)
         {
-            Character character = battlePlayer.availableCharacters[y];
+            Character character = bp.availableCharacters[y];
             tempCharList.Add(character);
         }
 
-        for(int y = 0; y < battlePlayer.ingameCharacters.Count; y++)
+        for(int y = 0; y < bp.ingameCharacters.Count; y++)
         {
-            Character character = battlePlayer.ingameCharacters[y];
-            if(character == battlePlayer.heroCharacter) continue;
-            
+            Character character = bp.ingameCharacters[y];
             tempCharList.Add(character);
         }
 
@@ -261,19 +242,19 @@ public class SceneMain : MonoBehaviour
         for(int y = 0; y < tempCharList.Count; y++)
         {
             Character character = tempCharList[y];
-            character.health.hp_cur = character.health.hp_max;
-
             account.heroes[account.battleHeroId].battleCharacters.Add(character);
         }
 
         LocalData localData = new LocalData();
         localData.Save_PlayerData(account);
-        yield return null;
     }
 
-    private IEnumerator Give_Reward(string rewardsList)
+    private void Give_Reward(BattlePlayer bp, string rewardsList)
     {
+        if(bp.aiPlayer) return;
         Account account = GameData.inst.account;
+
+        if(rewardsList == "") return;
 
         PlayerItemsData playerItemsData = new PlayerItemsData();
         string[] rewardsData = rewardsList.Split(',');
@@ -282,8 +263,6 @@ public class SceneMain : MonoBehaviour
             PlayerItem playerItem = playerItemsData.Get_PlayerItem_ById(Convert.ToInt32(rewardsData[x]));
             account.items.Add(playerItem);
         }
-
-        yield return null;
     }
     #endregion
 
@@ -320,6 +299,59 @@ public class SceneMain : MonoBehaviour
             {
                 rewards.Add(new Gold());
             }
+        }
+    }
+
+    private string Get_RewardList()
+    {
+        string rewardsList = "";
+
+        for(int x = 0; x < rewards.Count; x++)
+        {
+            rewardsList += rewards[x].id + ",";
+        }
+        if(rewardsList != "") rewardsList = rewardsList.Remove(rewardsList.Length - 1);
+        
+        return rewardsList;
+    }
+
+    public Utility.GameType Get_GameType()
+    {
+        gameType = GameData.inst.gameType;
+
+        Server server = GameData.inst.server;
+        if(server == null) return gameType;
+
+        if(server.players.Count == 1) 
+            gameType = Utility.GameType.solo;
+
+        return gameType;
+    }
+
+    public void Setup_HeroCharacters()
+    {
+        for(int x = 0; x < battlePlayers_List.Count; x++)
+        {
+            if (battlePlayers_List[x].aiPlayer) continue;
+
+            Hex startPoint = startPoints[UnityEngine.Random.Range(0,startPoints.Count)];
+            startPoints.Remove(startPoint);
+
+            BattlePlayer bp = battlePlayers_List[x];
+
+            gameMain.Order_CreateHeroCharacter(startPoint, bp);
+        }
+    }
+
+    private void Setup_Ai()
+    {
+        if(gameType == Utility.GameType.solo)
+        {
+            aiBehaviour = new AiSolo(this, battlePlayers_List[battlePlayers_List.Count - 1]);
+        }
+        else if(gameType == Utility.GameType.pvp)
+        {
+            aiBehaviour = new AiPvp(this, battlePlayers_List[battlePlayers_List.Count - 1]);
         }
     }
 }

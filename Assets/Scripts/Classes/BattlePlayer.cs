@@ -44,5 +44,9 @@ public class BattlePlayer
     private void Remove_Characters()
     {
         account.heroes[account.battleHeroId].battleCharacters.Clear();
+        
+        if(account.name != GameData.inst.account.name) return;
+
+        GameData.inst.account.heroes[account.battleHeroId].battleCharacters.Clear();
     }
 }

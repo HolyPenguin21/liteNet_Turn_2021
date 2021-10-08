@@ -41,6 +41,25 @@ public class Pathfinding
         pathVisual.gameObject.SetActive(true);
     }
 
+    public void Show_RealPath(Character character, Hex start, Hex end)
+    {
+        temp_path = Get_RealPath(character, Get_Path(start, end));
+        if(temp_path == null || temp_path.Count == 0) return;
+        
+        visual_path.Clear();
+        visual_path.Add(start);
+        for(int x = 0; x < temp_path.Count; x++)
+            visual_path.Add(temp_path[x]);
+
+        pathVisual.positionCount = visual_path.Count;
+        for (int x = 0; x < pathVisual.positionCount; x++)
+        {
+            pathVisual.SetPosition(x, visual_path[x].tr.position);
+        }
+
+        pathVisual.gameObject.SetActive(true);
+    }
+
     public List<Hex> Get_Path(Hex start, Hex end)
     {
         bool pathComplete = false;

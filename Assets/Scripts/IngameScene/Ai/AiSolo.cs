@@ -11,18 +11,31 @@ public class AiSolo : AiBehaviour
         this.sceneMain = sceneMain;
         this.sceneMain_ui = sceneMain.gameObject.GetComponent<SceneMain_UI>();
         this.aiBattlePlayer = aiBattlePlayer;
+
+        PrepareAI();
+    }
+
+    private void PrepareAI()
+    {
+        switch(sceneMain.eventType)
+        {
+            case Utility.EventType.none:
+                Create_AiHero(Get_StartPoint());
+            break;
+
+            case Utility.EventType.wolf:
+                Event_Wolf(Get_StartPoint());
+            break;
+
+            case Utility.EventType.goblin:
+                Event_Goblin(Get_StartPoint());
+            break;
+        }
     }
 
     public override IEnumerator AITurn()
     {
-        if(aiBattlePlayer.heroCharacter == null)
-        {
-            Create_AiHero(Get_StartPoint());
-        }
-        else
-        {
-            yield return AiAction();
-        }
+        yield return AiAction();
 
         sceneMain.Button_EndTurn();
         yield return null;
@@ -30,20 +43,30 @@ public class AiSolo : AiBehaviour
 
     private IEnumerator AiAction()
     {
-        // Movement / Attack
+        // Characters actions
         for (int x = 0; x < aiBattlePlayer.ingameCharacters.Count; x++)
         {
             Character aiChar = aiBattlePlayer.ingameCharacters[x];
             if (!aiChar.canAct) yield break;
 
-            yield return Move_ToRandomEnemyInRange(aiChar);
+            yield return Move_ToRandomEnemy(aiChar);
             while(aiInAction) yield return null;
 
             yield return Attack_NearbyEnemy(aiChar);
+            if(aiChar == null) aiInAction = false;
             while(aiInAction) yield return null;
             // if (aiChar == null) continue;
         }
-        yield return null;
+
+        // Hero actions
+        Character aiHero = aiBattlePlayer.heroCharacter;
+        if (!aiHero.canAct) yield break;
+
+        yield return Move_ToRandomEnemy(aiHero);
+        while(aiInAction) yield return null;
+
+        yield return Attack_NearbyEnemy(aiHero);
+        while(aiInAction) yield return null;
     }
 
     private IEnumerator Attack_NearbyEnemy(Character character)
@@ -69,7 +92,7 @@ public class AiSolo : AiBehaviour
         yield return null;
     }
 
-    private IEnumerator Move_ToRandomEnemyInRange(Character character)
+    private IEnumerator Move_ToRandomEnemy(Character character)
     {
         aiInAction = true;
         if (!character.canAct || character.movement.movePoints_cur == 0) 
@@ -78,7 +101,7 @@ public class AiSolo : AiBehaviour
             yield break;
         }
 
-        List<Hex> enemysInRange = Get_Enemys_InRange(character);
+        List<Hex> enemysInRange = Get_Enemys(character);
         if (enemysInRange.Count == 0)
         {
             aiInAction = false;
@@ -98,7 +121,7 @@ public class AiSolo : AiBehaviour
         GameData.inst.gameMain.On_Move(character.hex, path[path.Count - 1]);
     }
 
-    private List<Hex> Get_Enemys_InRange(Character aiChar)
+    private List<Hex> Get_Enemys(Character aiChar)
     {
         List<Hex> enemyHexes = new List<Hex>();
 
@@ -106,6 +129,8 @@ public class AiSolo : AiBehaviour
         {
             BattlePlayer battlePlayer = sceneMain.battlePlayers_List[x];
             if(battlePlayer == aiBattlePlayer) continue;
+
+            if(battlePlayer.heroCharacter != null) enemyHexes.Add(battlePlayer.heroCharacter.hex);
 
             for(int y = 0; y < battlePlayer.ingameCharacters.Count; y++)
             {
@@ -143,10 +168,12 @@ public class AiSolo : AiBehaviour
 
     private Hex Get_StartPoint()
     {
-        Hex startPoint = sceneMain.startPoints[Random.Range(0, sceneMain.startPoints.Count)];
+        Hex startPoint = null;
+        if(sceneMain.startPoints.Count != 0)
+            startPoint = sceneMain.startPoints[Random.Range(0, sceneMain.startPoints.Count)];
 
-        if(startPoint == null)
-        startPoint = sceneMain.bossSpawners[Random.Range(0, sceneMain.bossSpawners.Count)];
+        if(startPoint == null && sceneMain.bossSpawners.Count != 0)
+            startPoint = sceneMain.bossSpawners[Random.Range(0, sceneMain.bossSpawners.Count)];
 
         return startPoint;
     }
@@ -158,5 +185,38 @@ public class AiSolo : AiBehaviour
 
         Character character = charactersData.Get_Character_ById(randCharacterId);
         GameData.inst.gameMain.Order_CreateAICharacter(hex, aiBattlePlayer, character, 1);
+    }
+
+    private void Event_Wolf(Hex hex)
+    {
+        CharactersData charactersData = new CharactersData();
+        Character character = charactersData.Get_Character_ById(5);
+        GameData.inst.gameMain.Order_CreateAICharacter(hex, aiBattlePlayer, character, 1);
+
+        for(int x = 0; x < hex.neighbors.Count; x++)
+        {
+            int rand = UnityEngine.Random.Range(1, 101);
+            if(rand < 50) continue;
+
+            Hex crHex = hex.neighbors[x];
+            GameData.inst.gameMain.Order_CreateAICharacter(crHex, aiBattlePlayer, character, 0);
+        }
+    }
+
+    private void Event_Goblin(Hex hex)
+    {
+        CharactersData charactersData = new CharactersData();
+        Character character = charactersData.Get_Character_ById(7);
+        GameData.inst.gameMain.Order_CreateAICharacter(hex, aiBattlePlayer, character, 1);
+
+        for(int x = 0; x < hex.neighbors.Count; x++)
+        {
+            int rand = UnityEngine.Random.Range(1, 101);
+            if(rand < 70) continue;
+
+            character = charactersData.Get_Character_ById(6);
+            Hex crHex = hex.neighbors[x];
+            GameData.inst.gameMain.Order_CreateAICharacter(crHex, aiBattlePlayer, character, 0);
+        }
     }
 }

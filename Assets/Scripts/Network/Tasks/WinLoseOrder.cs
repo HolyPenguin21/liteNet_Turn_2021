@@ -48,7 +48,7 @@ public class WinLoseOrder : GeneralNetworkTask
 
     private IEnumerator Implementation()
     {
-        SceneMain sceneMain = GameObject.Find("SceneMain").GetComponent<SceneMain>();
+        SceneMain sceneMain = GameData.inst.gameMain.sceneMain;
         BattlePlayer bp = Utility.Get_BattlePlayer_ByName(this.winerName);
 
         yield return sceneMain.EndGame(bp, this.rewardsList);

@@ -4,7 +4,7 @@ using UnityEngine;
 using LiteNetLib;
 using LiteNetLib.Utils;
 
-public class SetupPvpPlayers : GeneralNetworkTask
+public class PVPSetupPlayers : GeneralNetworkTask
 {
     public override IEnumerator Implementation_Server()
     {

@@ -9,6 +9,7 @@ public class SceneMain_UI : MonoBehaviour
     private ClickHandler clickHandler;
     public Pathfinding pathfinding;
 
+    public HexInfoPanel hexInfoPanel;
     public AttackPanel attackPanel;
     public HirePanel hirePanel;
     public WinLosePanel winLosePanel;
@@ -38,6 +39,7 @@ public class SceneMain_UI : MonoBehaviour
         gm.sceneMain_ui = this;
 
         clickHandler = new ClickHandler(this);
+        hexInfoPanel = new HexInfoPanel(this);
         attackPanel = new AttackPanel(this);
         hirePanel = new HirePanel(this, sceneMain);
         winLosePanel = new WinLosePanel(this, sceneMain);
@@ -214,13 +216,10 @@ public class SceneMain_UI : MonoBehaviour
         selected_effect.gameObject.SetActive(true);
         selected_effect.position = selected_Hex.transform.position;
 
-        // GameObject.Find("UI").GetComponent<UI_Ingame>().Show_HexInfo(selectedHex);
+        hexInfoPanel.Show_HexInfo(selected_Hex);
 
-        // if(selectedHex.character != null)
-        // {
-        //     if(Utility.CharacterIsVisible(selectedHex.character))
-        //         GameMain.inst.fog.UpdateFog_CharacterView(selectedHex.character);
-        // }
+        if(selected_Hex.character == null) return;
+        hexInfoPanel.Show_CharacterInfo(selected_Hex.character);
     }
 
     private void Path_Display()
@@ -233,7 +232,7 @@ public class SceneMain_UI : MonoBehaviour
             return;
         }
 
-        pathfinding.Show_Path(selected_Hex, hover_Hex);
+        pathfinding.Show_RealPath(selected_Hex.character, selected_Hex, hover_Hex);
     }
 
     private Hex HittedObject()
@@ -280,6 +279,8 @@ public class SceneMain_UI : MonoBehaviour
 
         selected_Hex = null;
         selected_effect.gameObject.SetActive(false);
+
+        hexInfoPanel.Hide_All();
 
         // Set_HoverImage(0);
         // GameObject.Find("UI").GetComponent<UI_Ingame>().Hide_HexInfo();

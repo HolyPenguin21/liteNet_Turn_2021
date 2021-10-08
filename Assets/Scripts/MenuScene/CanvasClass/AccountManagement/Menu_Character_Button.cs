@@ -17,6 +17,8 @@ public class Menu_Character_Button : MonoBehaviour
 
     private Utility.UI_Char_Button ui_Char_Button;
 
+    private CharactersData cd;
+
     private void Start()
     {
         button = GetComponent<Button>();
@@ -25,6 +27,8 @@ public class Menu_Character_Button : MonoBehaviour
 
     public void Init(CharactersPanel charPanel, Character character, Utility.UI_Char_Button ui_Char_Button)
     {
+        this.cd = new CharactersData();
+
         this.charPanel = charPanel;
         this.character = character;
         this.characterImage = transform.Find("Character_Image").GetComponent<Image>();
@@ -47,26 +51,20 @@ public class Menu_Character_Button : MonoBehaviour
         switch(ui_Char_Button)
         {
             case Utility.UI_Char_Button.hero :
-                string heroInfo = character.name + "\n";
-                heroInfo += "Health: " + character.health.hp_cur + "/" + character.health.hp_max;
-                charPanel.selected_hero_Text.text = heroInfo;
+                charPanel.selected_hero_Text.text = cd.Get_Menu_Character_Tooltip(character);
 
                 charPanel.selected_hero_id = Get_Id_SelectedCharacter();
                 charPanel.Update_HeroCharactersView();
             break;
 
             case Utility.UI_Char_Button.battleChar :
-                string bCharInfo = character.name + "\n";
-                bCharInfo += "Health: " + character.health.hp_cur + "/" + character.health.hp_max;
-                charPanel.selected_hCharacter_Text.text = bCharInfo;
+                charPanel.selected_hCharacter_Text.text = cd.Get_Menu_Character_Tooltip(character);
 
                 charPanel.selected_hCharacter_id = Get_Id_SelectedCharacter();
             break;
 
             case Utility.UI_Char_Button.accChar :
-                string charInfo = character.name + "\n";
-                charInfo += "Health: " + character.health.hp_cur + "/" + character.health.hp_max;
-                charPanel.selected_pCharacter_Text.text = charInfo;
+                charPanel.selected_pCharacter_Text.text = cd.Get_Menu_Character_Tooltip(character);
 
                 charPanel.selected_pCharacter_id = Get_Id_SelectedCharacter();
             break;

@@ -113,7 +113,7 @@ public class IngameUI_Camera : MonoBehaviour
     {
         // Determine how much to move the camera
         Vector3 offset = cam.ScreenToViewportPoint(lastPanPosition - newPanPosition);
-        Vector3 move = new Vector3(offset.x * PanSpeed, 0, offset.y * PanSpeed);
+        Vector3 move = new Vector3(offset.x * PanSpeed, offset.y * PanSpeed, 0);
         
         // Perform the movement
         transform.Translate(move, Space.World);
