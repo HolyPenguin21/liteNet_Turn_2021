@@ -140,6 +140,11 @@ public class AiSolo : AiBehaviour
         }
 
         Hex enemyHex = enemysInRange[Random.Range(0, enemysInRange.Count)];
+        if(enemyHex == null)
+        {
+            aiInAction = false;
+            yield break; 
+        }
         List<Hex> path = sceneMain_ui.pathfinding.Get_Path(character.hex, enemyHex);
         if(path == null || path.Count < 2)
         {
@@ -173,25 +178,23 @@ public class AiSolo : AiBehaviour
         {
             Hex hireHex = hireHexes[x];
 
-            if(aiHero.hex != hireHex)
-            {
-                List<Hex> generalPath = sceneMain_ui.pathfinding.Get_Path(aiHero.hex, hireHex);
-                if(generalPath == null || generalPath.Count == 0) continue;
-
-                List<Hex> realPath = sceneMain_ui.pathfinding.Get_RealPath(aiHero, generalPath);
-                if(realPath == null || realPath.Count == 0) continue;
-
-                int pathCost = aiHero.movement.movePoints_cur - sceneMain_ui.pathfinding.Get_PathCost(aiHero, realPath);
-                if(pathCost < curMplose)
-                {
-                    curMplose = pathCost;
-                    closestHireHex = hireHex;
-                }
-            }
-            else
+            if(aiHero.hex == hireHex)
             {
                 closestHireHex = hireHex;
                 break;
+            }
+            
+            List<Hex> generalPath = sceneMain_ui.pathfinding.Get_Path(aiHero.hex, hireHex);
+            if(generalPath == null || generalPath.Count == 0) continue;
+
+            List<Hex> realPath = sceneMain_ui.pathfinding.Get_RealPath(aiHero, generalPath);
+            if(realPath == null || realPath.Count == 0) continue;
+
+            int pathCost = aiHero.movement.movePoints_cur - sceneMain_ui.pathfinding.Get_PathCost(aiHero, realPath);
+            if(pathCost < curMplose)
+            {
+                curMplose = pathCost;
+                closestHireHex = hireHex;
             }
         }
 
