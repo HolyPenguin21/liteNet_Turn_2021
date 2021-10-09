@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharactersData
 {
-    public int currentCharactersCount = 8; // +1 here
+    public int currentCharactersCount = 9; // +1 here
 
     public void Create_Character(Hex hex, BattlePlayer owner, Character character)
     {
@@ -61,6 +61,13 @@ public class CharactersData
                 character.go = goblinLeader_Obj;
                 character.tr = goblinLeader_Obj.transform;
             break;
+
+            case 8:
+                GameObject goblinArcher_Obj = MonoBehaviour.Instantiate(
+                    Resources.Load("Characters/GoblinArcher/GoblinArcher", typeof(GameObject)), position, Quaternion.identity) as GameObject;
+                character.go = goblinArcher_Obj;
+                character.tr = goblinArcher_Obj.transform;
+            break;
         }
 
         character.hex = hex;
@@ -91,6 +98,8 @@ public class CharactersData
                 return new Shadow();
             case 7:
                 return new GoblinLeader();
+            case 8:
+                return new GoblinArcher();
             default:
                 return new Swordman();
         }
@@ -114,6 +123,8 @@ public class CharactersData
                 return Resources.Load<Sprite>("Characters/Shadow/Shadow_ii");
             case 7:
                 return Resources.Load<Sprite>("Characters/GoblinLeader/GoblinLeader_ii");
+            case 8:
+                return Resources.Load<Sprite>("Characters/GoblinArcher/GoblinArcher_ii");
             default:
                 return Resources.Load<Sprite>("Characters/Swordman/Swordman_ii");
         }

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class AccountManagementMenu : UI_Menu_Canvas
 {
     public MenuSceneMain menuSceneMain;
-    public Account account;
 
     private Button overview_Button;
     public GameObject overviewPanel_go;
@@ -105,14 +104,7 @@ public class AccountManagementMenu : UI_Menu_Canvas
 
     public void Update_AccountManagementMenu()
     {
-        if(this.account == null) 
-        {
-            this.account = GameData.inst.account;
-            this.charactersPanel.account = this.account;
-            this.itemsPanel.account = this.account;
-            this.buyCharacterPanel.account = this.account;
-        }
-        accGold_Text.text = "Gold : " + account.acc_gold;
+        accGold_Text.text = "Gold : " + GameData.inst.account.acc_gold;
     }
 
     #region Hero creation panel
@@ -121,7 +113,7 @@ public class AccountManagementMenu : UI_Menu_Canvas
         Character hCharacter = cd.Get_Character_ById(heroIdToCreate);
         Hero hero = new Hero(hCharacter, heroName_Input);
 
-        account.heroes.Add(hero);
+        GameData.inst.account.heroes.Add(hero);
 
         charactersPanel.Update_HeroView();
         charactersPanel.Update_HeroCharactersView();
@@ -129,7 +121,7 @@ public class AccountManagementMenu : UI_Menu_Canvas
         buyHeroPanel.Back_Button();
 
         LocalData ld = new LocalData();
-        ld.Save_PlayerData(account);
+        ld.Save_PlayerData(GameData.inst.account);
     }
     #endregion
 
@@ -138,17 +130,17 @@ public class AccountManagementMenu : UI_Menu_Canvas
     {
         Character c = cd.Get_Character_ById(characterIdToBuy);
 
-        if(account.acc_gold < c.acc_cost) return;
+        if(GameData.inst.account.acc_gold < c.acc_cost) return;
         
-        account.acc_gold -= c.acc_cost;
-        account.сharacters.Add(c);
+        GameData.inst.account.acc_gold -= c.acc_cost;
+        GameData.inst.account.сharacters.Add(c);
 
         buyCharacterPanel.Back_Button();
         charactersPanel.Update_PlayerCharactersView();
         Update_AccountManagementMenu();
 
         LocalData ld = new LocalData();
-        ld.Save_PlayerData(account);
+        ld.Save_PlayerData(GameData.inst.account);
     }
     #endregion
 }

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class BuyCharacter
 {
-    public Account account;
     private AccountManagementMenu accountManagementMenu;
 
     private Transform charactersContent_tr;
@@ -47,7 +46,7 @@ public class BuyCharacter
             Character character = cd.Get_Character_ById(x);
             GameObject button_go = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/AccountPanel/BuyCharacterPanel/BuyCharacter_Button", typeof(GameObject)), charactersContent_tr) as GameObject;
             BuyCharacter_Button buyCharacter_Button = button_go.GetComponent<BuyCharacter_Button>();
-            buyCharacter_Button.Init(account, this, character);
+            buyCharacter_Button.Init(GameData.inst.account, this, character);
             
             charButtons.Add(buyCharacter_Button);
         }

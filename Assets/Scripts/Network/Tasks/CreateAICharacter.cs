@@ -60,7 +60,10 @@ public class CreateAICharacter : GeneralNetworkTask
         Character character = cd.Get_Character_ById(this.characterId);
 
         if(this.isHero == 1) owner.heroCharacter = character;
-        if(this.isHero == 0) owner.ingameCharacters.Add(character);
+        if(this.isHero == 0) 
+        {
+            owner.ingameCharacters.Add(character);
+        }
 
         cd.Create_Character(hex, owner, character);
 

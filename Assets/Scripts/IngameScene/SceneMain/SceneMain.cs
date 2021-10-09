@@ -49,7 +49,6 @@ public class SceneMain : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         Setup_HeroCharacters(); // server with order
-        Setup_Reward(); // server local
         Setup_Ai(); // server local
 
         yield return new WaitForSeconds(0.5f);
@@ -67,6 +66,7 @@ public class SceneMain : MonoBehaviour
         else if(gameType == Utility.GameType.pvp)
         {
             bpId = UnityEngine.Random.Range(0, battlePlayers_List.Count);
+            Setup_Reward();
         }
 
         gameMain.Order_SetTurn(bpId);
@@ -271,9 +271,6 @@ public class SceneMain : MonoBehaviour
         int randRewardCount = UnityEngine.Random.Range(1, 10);
         for(int x = 0; x < randRewardCount; x++)
         {
-            int chanceOfDrop = UnityEngine.Random.Range(1, 101);
-            if(chanceOfDrop <= 50) continue;
-
             int rarityValue = UnityEngine.Random.Range(1, 101);
             if(rarityValue <= 5)
             {
@@ -291,11 +288,11 @@ public class SceneMain : MonoBehaviour
                     break;
                 }
             }
-            else if(rarityValue > 5 && rarityValue <= 50)
+            else if(rarityValue > 5 && rarityValue <= 30)
             {
-                rewards.Add(new Gold());
+                rewards.Add(new PiSpearman());
             }
-            else if(rarityValue > 50 && rarityValue <= 100)
+            else if(rarityValue > 30 && rarityValue <= 100)
             {
                 rewards.Add(new Gold());
             }

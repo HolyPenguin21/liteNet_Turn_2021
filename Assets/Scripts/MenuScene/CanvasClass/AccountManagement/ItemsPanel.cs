@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class ItemsPanel
 {
     public AccountManagementMenu accountManagementMenu;
-    public Account account;
 
     private GameObject panel_Content;
 
@@ -33,12 +32,12 @@ public class ItemsPanel
 
         accountManagementMenu.itemsPanel_go.SetActive(true);
 
-        for(int x = 0; x < account.items.Count; x++)
+        for(int x = 0; x < GameData.inst.account.items.Count; x++)
         {
-            PlayerItem item = account.items[x];
+            PlayerItem item = GameData.inst.account.items[x];
             GameObject button_go = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/AccountPanel/PlayerItem_Button", typeof(GameObject)), panel_Content.transform) as GameObject;
             Menu_PlayerItem_Button playerItem_Button = button_go.GetComponent<Menu_PlayerItem_Button>();
-            playerItem_Button.Init(this, account, item);
+            playerItem_Button.Init(this, GameData.inst.account, item);
         }
     }
 

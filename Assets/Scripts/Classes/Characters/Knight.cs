@@ -19,8 +19,8 @@ public class Knight : Character
         movement = new CharVars.char_Move(4);
 
         defence.dodgeChance = 20;
-        defence.blade_resistance = 0.0f;
-        defence.pierce_resistance = 0.0f;
+        defence.blade_resistance = 0.3f;
+        defence.pierce_resistance = 0.2f;
         defence.impact_resistance = 0.0f;
         defence.magic_resistance = 0.0f;
 

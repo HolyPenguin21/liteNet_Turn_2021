@@ -80,6 +80,9 @@ public class AttackOrder : GeneralNetworkTask
             {
                 yield return attacker.Attack_Animation();
                 yield return target.Set_Health(healthLeft);
+                // Effect
+                if(dmg >= 0) Effects.Dmg(target.hex, dmg, true);
+                else Effects.Miss(target.hex, dmg);
 
                 if (GameData.inst.server != null)
                     if (healthLeft <= 0)
@@ -91,6 +94,9 @@ public class AttackOrder : GeneralNetworkTask
             {
                 yield return target.Attack_Animation();
                 yield return attacker.Set_Health(healthLeft);
+                // Effect
+                if(dmg >= 0) Effects.Dmg(attacker.hex, dmg, false);
+                else Effects.Miss(attacker.hex, dmg);
 
                 if (GameData.inst.server != null)
                     if (healthLeft <= 0)

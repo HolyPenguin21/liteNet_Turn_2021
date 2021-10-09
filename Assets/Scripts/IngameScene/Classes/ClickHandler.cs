@@ -29,6 +29,11 @@ public class ClickHandler
 
     private void Input_Pc()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            input.Reset_All();
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             input.OnClick();

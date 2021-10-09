@@ -19,9 +19,9 @@ public class Shadow : Character
         movement = new CharVars.char_Move(4);
 
         defence.dodgeChance = 40;
-        defence.blade_resistance = 0.0f;
-        defence.pierce_resistance = 0.0f;
-        defence.impact_resistance = 0.0f;
+        defence.blade_resistance = 0.3f;
+        defence.pierce_resistance = 0.3f;
+        defence.impact_resistance = 0.5f;
         defence.magic_resistance = 0.0f;
 
         attacks = new List<CharVars.char_Attack>();
