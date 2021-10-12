@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharactersData
 {
-    public int currentCharactersCount = 8; // +1 here
+    public int currentCharactersCount = 9; // +1 here
 
     public void Create_Character(Hex hex, BattlePlayer owner, Character character)
     {
@@ -61,6 +61,13 @@ public class CharactersData
                 character.go = goblinLeader_Obj;
                 character.tr = goblinLeader_Obj.transform;
             break;
+
+            case 8:
+                GameObject goblinArcher_Obj = MonoBehaviour.Instantiate(
+                    Resources.Load("Characters/GoblinArcher/GoblinArcher", typeof(GameObject)), position, Quaternion.identity) as GameObject;
+                character.go = goblinArcher_Obj;
+                character.tr = goblinArcher_Obj.transform;
+            break;
         }
 
         character.hex = hex;
@@ -75,25 +82,40 @@ public class CharactersData
 
     public Character Get_Character_ById(int id)
     {
+        Character character = null;
         switch(id)
         {
             case 1:
-                return new Swordman();
+                character = new Swordman();
+            break;
             case 2:
-                return new Spearman();
+                character = new Spearman();
+            break;
             case 3:
-                return new Knight();
+                character = new Knight();
+            break;
             case 4:
-                return new Gryphon();
+                character = new Gryphon();
+            break;
             case 5:
-                return new Wolf();
+                character = new Wolf();
+            break;
             case 6:
-                return new Shadow();
+                character = new Shadow();
+            break;
             case 7:
-                return new GoblinLeader();
+                character = new GoblinLeader();
+            break;
+            case 8:
+                character = new GoblinArcher();
+            break;
+
             default:
-                return new Swordman();
+                character = new Swordman();
+            break;
         }
+
+        return character;
     }
 
     public Sprite Get_CharacterImage_ById(int id)
@@ -114,6 +136,8 @@ public class CharactersData
                 return Resources.Load<Sprite>("Characters/Shadow/Shadow_ii");
             case 7:
                 return Resources.Load<Sprite>("Characters/GoblinLeader/GoblinLeader_ii");
+            case 8:
+                return Resources.Load<Sprite>("Characters/GoblinArcher/GoblinArcher_ii");
             default:
                 return Resources.Load<Sprite>("Characters/Swordman/Swordman_ii");
         }
@@ -124,10 +148,11 @@ public class CharactersData
         string result = character.name;
         result += "\nCost : " + character.acc_cost;
         result += "\nSummon cost : " + character.ingame_cost;
+        if (character.lifetimeBuffs.Count != 0) result += "\nLifetime buffs : " + Get_LifeTimeBuffs_Tooltip(character);
         result += "\nHealth : " + character.health.hp_cur + "/" + character.health.hp_max;
         result += "\nDodge : " + character.defence.dodgeChance;
         result += "\nMove points : " + character.movement.movePoints_max;
-        result += "\nAttack : " + Get_CharacterAttacks_Tooltip(character);
+        result += "\nAttack : " + Get_Attacks_Tooltip(character);
 
         return result;
     }
@@ -140,18 +165,29 @@ public class CharactersData
         if(character.canAct) result += "\nCan act : yes";
         else result += "\nCan act : no";
         result += "\nMove points : " + character.movement.movePoints_cur + "/" + character.movement.movePoints_max;
-        result += "\nAttack : " + Get_CharacterAttacks_Tooltip(character);
+        result += "\nAttack : " + Get_Attacks_Tooltip(character);
 
         return result;
     }
 
-    private string Get_CharacterAttacks_Tooltip(Character character)
+    private string Get_Attacks_Tooltip(Character character)
     {
         string result = "";
         for(int x = 0; x < character.attacks.Count; x++)
         {
-            CharVars.char_Attack att = character.attacks[x];
-            result += "\n  - " + att.attackType + ", " + att.attackDmgType + ", " + att.attacksCount + "x" + att.attackDmg_base;
+            CharAttack att = character.attacks[x];
+            result += "\n  - " + att.attackType + ", " + att.attackDmgType + ", " + att.attacksCount + "x" + att.attackDmg;
+        }
+        return result;
+    }
+
+    private string Get_LifeTimeBuffs_Tooltip(Character character)
+    {
+        string result = "";
+        for(int x = 0; x < character.lifetimeBuffs.Count; x++)
+        {
+            LifetimeBuff buff = character.lifetimeBuffs[x];
+            result += "\n  - " + buff.name;
         }
         return result;
     }

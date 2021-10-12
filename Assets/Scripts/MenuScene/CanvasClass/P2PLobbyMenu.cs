@@ -5,17 +5,31 @@ using UnityEngine.UI;
 
 public class P2PLobbyMenu : UI_Menu_Canvas
 {
+    private MenuSceneMain menuSceneMain;
     private GameMain gameMain;
+
     public Text connectedPlayersList;
     public Button startGame_Button;
+    public Button cancel_Button;
 
-    public P2PLobbyMenu (GameObject gameObject)
+    public P2PLobbyMenu (MenuSceneMain menuSceneMain)
     {
-        go = gameObject;
-        this.connectedPlayersList = go.transform.Find("Panel").transform.Find("Connected_Panel").transform.Find("PlayersList_Text").GetComponent<Text>();
-        this.startGame_Button = go.transform.Find("Panel").transform.Find("StartGame_Button").GetComponent<Button>();
+        this.menuSceneMain = menuSceneMain;
+        go = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/P2P_Lobby_Canvas", typeof(GameObject))) as GameObject;
 
+        this.connectedPlayersList = go.transform.Find("Panel").transform.Find("Connected_Panel").transform.Find("PlayersList_Text").GetComponent<Text>();
+        
+        this.startGame_Button = go.transform.Find("Panel").transform.Find("StartGame_Button").GetComponent<Button>();
+        this.startGame_Button.onClick.AddListener(StartGame);
         this.startGame_Button.interactable = false;
+
+        this.cancel_Button = go.transform.Find("Panel").transform.Find("Back_Button").GetComponent<Button>();
+        this.cancel_Button.onClick.AddListener(menuSceneMain.Button_Back_P2P);
+    }
+
+    public void StartGame()
+    {
+        GameData.inst.gameMain.Order_StartGame(4);
     }
 
     public void UpdateConnectedPlayersList()
@@ -75,7 +89,7 @@ public class P2PLobbyMenu : UI_Menu_Canvas
     void DropdownValueChanged(Dropdown dropdown, string pName)
     {
         if(pName != GameData.inst.account.name) return;
-        if(gameMain == null) gameMain = GameData.inst.gameObject.GetComponent<GameMain>();
+        if(gameMain == null) gameMain = GameData.inst.gameMain;
 
         Server s = GameData.inst.server;
         Client c = GameData.inst.client;

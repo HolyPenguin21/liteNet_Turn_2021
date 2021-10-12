@@ -21,8 +21,7 @@ public class MenuSceneMain : MonoBehaviour
         p2p_Menu = new P2PMenu(this);
         accountManagement_Menu = new AccountManagementMenu(this);
         offlineMenu = new OfflineMenu(this);
-
-        p2PLobbyMenu = new P2PLobbyMenu(GameObject.Find("P2P_Lobby_Canvas"));
+        p2PLobbyMenu = new P2PLobbyMenu(this);
 
         HideBeforeStart();
     }
@@ -33,7 +32,6 @@ public class MenuSceneMain : MonoBehaviour
         main_Menu.Hide();
         p2p_Menu.Hide();
         accountManagement_Menu.Hide();
-
         p2PLobbyMenu.Hide();
         offlineMenu.Hide();
     }
@@ -78,6 +76,7 @@ public class MenuSceneMain : MonoBehaviour
 
         main_Menu.Hide();
         p2p_Menu.Hide();
+        offlineMenu.Hide();
 
         localLogin_Menu.Show();
     }
@@ -112,26 +111,23 @@ public class MenuSceneMain : MonoBehaviour
         p2p_Menu.Hide();
         accountFastOverview_Menu.Hide();
         GameData.inst.CreateHost();
-        p2PLobbyMenu.Show();
-
+        
         p2PLobbyMenu.startGame_Button.interactable = true;
+        p2PLobbyMenu.Show();
     }
 
     public void Button_Back_P2P()
     {
         GameData.inst.Close_ServerClient();
 
+        p2PLobbyMenu.Hide();
         p2p_Menu.Hide();
         main_Menu.Show();
+        accountFastOverview_Menu.Show();
     }
     #endregion
 
     #region P2P Lobby
-    public void UpdateConnectedPlayersList()
-    {
-        p2PLobbyMenu.UpdateConnectedPlayersList();
-    }
-
     public void Client_OpenLobby_OnConnect()
     {
         p2p_Menu.Hide();
@@ -144,17 +140,13 @@ public class MenuSceneMain : MonoBehaviour
         int pos = 0;
         if(GameData.inst.server != null) pos = Utility.Get_Server_PlayerID_ByName(player.name);
         if(GameData.inst.client != null) pos = Utility.Get_Client_PlayerID_ByName(player.name);
+
         p2PLobbyMenu.Add_PlayerPanel(pos, player);
     }
 
     public void Remove_PlayerPanel(Account player)
     {
         p2PLobbyMenu.Remove_PlayerPanel(player);
-    }
-
-    public void Button_StartGame()
-    {
-        GameData.inst.gameMain.Order_StartGame(4);
     }
 
     public void Button_P2P_Lobby_Back()

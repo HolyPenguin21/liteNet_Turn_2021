@@ -22,6 +22,12 @@ public class PlayerItemsData
             
             case 5:
                 return new Token_Dark();
+
+            case 6:
+                return new PiSpearman();
+
+            case 7:
+                return new PiWolf();
             
             default:
                 return new Gold();
@@ -46,6 +52,12 @@ public class PlayerItemsData
 
             case 5:
                 return Resources.Load<Sprite>("PlayerItem/TokenDark");
+            
+            case 6:
+                return Resources.Load<Sprite>("Characters/Spearman/Spearman_ii");
+
+            case 7:
+                return Resources.Load<Sprite>("Characters/Wolf/Wolf_ii");
 
             default:
                 return Resources.Load<Sprite>("PlayerItem/Gold");

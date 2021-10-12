@@ -55,6 +55,8 @@ public class CreateHeroCharacter : GeneralNetworkTask
         BattlePlayer owner = Utility.Get_BattlePlayer_ByName(this.ownerName);
         Character character = owner.heroCharacter;
 
+        character.Set_CharacterLifetimeBuffs();
+
         CharactersData cd = new CharactersData();
         cd.Create_Character(hex, owner, owner.heroCharacter);
 

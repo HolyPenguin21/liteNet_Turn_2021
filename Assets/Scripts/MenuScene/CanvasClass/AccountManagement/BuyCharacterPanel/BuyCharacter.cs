@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class BuyCharacter
 {
-    public Account account;
     private AccountManagementMenu accountManagementMenu;
 
     private Transform charactersContent_tr;
@@ -26,17 +25,20 @@ public class BuyCharacter
 
         this.characterToBuy_info_Text = accountManagementMenu.buyCharacterPanel_go.transform.Find("CharacterToBuy_Info_Text").GetComponent<Text>();
 
-        this.back_Button = accountManagementMenu.buyCharacterPanel_go.transform.Find("Buy_Button").GetComponent<Button>();
-        this.back_Button.onClick.AddListener(Buy_Button);
+        this.buy_Button = accountManagementMenu.buyCharacterPanel_go.transform.Find("Buy_Button").GetComponent<Button>();
+        this.buy_Button.onClick.AddListener(Buy_Button);
+        this.buy_Button.interactable = false;
 
         this.back_Button = accountManagementMenu.buyCharacterPanel_go.transform.Find("Back_Button").GetComponent<Button>();
-        this.back_Button.onClick.AddListener(Back_Button);
+        this.back_Button.onClick.AddListener(Hide);
 
         cd = new CharactersData();
     }
 
     public void Show()
     {
+        this.buy_Button.interactable = false;
+
         // Clear
         charButtons.Clear();
         foreach (Transform child in charactersContent_tr)
@@ -47,10 +49,15 @@ public class BuyCharacter
             Character character = cd.Get_Character_ById(x);
             GameObject button_go = MonoBehaviour.Instantiate(Resources.Load("UI_MainMenu/AccountPanel/BuyCharacterPanel/BuyCharacter_Button", typeof(GameObject)), charactersContent_tr) as GameObject;
             BuyCharacter_Button buyCharacter_Button = button_go.GetComponent<BuyCharacter_Button>();
-            buyCharacter_Button.Init(account, this, character);
+            buyCharacter_Button.Init(GameData.inst.account, this, character);
             
             charButtons.Add(buyCharacter_Button);
         }
+    }
+
+    public void Hide()
+    {
+        accountManagementMenu.buyCharacterPanel_go.SetActive(false);
     }
 
     public void Update_CharButtons()
@@ -71,13 +78,13 @@ public class BuyCharacter
         accountManagementMenu.Buy_Character(characterIdToBuy);
     }
 
-    public void Back_Button()
-    {
-        accountManagementMenu.buyCharacterPanel_go.SetActive(false);
-    }
-
     public void Update_CharacterInfo_OnBuy(Character character)
     {
         characterToBuy_info_Text.text = cd.Get_Menu_Character_Tooltip(character);
+
+        if(GameData.inst.account.acc_gold < character.acc_cost)
+            this.buy_Button.interactable = false;
+        else
+            this.buy_Button.interactable = true;
     }
 }

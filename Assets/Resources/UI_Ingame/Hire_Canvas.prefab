@@ -712,12 +712,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Content: {fileID: 8226495275661783708}
   m_Horizontal: 0
-  m_Vertical: 0
+  m_Vertical: 1
   m_MovementType: 1
-  m_Elasticity: 0.1
+  m_Elasticity: 0.5
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 7
   m_Viewport: {fileID: 8226495277391764782}
   m_HorizontalScrollbar: {fileID: 8226495276292680297}
   m_VerticalScrollbar: {fileID: 8226495276082891381}
@@ -1266,7 +1266,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8226495276923597519}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

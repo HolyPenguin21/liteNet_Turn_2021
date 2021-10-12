@@ -80,6 +80,9 @@ public class AttackOrder : GeneralNetworkTask
             {
                 yield return attacker.Attack_Animation();
                 yield return target.Set_Health(healthLeft);
+                // Effect
+                if(dmg >= 0) Effects.Dmg(target.hex, dmg, true);
+                else Effects.Miss(target.hex, dmg);
 
                 if (GameData.inst.server != null)
                     if (healthLeft <= 0)
@@ -91,6 +94,9 @@ public class AttackOrder : GeneralNetworkTask
             {
                 yield return target.Attack_Animation();
                 yield return attacker.Set_Health(healthLeft);
+                // Effect
+                if(dmg >= 0) Effects.Dmg(attacker.hex, dmg, false);
+                else Effects.Miss(attacker.hex, dmg);
 
                 if (GameData.inst.server != null)
                     if (healthLeft <= 0)
@@ -129,7 +135,7 @@ public class AttackOrder : GeneralNetworkTask
         {
             if (a_AttackCount > 0)
             {
-                CharVars.char_Attack a_Attack = attacker.attacks[this.a_AttackId];
+                CharAttack a_Attack = attacker.attacks[this.a_AttackId];
                 int dmg = AttackResult_Calculation(a_Attack, target);
                 t_Health = Target_HealthCalculation(dmg, t_Health);
 
@@ -142,7 +148,7 @@ public class AttackOrder : GeneralNetworkTask
 
             if (t_AttackCount > 0)
             {
-                CharVars.char_Attack t_Attack = target.attacks[this.t_AttackId];
+                CharAttack t_Attack = target.attacks[this.t_AttackId];
                 int dmg = AttackResult_Calculation(t_Attack, attacker);
                 a_Health = Target_HealthCalculation(dmg, a_Health);
 
@@ -158,7 +164,7 @@ public class AttackOrder : GeneralNetworkTask
         return result;
     }
 
-    private int AttackResult_Calculation(CharVars.char_Attack a_Attack, Character target)
+    private int AttackResult_Calculation(CharAttack a_Attack, Character target)
     {
         AttackCalculation attackCalculation = new AttackCalculation();
 

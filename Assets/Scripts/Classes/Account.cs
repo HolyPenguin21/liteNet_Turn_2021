@@ -103,6 +103,7 @@ public class Account
     #endregion
 
     #region Acc Characters data : get/set
+    // 1:;2:3,3,3;4:
     public string Get_Acc_CharactersData()
     {
         string data = "";
@@ -110,23 +111,60 @@ public class Account
         for(int x = 0; x < сharacters.Count; x++)
         {
             Character c = сharacters[x];
-            data += c.id + ",";
+            data += c.id + Get_CharLifebuffs(c) + ";";
         }
         if(data != "") data = data.Remove(data.Length - 1);
 
         return data;
     }
 
+    private string Get_CharLifebuffs(Character character)
+    {
+        string data = ":";
+
+        if(character.lifetimeBuffs.Count == 0) return data;
+        
+        for(int x = 0; x < character.lifetimeBuffs.Count; x++)
+        {
+            LifetimeBuff buff = character.lifetimeBuffs[x];
+            data += buff.id + ",";
+        }
+        if(data != "") data = data.Remove(data.Length - 1);
+
+        return data;
+    }
+
+    // 1:2,2,2;3:4,4,4,4
     public void Set_Acc_CharactersData(string data)
     {
         if(data == "") return;
         CharactersData cd = new CharactersData();
 
-        string[] characters = data.Split(',');
-        for(int x = 0; x < characters.Length; x++)
+        string[] charactersData = data.Split(';');
+        for(int x = 0; x < charactersData.Length; x++)
         {
-            Character c = cd.Get_Character_ById(Convert.ToInt32(characters[x]));
-            сharacters.Add(c);
+            string[] characterData = charactersData[x].Split(':');
+            int charId = Convert.ToInt32(characterData[0]);
+            string buffsData = characterData[1];
+
+            Character character = cd.Get_Character_ById(charId);
+            
+            Set_CharLifebuffs(character, buffsData);
+
+            сharacters.Add(character);
+        }
+    }
+
+    private void Set_CharLifebuffs(Character character, string buffsData)
+    {
+        if(buffsData == "") return;
+        LifetimeBuffData bd = new LifetimeBuffData();
+        
+        string[] buffData = buffsData.Split(',');
+        for(int x = 0; x < buffData.Length; x++)
+        {
+            LifetimeBuff buff = bd.Get_LifetimeBuff_ById(Convert.ToInt32(buffData[x]));
+            character.lifetimeBuffs.Add(buff);
         }
     }
     #endregion

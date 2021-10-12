@@ -22,12 +22,23 @@ public abstract class Character
     public CharVars.faction faction;
     public Sprite image;
     public string name;
-    
+
+    public List<LifetimeBuff> lifetimeBuffs = new List<LifetimeBuff>();
+    public List<IngameBuff> ingameBuffs;
+
     public CharVars.char_Hp health;
     public CharVars.char_Defence defence;
     public CharVars.char_Move movement;
-    public List<CharVars.char_Attack> attacks;
+    public List<CharAttack> attacks = new List<CharAttack>();
 
+    public void Set_CharacterLifetimeBuffs()
+    {
+        for(int x = 0; x < lifetimeBuffs.Count; x++)
+        {
+            LifetimeBuff lifetimeBuff = lifetimeBuffs[x];
+            lifetimeBuff.Effect(this);
+        }
+    }
 
     #region Animations
     public IEnumerator Die_Animation()
