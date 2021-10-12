@@ -14,7 +14,7 @@ public class Gold : PlayerItem
         this.image = piData.Get_PlayerItemImage_ById(this.id);
         this.oneTime = true;
 
-        this.value = Random.Range(1, 6);
+        this.value = Random.Range(4, 15);
     }
 
     public override void Effect()
