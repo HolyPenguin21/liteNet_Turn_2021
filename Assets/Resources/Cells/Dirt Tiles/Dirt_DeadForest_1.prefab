@@ -419,7 +419,7 @@ MonoBehaviour:
   - {fileID: 0}
   groundMove: 1
   moveCost: 2
-  dodge: 0
+  dodge: 10
   rootCastle: {fileID: 0}
   isStartPoint: 0
   isBossSpawner: 0

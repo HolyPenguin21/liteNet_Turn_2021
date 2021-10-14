@@ -43,6 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dab4bf772848634bab0cdbb21bc0a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid_height: 20
-  grid_width: 5
+  grid_height: 40
+  grid_width: 10
   tileTemplate_pref: {fileID: 1649740247312020228, guid: d15b830a2ac1a3444904c25169133d4d, type: 3}

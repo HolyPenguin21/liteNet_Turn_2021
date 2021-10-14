@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-// [ExecuteInEditMode] // COMMENT
+[ExecuteInEditMode] // COMMENT
 // Disable before PlayMode and on Build
 public class CellAdjustOnEdit : MonoBehaviour
 {
