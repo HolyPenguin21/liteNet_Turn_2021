@@ -167,7 +167,8 @@ public class GameMain : MonoBehaviour
         Character attacker = aHex.character;
         Character target = tHex.character;
 
-        List<Hex> attackPath = new List<Hex>(sceneMain_ui.pathfinding.Get_Path(aHex, tHex));
+        List<Hex> attackPath = sceneMain_ui.pathfinding.Get_Path(aHex, tHex);
+        if(attackPath == null) return;
         attackPath.RemoveAt(attackPath.Count - 1);
 
         if(attackPath.Count > 0)

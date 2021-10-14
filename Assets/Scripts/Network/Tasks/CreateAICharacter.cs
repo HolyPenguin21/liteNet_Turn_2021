@@ -59,8 +59,13 @@ public class CreateAICharacter : GeneralNetworkTask
         BattlePlayer owner = Utility.Get_BattlePlayer_ByName(this.ownerName);
         Character character = cd.Get_Character_ById(this.characterId);
 
+        character.Set_CharacterLifetimeBuffs();
+
         if(this.isHero == 1) owner.heroCharacter = character;
-        if(this.isHero == 0) owner.ingameCharacters.Add(character);
+        if(this.isHero == 0) 
+        {
+            owner.ingameCharacters.Add(character);
+        }
 
         cd.Create_Character(hex, owner, character);
 

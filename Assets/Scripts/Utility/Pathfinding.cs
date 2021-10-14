@@ -62,6 +62,8 @@ public class Pathfinding
 
     public List<Hex> Get_Path(Hex start, Hex end)
     {
+        if(end == null) return null;
+
         bool pathComplete = false;
         List<Hex> finalPath = new List<Hex>();
 

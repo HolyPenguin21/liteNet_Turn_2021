@@ -50,8 +50,14 @@ public class LocalLogin : UI_Menu_Canvas
         acc.name = loginInput.text;
         acc.password = passwordInput.text;
 
-        acc.сharacters.Add(new Swordman());
-        acc.сharacters.Add(new Spearman());
+        Character testChar = new Swordman();
+        testChar.lifetimeBuffs.Add(new Strong());
+        acc.сharacters.Add(testChar);
+
+        testChar = new Swordman();
+        testChar.lifetimeBuffs.Add(new BrokenLeg());
+        acc.сharacters.Add(testChar);
+        
         acc.сharacters.Add(new Spearman());
 
         acc.items.Add(new Gold());

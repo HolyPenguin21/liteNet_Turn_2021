@@ -5,8 +5,8 @@ using UnityEngine;
 public class ClickHandler
 {
     public int clickCount = 0;
-    public float double_timer = 0.0f;
-    private float clickDelay = 0.3f;
+    public float doubleClick_timer = 0.0f;
+    private float doubleClick_delay = 0.3f;
 
     public float hold_timer = 0.0f;
     private float holdDelay = 0.5f;
@@ -29,14 +29,19 @@ public class ClickHandler
 
     private void Input_Pc()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            input.Reset_All();
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            input.OnClick();
+            input.Input_SingleClick();
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            input.OnHold();
+            input.Input_Hold();
         }
     }
 
@@ -58,28 +63,28 @@ public class ClickHandler
         }
 
         if (clickCount == 1)
-            double_timer += Time.deltaTime;
+            doubleClick_timer += Time.deltaTime;
 
         if (clickCount >= 2)
         {
-            double_timer = 0.0f;
+            doubleClick_timer = 0.0f;
             clickCount = 0;
-            input.OnClick();
+            input.Input_SingleClick();
         }
 
-        if (double_timer >= clickDelay)
+        if (doubleClick_timer >= doubleClick_delay)
         {
-            double_timer = 0.0f;
+            doubleClick_timer = 0.0f;
             clickCount = 0;
 
-            // if (hold_timer == 0.0f && !input.mouseOverUI)
-            //     input.OnClick();
+            if (doubleClick_delay == 0.0f && !input.mouseOverUI)
+                input.Input_SingleClick();
         }
 
         if (hold_timer >= holdDelay && !holdOn)
         {
             holdOn = true;
-            input.OnHold();
+            input.Input_Hold();
         }
     }
 }

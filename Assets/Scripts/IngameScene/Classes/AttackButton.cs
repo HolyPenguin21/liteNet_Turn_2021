@@ -31,12 +31,12 @@ public class AttackButton
         button = button_Go.GetComponent<Button>();
         button.onClick.AddListener(TaskOnClick);
 
-        CharVars.char_Attack a_Attack = attacker.attacks[a_attackId];
+        CharAttack a_Attack = attacker.attacks[a_attackId];
         button_Go.transform.Find("a_Image").GetComponent<Image>().sprite = Get_DmgTypeImage(a_Attack);
         button_Go.transform.Find("a_Text").GetComponent<Text>().text = 
         a_Attack.attackType + ", " + a_Attack.attackDmgType + ", " + a_Attack.attacksCount + "x" + attackCalculation.Hit_DmgCalculation(a_Attack, target);
 
-        CharVars.char_Attack t_Attack = attackCalculation.Get_ReturnAttack(attacker, a_attackId, target);
+        CharAttack t_Attack = attackCalculation.Get_ReturnAttack(attacker, a_attackId, target);
         if(t_Attack.attackType == CharVars.attackType.none)
         {
             button_Go.transform.Find("t_Image").gameObject.SetActive(false);
@@ -57,7 +57,7 @@ public class AttackButton
         aPanel.SelectAttack(this.a_attackId, this.t_attackId);
     }
     
-    private Sprite Get_DmgTypeImage(CharVars.char_Attack attack)
+    private Sprite Get_DmgTypeImage(CharAttack attack)
     {
         switch(attack.attackDmgType)
         {

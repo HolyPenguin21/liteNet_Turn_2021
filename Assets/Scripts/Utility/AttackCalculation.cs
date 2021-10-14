@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class AttackCalculation
 {
-    public CharVars.char_Attack Get_MaxDmgAttack(Character a_character, Character t_character)
+    public CharAttack Get_MaxDmgAttack(Character a_character, Character t_character)
     {
-        CharVars.char_Attack a_attack = new CharVars.char_Attack();
+        CharAttack a_attack = new CharAttack();
 
         int curMaxDmg = 0;
         for (int x = 0; x < a_character.attacks.Count; x++)
         {
-            CharVars.char_Attack tempAttack = a_character.attacks[x];
+            CharAttack tempAttack = a_character.attacks[x];
             int dmg = tempAttack.attacksCount * Hit_DmgCalculation(tempAttack, t_character);
             if(dmg > curMaxDmg)
             {
@@ -24,11 +24,11 @@ public class AttackCalculation
         return a_attack;
     }
 
-    public int Hit_DmgCalculation(CharVars.char_Attack a_Attack, Character target)
+    public int Hit_DmgCalculation(CharAttack a_Attack, Character target)
     {
         CharVars.char_Defence t_Defence = target.defence;
 
-        int dmg = a_Attack.attackDmg_cur;
+        int dmg = a_Attack.attackDmg;
 
         switch (a_Attack.attackDmgType)
         {
@@ -45,24 +45,24 @@ public class AttackCalculation
         return -999; // should not get here
     }
 
-    public CharVars.char_Attack Get_ReturnAttack(Character a_Character, int a_AttackId, Character t_Character)
+    public CharAttack Get_ReturnAttack(Character a_Character, int a_AttackId, Character t_Character)
     {
-        List<CharVars.char_Attack> t_Attack_List = new List<CharVars.char_Attack>();
+        List<CharAttack> t_Attack_List = new List<CharAttack>();
 
         for(int x = 0; x < t_Character.attacks.Count; x++)
         {
-            CharVars.char_Attack someAttack = t_Character.attacks[x];
+            CharAttack someAttack = t_Character.attacks[x];
             
             if(someAttack.attackType == a_Character.attacks[a_AttackId].attackType)
                 t_Attack_List.Add(someAttack);
         }
 
-        CharVars.char_Attack t_Attack = new CharVars.char_Attack();
+        CharAttack t_Attack = new CharAttack();
         t_Attack.attackType = CharVars.attackType.none;
 
         for(int x = 0; x < t_Attack_List.Count; x++)
         {
-            CharVars.char_Attack someAttack = t_Attack_List[x];
+            CharAttack someAttack = t_Attack_List[x];
 
             int dmgCur = someAttack.attacksCount * Hit_DmgCalculation(someAttack, a_Character);
 
@@ -73,16 +73,16 @@ public class AttackCalculation
         return t_Attack;
     }
 
-    public int Get_AttackId(Character character, CharVars.char_Attack attack)
+    public int Get_AttackId(Character character, CharAttack attack)
     {
         for(int x = 0; x < character.attacks.Count; x++)
         {
-            CharVars.char_Attack someAttack = character.attacks[x];
+            CharAttack someAttack = character.attacks[x];
 
             if(someAttack.attackType == attack.attackType &&
             someAttack.attackDmgType == attack.attackDmgType &&
             someAttack.attacksCount == attack.attacksCount &&
-            someAttack.attackDmg_cur == attack.attackDmg_cur)
+            someAttack.attackDmg == attack.attackDmg)
                 return x;
         }
 

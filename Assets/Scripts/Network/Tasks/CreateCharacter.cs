@@ -55,7 +55,9 @@ public class CreateCharacter : GeneralNetworkTask
         Hex hex = Utility.Get_Hex_ByCoords(this.coord_x, this.coord_y);
         BattlePlayer owner = Utility.Get_BattlePlayer_ByName(this.ownerName);
         Character character = owner.availableCharacters[this.characterId];
-        
+
+        character.Set_CharacterLifetimeBuffs();
+
         owner.availableCharacters.Remove(character);
         owner.ingameCharacters.Add(character);
 

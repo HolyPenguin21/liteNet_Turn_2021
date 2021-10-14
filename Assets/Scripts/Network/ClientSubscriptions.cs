@@ -39,7 +39,7 @@ public class ClientSubscriptions
             if(SceneManager.GetActiveScene().buildIndex == 0)
             {
                 MenuSceneMain menuSceneMain = GameObject.Find("SceneMain").GetComponent<MenuSceneMain>();
-                menuSceneMain.UpdateConnectedPlayersList();
+                menuSceneMain.p2PLobbyMenu.UpdateConnectedPlayersList();
                 menuSceneMain.Client_OpenLobby_OnConnect();
                 
                 for (int x = 0; x < client.players.Count; x++)

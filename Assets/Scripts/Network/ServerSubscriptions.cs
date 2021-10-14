@@ -76,16 +76,9 @@ public class ServerSubscriptions
                 netProcessor.Send(server.players[x].address, playersData, DeliveryMethod.ReliableOrdered);
             }
 
-            if(SceneManager.GetActiveScene().buildIndex == 0)
-            {
-                MenuSceneMain menuSceneMain = GameObject.Find("SceneMain").GetComponent<MenuSceneMain>();
-                menuSceneMain.UpdateConnectedPlayersList();
-
-                for (int x = 0; x < server.players.Count; x++)
-                {
-                    menuSceneMain.Add_PlayerPanel(server.players[x]);
-                }
-            }
+            MenuSceneMain menuSceneMain = GameObject.Find("SceneMain").GetComponent<MenuSceneMain>();
+            menuSceneMain.p2PLobbyMenu.UpdateConnectedPlayersList();
+            menuSceneMain.Add_PlayerPanel(acc);
         });
     }
 

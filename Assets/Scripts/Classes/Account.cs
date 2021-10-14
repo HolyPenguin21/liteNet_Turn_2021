@@ -41,6 +41,7 @@ public class Account
     #endregion
 
     #region Acc heroes data : get/set
+    // asd,1;2:3,3;4:5,5,5|
     public string Get_Acc_Heroes_Data()
     {
         string data = "";
@@ -49,52 +50,61 @@ public class Account
         {
             Hero hero = heroes[x];
 
-            data += hero.name + "," + hero.character.id + ":";
+            data += hero.name + "," + hero.character.id + ";";
             if(hero.battleCharacters.Count > 0) data += Get_Hero_CharactersData(hero);
 
-            data += ";";
+            data += "|";
         }
         if(data != "") data = data.Remove(data.Length - 1);
 
         return data;
     }
-    
+
     private string Get_Hero_CharactersData(Hero hero)
     {
         string data = "";
 
         for(int x = 0; x < hero.battleCharacters.Count; x++)
         {
-            Character c = hero.battleCharacters[x];
-            data += c.id + ",";
+            Character character = hero.battleCharacters[x];
+            data += character.id + Get_CharLifebuffs(character) + ";";
         }
         if(data != "") data = data.Remove(data.Length - 1);
 
         return data;
     }
 
+    // asd,1;2:3,3;4:5,5,5|
     public void Set_Acc_Heroes_Data(string data)
     {
         if(data == "") return;
         CharactersData cd = new CharactersData();
+        LifetimeBuffData bd = new LifetimeBuffData();
         
-        string[] heroesData = data.Split(';');
+        string[] heroesData = data.Split('|');
         for(int x = 0; x < heroesData.Length; x++)
         {
-            string[] heroData = heroesData[x].Split(':');
-
+            string[] heroData = heroesData[x].Split(';');
             string[] hero = heroData[0].Split(','); // Hero
+
             Character hCharacter = cd.Get_Character_ById(Convert.ToInt32(hero[1]));
             Hero h = new Hero(hCharacter, hero[0]);
 
-            if(heroData[1] != "")
+            for(int y = 1; y < heroData.Length; y++)
             {
-                string[] hCharacters = heroData[1].Split(','); // Selected Characters
-                for(int y = 0; y < hCharacters.Length; y++)
+                string[] hCharacterData = heroData[y].Split(':');
+                Character character = cd.Get_Character_ById(Convert.ToInt32(hCharacterData[0]));
+
+                string[] cBuffs = hCharacterData[1].Split(',');
+                for(int z = 0; z < cBuffs.Length; z++)
                 {
-                    Character c = cd.Get_Character_ById(Convert.ToInt32(hCharacters[y]));
-                    h.battleCharacters.Add(c);
+                    if(cBuffs[z] == "") continue;
+
+                    LifetimeBuff buff = bd.Get_LifetimeBuff_ById(Convert.ToInt32(cBuffs[z]));
+                    character.lifetimeBuffs.Add(buff);
                 }
+
+                h.battleCharacters.Add(character);
             }
 
             heroes.Add(h);
@@ -110,7 +120,23 @@ public class Account
         for(int x = 0; x < сharacters.Count; x++)
         {
             Character c = сharacters[x];
-            data += c.id + ",";
+            data += c.id + Get_CharLifebuffs(c) + ";";
+        }
+        if(data != "") data = data.Remove(data.Length - 1);
+
+        return data;
+    }
+
+    private string Get_CharLifebuffs(Character character)
+    {
+        string data = ":";
+
+        if(character.lifetimeBuffs.Count == 0) return data;
+        
+        for(int x = 0; x < character.lifetimeBuffs.Count; x++)
+        {
+            LifetimeBuff buff = character.lifetimeBuffs[x];
+            data += buff.id + ",";
         }
         if(data != "") data = data.Remove(data.Length - 1);
 
@@ -122,11 +148,31 @@ public class Account
         if(data == "") return;
         CharactersData cd = new CharactersData();
 
-        string[] characters = data.Split(',');
-        for(int x = 0; x < characters.Length; x++)
+        string[] charactersData = data.Split(';');
+        for(int x = 0; x < charactersData.Length; x++)
         {
-            Character c = cd.Get_Character_ById(Convert.ToInt32(characters[x]));
-            сharacters.Add(c);
+            string[] characterData = charactersData[x].Split(':');
+            int charId = Convert.ToInt32(characterData[0]);
+            string buffsData = characterData[1];
+
+            Character character = cd.Get_Character_ById(charId);
+            
+            Set_CharLifebuffs(character, buffsData);
+
+            сharacters.Add(character);
+        }
+    }
+
+    private void Set_CharLifebuffs(Character character, string buffsData)
+    {
+        if(buffsData == "") return;
+        LifetimeBuffData bd = new LifetimeBuffData();
+        
+        string[] buffData = buffsData.Split(',');
+        for(int x = 0; x < buffData.Length; x++)
+        {
+            LifetimeBuff buff = bd.Get_LifetimeBuff_ById(Convert.ToInt32(buffData[x]));
+            character.lifetimeBuffs.Add(buff);
         }
     }
     #endregion

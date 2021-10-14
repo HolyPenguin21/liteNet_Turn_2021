@@ -46,6 +46,7 @@ public class PlayersData : GeneralNetworkTask
             acc.name = accountData.name;
             acc.Set_Acc_Data(accountData.data);
             acc.Set_Acc_Heroes_Data(accountData.heroes);
+            Debug.Log(accountData.characters);
             acc.Set_Acc_CharactersData(accountData.characters);
             acc.Set_Acc_ItemsData(accountData.items);
 

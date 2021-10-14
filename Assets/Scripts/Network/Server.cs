@@ -52,7 +52,7 @@ public class Server : MonoBehaviour
             if(SceneManager.GetActiveScene().buildIndex == 0)
             {
                 MenuSceneMain menuSceneMain = GameObject.Find("SceneMain").GetComponent<MenuSceneMain>();
-                menuSceneMain.UpdateConnectedPlayersList();
+                menuSceneMain.p2PLobbyMenu.UpdateConnectedPlayersList();
             }
         };
 
@@ -73,7 +73,7 @@ public class Server : MonoBehaviour
             if(SceneManager.GetActiveScene().buildIndex == 0)
             {
                 MenuSceneMain menuSceneMain = GameObject.Find("SceneMain").GetComponent<MenuSceneMain>();
-                menuSceneMain.UpdateConnectedPlayersList();
+                menuSceneMain.p2PLobbyMenu.UpdateConnectedPlayersList();
                 menuSceneMain.Remove_PlayerPanel(disconnectedPlayer);
             }
         };
@@ -92,7 +92,8 @@ public class Server : MonoBehaviour
         if(SceneManager.GetActiveScene().buildIndex == 0)
         {
             MenuSceneMain menuSceneMain = GameObject.Find("SceneMain").GetComponent<MenuSceneMain>();
-            menuSceneMain.UpdateConnectedPlayersList();
+            menuSceneMain.p2PLobbyMenu.UpdateConnectedPlayersList();
+            menuSceneMain.Add_PlayerPanel(serverPlayer);
         }
 
         serverSubscriptions = new ServerSubscriptions(this, netProcessor);

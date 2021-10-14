@@ -21,20 +21,11 @@ public static class CharVars
     }
 
     [System.Serializable]
-    public struct char_Attack
-    {
-        public attackType attackType;
-        public attackDmgType attackDmgType;
-        public int attacksCount;
-        public int attackDmg_base;
-        public int attackDmg_cur;
-    }
-
-    [System.Serializable]
     public struct char_Hp
     {
         public int hp_cur;
         public int hp_max;
+
         public char_Hp(int hp_max)
         {
             this.hp_max = hp_max;

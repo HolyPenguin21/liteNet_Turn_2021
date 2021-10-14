@@ -19,18 +19,16 @@ public class Gryphon : Character
         movement = new CharVars.char_Move(5);
 
         defence.dodgeChance = 30;
-        defence.blade_resistance = 0.0f;
-        defence.pierce_resistance = 0.0f;
-        defence.impact_resistance = 0.0f;
-        defence.magic_resistance = 0.0f;
+        defence.blade_resistance = 0.3f;
+        defence.pierce_resistance = -0.2f;
+        defence.impact_resistance = 0.3f;
+        defence.magic_resistance = 0.3f;
 
-        attacks = new List<CharVars.char_Attack>();
-        CharVars.char_Attack attack1 = new CharVars.char_Attack();
+        CharAttack attack1 = new CharAttack();
         attack1.attackType = CharVars.attackType.Melee;
         attack1.attackDmgType = CharVars.attackDmgType.Blade;
         attack1.attacksCount = 2;
-        attack1.attackDmg_base = 12;
-        attack1.attackDmg_cur = attack1.attackDmg_base;
+        attack1.attackDmg = 12;
         attacks.Add(attack1);
     }
 }
