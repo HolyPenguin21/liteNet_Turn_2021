@@ -29,11 +29,11 @@ public class OfflineMenu : UI_Menu_Canvas
 
     public void Button_WolfEvent()
     {
-        GameData.inst.gameMain.Order_StartGame(1);
+        GameData.inst.gameMain.Order_StartGame(2);
     }
 
     public void Button_GoblinEvent()
     {
-        GameData.inst.gameMain.Order_StartGame(2);
+        GameData.inst.gameMain.Order_StartGame(3);
     }
 }

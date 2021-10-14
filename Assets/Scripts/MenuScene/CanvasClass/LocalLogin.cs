@@ -51,17 +51,20 @@ public class LocalLogin : UI_Menu_Canvas
         acc.password = passwordInput.text;
 
         Character testChar = new Swordman();
-        testChar.lifetimeBuffs.Add(new Strong());
-        acc.сharacters.Add(testChar);
+        int rand = Random.Range(1,4);
+        if(rand == 1)
+            testChar.lifetimeBuffs.Add(new Strong());
+        else if(rand == 2)
+            testChar.lifetimeBuffs.Add(new BrokenLeg());
+        else
+            testChar.lifetimeBuffs.Add(new ChestWound());
 
-        testChar = new Swordman();
-        testChar.lifetimeBuffs.Add(new BrokenLeg());
-        acc.сharacters.Add(testChar);
-        
+        acc.сharacters.Add(testChar);        
         acc.сharacters.Add(new Spearman());
 
         acc.items.Add(new Gold());
         acc.items.Add(new Token_General());
+        acc.items.Add(new PiWolf());
 
         acc.acc_gold = 45;
 

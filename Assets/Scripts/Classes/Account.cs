@@ -78,6 +78,7 @@ public class Account
     public void Set_Acc_Heroes_Data(string data)
     {
         if(data == "") return;
+        Debug.Log(data);
         CharactersData cd = new CharactersData();
         LifetimeBuffData bd = new LifetimeBuffData();
         
@@ -90,21 +91,24 @@ public class Account
             Character hCharacter = cd.Get_Character_ById(Convert.ToInt32(hero[1]));
             Hero h = new Hero(hCharacter, hero[0]);
 
-            for(int y = 1; y < heroData.Length; y++)
+            if(heroData[1] != "")
             {
-                string[] hCharacterData = heroData[y].Split(':');
-                Character character = cd.Get_Character_ById(Convert.ToInt32(hCharacterData[0]));
-
-                string[] cBuffs = hCharacterData[1].Split(',');
-                for(int z = 0; z < cBuffs.Length; z++)
+                for(int y = 1; y < heroData.Length; y++)
                 {
-                    if(cBuffs[z] == "") continue;
+                    string[] hCharacterData = heroData[y].Split(':');
+                    Character character = cd.Get_Character_ById(Convert.ToInt32(hCharacterData[0]));
 
-                    LifetimeBuff buff = bd.Get_LifetimeBuff_ById(Convert.ToInt32(cBuffs[z]));
-                    character.lifetimeBuffs.Add(buff);
+                    string[] cBuffs = hCharacterData[1].Split(',');
+                    for(int z = 0; z < cBuffs.Length; z++)
+                    {
+                        if(cBuffs[z] == "") continue;
+
+                        LifetimeBuff buff = bd.Get_LifetimeBuff_ById(Convert.ToInt32(cBuffs[z]));
+                        character.lifetimeBuffs.Add(buff);
+                    }
+
+                    h.battleCharacters.Add(character);
                 }
-
-                h.battleCharacters.Add(character);
             }
 
             heroes.Add(h);

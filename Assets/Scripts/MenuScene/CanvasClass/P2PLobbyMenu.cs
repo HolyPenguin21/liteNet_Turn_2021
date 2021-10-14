@@ -29,7 +29,7 @@ public class P2PLobbyMenu : UI_Menu_Canvas
 
     public void StartGame()
     {
-        GameData.inst.gameMain.Order_StartGame(4);
+        GameData.inst.gameMain.Order_StartGame(1);
     }
 
     public void UpdateConnectedPlayersList()

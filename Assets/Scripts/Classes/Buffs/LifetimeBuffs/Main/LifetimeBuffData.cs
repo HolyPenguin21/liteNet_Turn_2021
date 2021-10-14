@@ -15,6 +15,9 @@ public class LifetimeBuffData
             case 2:
                 buff = new BrokenLeg();
             break;
+            case 3:
+                buff = new ChestWound();
+            break;
 
             default:
                 buff = new Strong();

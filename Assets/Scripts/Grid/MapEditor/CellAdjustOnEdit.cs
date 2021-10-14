@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+// using UnityEditor; // COMMENT
 
-[ExecuteInEditMode] // COMMENT
-// Disable before PlayMode and on Build
+// [ExecuteInEditMode] // COMMENT
 public class CellAdjustOnEdit : MonoBehaviour
 {
     private Transform tr;
