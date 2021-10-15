@@ -1,7 +1,7 @@
 using UnityEngine;
-// using UnityEditor; // COMMENT
+using UnityEditor; // COMMENT
 
-// [ExecuteInEditMode] // COMMENT
+[ExecuteInEditMode] // COMMENT
 public class CellAdjustOnEdit : MonoBehaviour
 {
     private Transform tr;
@@ -51,9 +51,20 @@ public class CellAdjustOnEdit : MonoBehaviour
         foreach(Transform child in allChildren)
         {
             SpriteRenderer childRend = child.GetComponent<SpriteRenderer>();
-            if(childRend == null) continue;
+            if( childRend == null) continue;
             
-            childRend.sortingOrder = gridCoord.rendValue;
+            if (child.name == "background")
+            {
+                childRend.sortingOrder = gridCoord.rendValue;
+            }
+            else if (child.name == "front")
+            {
+                childRend.sortingOrder = gridCoord.rendValue + 1;
+            }
+            else
+            {
+                childRend.sortingOrder = gridCoord.rendValue - 1;
+            }
         }
     }
 }
