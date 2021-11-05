@@ -169,8 +169,10 @@ public class SceneMain_UI : MonoBehaviour
 
         hexInfoPanel.Show_HexInfo(selected_Hex);
 
-        if(selected_Hex.character == null) return;
-        hexInfoPanel.Show_CharacterInfo(selected_Hex.character);
+        if(selected_Hex.character != null)
+            hexInfoPanel.Show_CharacterInfo(selected_Hex.character);
+        else
+            hexInfoPanel.Hide_CharacterInfo();
     }
 
     private void Path_Display()

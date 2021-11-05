@@ -6,32 +6,7 @@ public static class CharVars
 {
     public enum faction { General, Castle, Forest, Dark};
     public enum attackType { none, Melee, Ranged };
-    public enum attackDmgType { Blade, Pierce, Impact, Magic };
-
-    [System.Serializable]
-    public struct char_Move
-    {
-        public int movePoints_cur;
-        public int movePoints_max;
-        public char_Move(int movePoints_max)
-        {
-            this.movePoints_max = movePoints_max;
-            this.movePoints_cur = 0;
-        }
-    }
-
-    [System.Serializable]
-    public struct char_Hp
-    {
-        public int hp_cur;
-        public int hp_max;
-
-        public char_Hp(int hp_max)
-        {
-            this.hp_max = hp_max;
-            this.hp_cur = hp_max;
-        }
-    }
+    public enum attackDmgType { none, Blade, Pierce, Impact, Magic };
 
     [System.Serializable]
     public struct char_Defence

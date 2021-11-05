@@ -56,6 +56,7 @@ public class CreateCharacter : GeneralNetworkTask
         BattlePlayer owner = Utility.Get_BattlePlayer_ByName(this.ownerName);
         Character character = owner.availableCharacters[this.characterId];
 
+        character.Reset();
         character.Set_CharacterLifetimeBuffs();
 
         owner.availableCharacters.Remove(character);

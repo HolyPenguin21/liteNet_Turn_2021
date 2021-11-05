@@ -309,8 +309,19 @@ public class AiSolo : AiBehaviour
         Character character = charactersData.Get_Character_ById(randCharacterId);
         GameData.inst.gameMain.Order_CreateAICharacter(hex, aiBattlePlayer, character, 1);
 
-        aiBattlePlayer.availableCharacters.Add(charactersData.Get_Character_ById(1));
-        aiBattlePlayer.availableCharacters.Add(charactersData.Get_Character_ById(1));
+        // aiBattlePlayer.availableCharacters.Add(charactersData.Get_Character_ById(1));
+        // aiBattlePlayer.availableCharacters.Add(charactersData.Get_Character_ById(1));
+
+        // Rewards
+        int randRewardCount = UnityEngine.Random.Range(1, 6);
+        for(int x = 0; x < randRewardCount; x++)
+        {
+            int rarityValue = UnityEngine.Random.Range(1, 101);
+            if(rarityValue > 30 && rarityValue <= 100)
+            {
+                sceneMain.rewards.Add(new Gold());
+            }
+        }
     }
 
     private void Event_Wolf(Hex hex)
@@ -325,7 +336,7 @@ public class AiSolo : AiBehaviour
         for(int x = 0; x < hex.neighbors.Count; x++)
         {
             int rand = UnityEngine.Random.Range(1, 101);
-            if(rand < 50) continue;
+            if(rand < 66) continue;
 
             Hex crHex = hex.neighbors[x];
             GameData.inst.gameMain.Order_CreateAICharacter(crHex, aiBattlePlayer, character, 0);

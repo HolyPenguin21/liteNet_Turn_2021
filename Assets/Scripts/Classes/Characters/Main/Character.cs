@@ -26,19 +26,26 @@ public abstract class Character
     public List<LifetimeBuff> lifetimeBuffs = new List<LifetimeBuff>();
     public List<IngameBuff> ingameBuffs;
 
-    public CharVars.char_Hp health;
+    public CharHealth health;
     public CharVars.char_Defence defence;
-    public CharVars.char_Move movement;
+    public CharMove movement;
     public List<CharAttack> attacks = new List<CharAttack>();
 
     public void Set_CharacterLifetimeBuffs()
     {
-        Debug.Log(lifetimeBuffs.Count);
         for(int x = 0; x < lifetimeBuffs.Count; x++)
         {
             LifetimeBuff lifetimeBuff = lifetimeBuffs[x];
             lifetimeBuff.Effect(this);
         }
+    }
+
+    public void Reset()
+    {
+        health.Reset();
+        movement.Reset();
+        for(int x = 0; x < attacks.Count; x++)
+            attacks[x].Reset();
     }
 
     #region Animations

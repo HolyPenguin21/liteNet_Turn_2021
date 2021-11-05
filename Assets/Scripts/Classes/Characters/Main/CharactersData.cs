@@ -147,9 +147,9 @@ public class CharactersData
     public string Get_Menu_Character_Tooltip(Character character)
     {
         string result = character.name;
+        if (character.lifetimeBuffs.Count != 0) result += "\nLifetime buffs : " + Get_LifeTimeBuffs_Tooltip(character);
         result += "\nCost : " + character.acc_cost;
         result += "\nSummon cost : " + character.ingame_cost;
-        if (character.lifetimeBuffs.Count != 0) result += "\nLifetime buffs : " + Get_LifeTimeBuffs_Tooltip(character);
         result += "\nHealth : " + character.health.hp_cur + "/" + character.health.hp_max;
         result += "\nDodge : " + character.defence.dodgeChance;
         result += "\nMove points : " + character.movement.movePoints_max;
@@ -161,6 +161,7 @@ public class CharactersData
     public string Get_Ingame_Character_Tooltip(Character character)
     {
         string result = character.name;
+        if (character.lifetimeBuffs.Count != 0) result += "\nLifetime buffs :" + Get_LifeTimeBuffs_Tooltip(character);
         result += "\nHealth : " + character.health.hp_cur + "/" + character.health.hp_max;
         result += "\nDodge : " + character.defence.dodgeChance + "+" + character.hex.dodge;
         if(character.canAct) result += "\nCan act : yes";
@@ -177,7 +178,7 @@ public class CharactersData
         for(int x = 0; x < character.attacks.Count; x++)
         {
             CharAttack att = character.attacks[x];
-            result += "\n  - " + att.attackType + ", " + att.attackDmgType + ", " + att.attacksCount + "x" + att.attackDmg;
+            result += "\n  - " + att.attackType + ", " + att.attackDmgType + ", " + att.attacksCount_cur + "x" + att.attackDmg_cur;
         }
         return result;
     }
@@ -188,8 +189,9 @@ public class CharactersData
         for(int x = 0; x < character.lifetimeBuffs.Count; x++)
         {
             LifetimeBuff buff = character.lifetimeBuffs[x];
-            result += "\n  - " + buff.name;
+            result += " " + buff.name + ",";
         }
+        if(result != "") result = result.Remove(result.Length - 1);
         return result;
     }
 

@@ -198,8 +198,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2824317582765184596}
   m_HandleRect: {fileID: 2824317582765184597}
   m_Direction: 2
-  m_Value: 1.0000387
-  m_Size: 0.9704731
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -964,11 +964,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
-    m_FontStyle: 0
+    m_FontSize: 20
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 40
+    m_MaxSize: 55
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
@@ -1781,7 +1781,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2824317583618290300}
   m_HandleRect: {fileID: 2824317583618290301}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3575,7 +3575,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2824317582634784370}
   m_HandleRect: {fileID: 2824317582634784371}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3701,7 +3701,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2824317583886978909}
   m_HandleRect: {fileID: 2824317583886978910}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3827,7 +3827,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2824317584094125832}
   m_HandleRect: {fileID: 2824317584094125833}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4282,7 +4282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

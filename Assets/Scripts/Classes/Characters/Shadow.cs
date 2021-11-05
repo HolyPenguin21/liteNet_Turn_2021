@@ -15,27 +15,21 @@ public class Shadow : Character
         name = "Shadow";
         image = cd.Get_CharacterImage_ById(id);
 
-        health = new CharVars.char_Hp(25);
-        movement = new CharVars.char_Move(4);
-
         defence.dodgeChance = 40;
         defence.blade_resistance = 0.3f;
         defence.pierce_resistance = 0.3f;
         defence.impact_resistance = 0.5f;
         defence.magic_resistance = 0.0f;
 
-        CharAttack attack1 = new CharAttack();
-        attack1.attackType = CharVars.attackType.Melee;
-        attack1.attackDmgType = CharVars.attackDmgType.Blade;
-        attack1.attacksCount = 2;
-        attack1.attackDmg = 5;
+        health = new CharHealth(25);
+        movement = new CharMove(4);
+
+        CharAttack attack1 = 
+            new CharAttack(CharVars.attackType.Melee, CharVars.attackDmgType.Blade, 2, 5);
         attacks.Add(attack1);
 
-        CharAttack attack2 = new CharAttack();
-        attack2.attackType = CharVars.attackType.Ranged;
-        attack2.attackDmgType = CharVars.attackDmgType.Magic;
-        attack2.attacksCount = 2;
-        attack2.attackDmg = 5;
+        CharAttack attack2 = 
+            new CharAttack(CharVars.attackType.Ranged, CharVars.attackDmgType.Magic, 2, 5);
         attacks.Add(attack2);
     }
 }

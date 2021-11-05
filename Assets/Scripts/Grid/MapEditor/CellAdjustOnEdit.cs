@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEditor; // COMMENT
 
-[ExecuteInEditMode] // COMMENT
+// [ExecuteInEditMode] // COMMENT
 public class CellAdjustOnEdit : MonoBehaviour
 {
     private Transform tr;

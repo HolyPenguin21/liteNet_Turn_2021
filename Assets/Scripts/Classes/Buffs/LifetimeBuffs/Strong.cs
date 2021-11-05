@@ -20,7 +20,7 @@ public class Strong : LifetimeBuff
         for(int x = 0; x < character.attacks.Count; x++)
         {
             CharAttack attack = character.attacks[x];
-            attack.attackDmg += 1;
+            attack.attackDmg_cur += 1;
         }
     }
 }

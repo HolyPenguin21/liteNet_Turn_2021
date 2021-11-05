@@ -21,7 +21,7 @@ public class AttackRequest : GeneralNetworkTask
 
         GameData.inst.gameMain.Order_Attack(a_Hex, this.a_AttackId, t_Hex, this.t_AttackId);
         yield return null;
-    }
+    }    
 
     public override void SendToClients(Server server)
     {

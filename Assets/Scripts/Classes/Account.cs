@@ -78,10 +78,10 @@ public class Account
     public void Set_Acc_Heroes_Data(string data)
     {
         if(data == "") return;
-        Debug.Log(data);
+
         CharactersData cd = new CharactersData();
         LifetimeBuffData bd = new LifetimeBuffData();
-        
+
         string[] heroesData = data.Split('|');
         for(int x = 0; x < heroesData.Length; x++)
         {

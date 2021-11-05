@@ -30,7 +30,7 @@ public class LocalData
 
     public Account Load_PlayerData(string accName)
     {
-        Debug.Log("Loading data for " + accName);
+        // Debug.Log("Loading data for " + accName);
         string jsonData = PlayerPrefs.GetString(accName);
         AccountData accountData = JsonUtility.FromJson<AccountData>(jsonData);
 

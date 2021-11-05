@@ -15,20 +15,17 @@ public class Swordman : Character
         name = "Swordman";
         image = cd.Get_CharacterImage_ById(id);
 
-        health = new CharVars.char_Hp(30);
-        movement = new CharVars.char_Move(4);
-
         defence.dodgeChance = 20;
         defence.blade_resistance = 0.2f;
         defence.pierce_resistance = 0.1f;
         defence.impact_resistance = 0.0f;
         defence.magic_resistance = 0.0f;
 
-        CharAttack attack1 = new CharAttack();
-        attack1.attackType = CharVars.attackType.Melee;
-        attack1.attackDmgType = CharVars.attackDmgType.Blade;
-        attack1.attacksCount = 3;
-        attack1.attackDmg = 5;
+        health = new CharHealth(30);
+        movement = new CharMove(4);
+
+        CharAttack attack1 = 
+            new CharAttack(CharVars.attackType.Melee, CharVars.attackDmgType.Blade, 3, 5);
         attacks.Add(attack1);
     }
 }

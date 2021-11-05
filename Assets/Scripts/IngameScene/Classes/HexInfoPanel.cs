@@ -58,7 +58,7 @@ public class HexInfoPanel
 
         string result = hex.tr.name;
         result += "\nMove cost : " + hex.moveCost;
-        result += "\nDodge bonus" + hex.dodge;
+        result += "\nDodge bonus : " + hex.dodge;
 
         this.hex_Text.text = result;
     }

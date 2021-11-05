@@ -15,20 +15,17 @@ public class Knight : Character
         name = "Knight";
         image = cd.Get_CharacterImage_ById(id);
 
-        health = new CharVars.char_Hp(40);
-        movement = new CharVars.char_Move(4);
-
         defence.dodgeChance = 20;
         defence.blade_resistance = 0.3f;
         defence.pierce_resistance = 0.2f;
         defence.impact_resistance = 0.0f;
         defence.magic_resistance = 0.0f;
 
-        CharAttack attack1 = new CharAttack();
-        attack1.attackType = CharVars.attackType.Melee;
-        attack1.attackDmgType = CharVars.attackDmgType.Blade;
-        attack1.attacksCount = 2;
-        attack1.attackDmg = 10;
+        health = new CharHealth(40);
+        movement = new CharMove(4);
+
+        CharAttack attack1 = 
+            new CharAttack(CharVars.attackType.Melee, CharVars.attackDmgType.Blade, 2, 10);
         attacks.Add(attack1);
     }
 }

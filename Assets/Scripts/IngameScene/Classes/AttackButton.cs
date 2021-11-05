@@ -34,7 +34,7 @@ public class AttackButton
         CharAttack a_Attack = attacker.attacks[a_attackId];
         button_Go.transform.Find("a_Image").GetComponent<Image>().sprite = Get_DmgTypeImage(a_Attack);
         button_Go.transform.Find("a_Text").GetComponent<Text>().text = 
-        a_Attack.attackType + ", " + a_Attack.attackDmgType + ", " + a_Attack.attacksCount + "x" + attackCalculation.Hit_DmgCalculation(a_Attack, target);
+        a_Attack.attackType + ", " + a_Attack.attackDmgType + ", " + a_Attack.attacksCount_cur + "x" + attackCalculation.Hit_DmgCalculation(a_Attack, target);
 
         CharAttack t_Attack = attackCalculation.Get_ReturnAttack(attacker, a_attackId, target);
         if(t_Attack.attackType == CharVars.attackType.none)
@@ -47,7 +47,7 @@ public class AttackButton
         {
             button_Go.transform.Find("t_Image").GetComponent<Image>().sprite = Get_DmgTypeImage(t_Attack);
             button_Go.transform.Find("t_Text").GetComponent<Text>().text = 
-            t_Attack.attackType + ", " + t_Attack.attackDmgType + ", " + t_Attack.attacksCount + "x" + attackCalculation.Hit_DmgCalculation(t_Attack, attacker);
+            t_Attack.attackType + ", " + t_Attack.attackDmgType + ", " + t_Attack.attacksCount_cur + "x" + attackCalculation.Hit_DmgCalculation(t_Attack, attacker);
             this.t_attackId = attackCalculation.Get_AttackId(target, t_Attack);
         }
     }
